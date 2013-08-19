@@ -1,3 +1,7 @@
+# project specific
+instructors
+students
+
 *.gem
 *.rbc
 .bundle
