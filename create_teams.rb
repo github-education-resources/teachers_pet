@@ -83,25 +83,12 @@ class TeamCreator < GithubCommon
           puts "  -> Adding '#{team[:name]}' to the team"
           @client.add_team_member(team[:id], team[:name])
         end
-        @instructors.keys.each do |instructor|
-          if !team_members.key?(instructor)
-            puts "  -> Adding instructor '#{instructor}' to team"
-            @client.add_team_member(team[:id], instructor)
-          end
-        end
+        # Originally, instructors were added to the student's team, but that isn't needed
+        # since instructors are addded to the Owners team that can see all repositories.
       else
         puts "*** Team name '#{team[:name]}' does not match any students, ignoring. ***"
       end
     end
-  end
-
-  private
-  def get_team_members(team_id)
-    team_members = Hash.new
-    @client.team_members(team_id).each do |member|
-      team_members[member[:login]] = member
-    end
-    return team_members
   end
 end
 

@@ -36,6 +36,60 @@ class RepoCreator < GithubCommon
     org_hash = read_organization(@organization)
     abort('Organization could not be found') if org_hash.nil?
     puts "Found organization at: #{org_hash[:url]}"
+
+    # we want to list the organization repositories and skip creating ones that already exist
+    existing_repos = get_existing_repo_names(@organization)
+
+    # Load the teams - there should be one team per student.
+    # Repositories are given permissions by teams
+    org_teams = get_teams_by_name(@organization)
+    # For each student - create a repository, and give permissions to their "team"
+    # The repository name is teamName-repository
+    puts "\nCreating assignment repositories for students..."
+    @students.keys.each do |student|
+      unless org_teams.key?(student)
+        puts("  ** ERROR ** - no team for #{student}")
+        next
+      end
+      repo_name = "#{student}-#{@repository}"
+      
+      if existing_repos.key?(repo_name)
+        puts " --> Already exists, skipping '#{repo_name}'"
+        next
+      end
+      
+      puts " --> Creating '#{repo_name}'"
+      @client.create_repository(repo_name,
+          {
+            :description => "#{@repository} created for #{student}",
+            :private => true, ## Current default, repositories are private to the student & instructors
+            :has_issues => true, # seems like a resonable default
+            :has_wiki => false,
+            :has_downloads => false,
+            :organization => @organization,
+            :team_id => org_teams[student][:id],
+            :auto_init => true,
+            :gitignore_template => "C++" ## This is specific to my current class, you'll want to change
+          })
+    end
+  end
+
+  private
+  def get_existing_repo_names(organization)
+    repos = Hash.new
+    @client.organization_repositories(organization).each do |repo|
+      repos[repo[:name]] = true
+    end
+    return repos
+  end
+
+  def get_teams_by_name(organization)
+    org_teams = @client.organization_teams(organization)
+    teams = Hash.new
+    org_teams.each do |team|
+      teams[team[:name]] = team
+    end
+    return teams
   end
 end
 

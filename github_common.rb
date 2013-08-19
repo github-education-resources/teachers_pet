@@ -30,6 +30,14 @@ class GithubCommon
   end
 
   protected
+  def get_team_members(team_id)
+    team_members = Hash.new
+    @client.team_members(team_id).each do |member|
+      team_members[member[:login]] = member
+    end
+    return team_members
+  end
+
   def read_file(filename, type)
     set = Hash.new
     puts "Loading #{type}:"
