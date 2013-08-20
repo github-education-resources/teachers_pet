@@ -10,7 +10,23 @@ class GithubCommon
     @web_endpoint = ask("What is the Web endpoint?") { |q| q.default = 'https://github.uc.edu/' }
 
     @username = ask('What is your username? (You must be an owner for the organization)?') { |q| q.default = ENV['USER'] }
-    @password = ask('What is your password?') { |q| q.echo = false }
+
+    choose do |menu|
+      menu.prompt = "Login via oAuth or Password? "
+      menu.choice :oAuth do
+        @authmethod = 'oauth'
+      end 
+      menu.choice :Password do 
+        @authmethod = 'password'
+      end 
+    end
+
+    if @authmethod == 'oauth'
+        @oauthtoken = ask('What is your oAuth token?') { |q| q.default = ENV['ghe_oauth'] }
+    end
+    if @authmethod == 'password'
+        @password = ask('What is your password?') { |q| q.echo = false }
+    end
   end
 
   def init_client
@@ -21,7 +37,13 @@ class GithubCommon
       c.api_endpoint = @api_endpoint
       c.web_endpoint = @web_endpoint
     end
-    @client = Octokit::Client.new(:login => @username, :password => @password)
+ 
+    if @authmethod == 'password'
+      @client = Octokit::Client.new(:login => @username, :password => @password) 
+    end
+    if @authmethod == 'oauth'
+      @client = Octokit::Client.new(:login => @username, :oauth_token => @oauthtoken) 
+    end
   end
 
   def read_organization(organization)
