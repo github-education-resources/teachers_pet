@@ -30,6 +30,23 @@ class GithubCommon
   end
 
   protected
+  def get_existing_repos_by_names(organization)
+    repos = Hash.new
+    @client.organization_repositories(organization).each do |repo|
+      repos[repo[:name]] = repo
+    end
+    return repos
+  end
+
+  def get_teams_by_name(organization)
+    org_teams = @client.organization_teams(organization)
+    teams = Hash.new
+    org_teams.each do |team|
+      teams[team[:name]] = team
+    end
+    return teams
+  end
+
   def get_team_members(team_id)
     team_members = Hash.new
     @client.team_members(team_id).each do |member|

@@ -38,7 +38,7 @@ class RepoCreator < GithubCommon
     puts "Found organization at: #{org_hash[:url]}"
 
     # we want to list the organization repositories and skip creating ones that already exist
-    existing_repos = get_existing_repo_names(@organization)
+    existing_repos = get_existing_repos_by_names(@organization)
 
     # Load the teams - there should be one team per student.
     # Repositories are given permissions by teams
@@ -72,24 +72,6 @@ class RepoCreator < GithubCommon
             :gitignore_template => "C++" ## This is specific to my current class, you'll want to change
           })
     end
-  end
-
-  private
-  def get_existing_repo_names(organization)
-    repos = Hash.new
-    @client.organization_repositories(organization).each do |repo|
-      repos[repo[:name]] = true
-    end
-    return repos
-  end
-
-  def get_teams_by_name(organization)
-    org_teams = @client.organization_teams(organization)
-    teams = Hash.new
-    org_teams.each do |team|
-      teams[team[:name]] = team
-    end
-    return teams
   end
 end
 
