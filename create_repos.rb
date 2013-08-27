@@ -20,6 +20,7 @@ class RepoCreator < GithubCommon
     @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Fall2013' }
     @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
     @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = 'instructors' }
+    @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
   end
 
   def load_files()
@@ -58,6 +59,8 @@ class RepoCreator < GithubCommon
         next
       end
       
+      git_ignore_template = "C++" ## This is specific to my current class, you'll want to change
+      git_ignore_template = '' unless @add_init_files
       puts " --> Creating '#{repo_name}'"
       @client.create_repository(repo_name,
           {
@@ -68,8 +71,8 @@ class RepoCreator < GithubCommon
             :has_downloads => false,
             :organization => @organization,
             :team_id => org_teams[student][:id],
-            :auto_init => true,
-            :gitignore_template => "C++" ## This is specific to my current class, you'll want to change
+            :auto_init => @add_init_files,
+            :gitignore_template => git_ignore_template
           })
     end
   end

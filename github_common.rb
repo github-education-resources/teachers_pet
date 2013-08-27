@@ -92,7 +92,7 @@ class GithubCommon
     return set
   end
 
-  def confirm(message)
+  def confirm(message, abort_on_no = true)
     # confirm
     confirmed = false
     choose do |menu|
@@ -101,7 +101,9 @@ class GithubCommon
       menu.choice :yes do confirmed = true end
       menu.choice :no do confirmed = false end
     end
-    abort("Creation cancled by user") unless confirmed
-    return true
+    if abort_on_no && !confirmed
+      abort("Creation cancled by user")
+    end
+    return confirmed
   end
 end
