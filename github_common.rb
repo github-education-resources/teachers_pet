@@ -36,13 +36,15 @@ class GithubCommon
     Octokit.configure do |c|
       c.api_endpoint = @api_endpoint
       c.web_endpoint = @web_endpoint
+      # Organizations can get big, pull in all pages
+      c.auto_paginate = true
     end
  
     if @authmethod == 'password'
       @client = Octokit::Client.new(:login => @username, :password => @password) 
     end
     if @authmethod == 'oauth'
-      @client = Octokit::Client.new(:login => @username, :oauth_token => @oauthtoken) 
+      @client = Octokit::Client.new(:login => @username, :access_token => @oauthtoken) 
     end
   end
 
@@ -54,9 +56,13 @@ class GithubCommon
   protected
   def get_existing_repos_by_names(organization)
     repos = Hash.new
-    @client.organization_repositories(organization).each do |repo|
+    response = @client.organization_repositories(organization)
+    print " Org repo names"
+    response.each do |repo|
       repos[repo[:name]] = repo
+      print " '#{repo[:name]}'"
     end
+    print "\n";
     return repos
   end
 
