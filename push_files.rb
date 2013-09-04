@@ -36,9 +36,6 @@ class PushFiles < GithubCommon
     abort('Organization could not be found') if org_hash.nil?
     puts "Found organization at: #{org_hash[:url]}"
 
-    # we want to list the organization repositories and skip creating ones that already exist
-    existing_repos = get_existing_repos_by_names(@organization)
-
     # Load the teams - there should be one team per student.
     # Repositories are given permissions by teams
     org_teams = get_teams_by_name(@organization)
@@ -53,8 +50,8 @@ class PushFiles < GithubCommon
       end
       repo_name = "#{student}-#{@repository}"
       
-      unless existing_repos.key?(repo_name)
-        puts("  ** ERROR ** - not repository called #{repo_name}")
+      unless repository?(@organization, repo_name)
+        puts("  ** ERROR ** - no repository called #{repo_name}")
       end
       remotes_to_add[student] = "#{@web_endpoint}#{@organization}/#{repo_name}.git"
     end

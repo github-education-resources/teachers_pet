@@ -38,10 +38,6 @@ class RepoCreator < GithubCommon
     abort('Organization could not be found') if org_hash.nil?
     puts "Found organization at: #{org_hash[:login]}"
 
-    # we want to list the organization repositories and skip creating ones that already exist
-    existing_repos = get_existing_repos_by_names(@organization)
-    puts "Found #{existing_repos.size} existing repositories in the organization"
-
     # Load the teams - there should be one team per student.
     # Repositories are given permissions by teams
     org_teams = get_teams_by_name(@organization)
@@ -54,8 +50,8 @@ class RepoCreator < GithubCommon
         next
       end
       repo_name = "#{student}-#{@repository}"
-      
-      if existing_repos.key?(repo_name)
+
+      if repository?(@organization, repo_name)
         puts " --> Already exists, skipping '#{repo_name}'"
         next
       end

@@ -54,6 +54,10 @@ class GithubCommon
   end
 
   protected
+  def repository?(organization, repo_name)
+    @client.repository("#{organization}/#{repo_name}")
+  end
+  
   def get_existing_repos_by_names(organization)
     repos = Hash.new
     response = @client.organization_repositories(organization)
