@@ -5,6 +5,8 @@
 #
 # Currently this will clone all student repositories into the current 
 
+$LOAD_PATH << File.dirname(__FILE__)
+
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
@@ -37,9 +39,6 @@ class CloneRepos < GithubCommon
     abort('Organization could not be found') if org_hash.nil?
     puts "Found organization at: #{org_hash[:url]}"
 
-    # we want to list the organization repositories and skip creating ones that already exist
-    existing_repos = get_existing_repos_by_names(@organization)
-
     # Load the teams - there should be one team per student.
     org_teams = get_teams_by_name(@organization)
     # For each student - pull the repository if it exists
@@ -51,7 +50,7 @@ class CloneRepos < GithubCommon
       end
       repo_name = "#{student}-#{@repository}"
       
-      unless existing_repos.key?(repo_name)
+      unless repository?(@organization, repo_name)
         puts " ** ERROR ** - Can't find expected repository '#{repo_name}'"
         next
       end
