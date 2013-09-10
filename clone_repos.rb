@@ -56,7 +56,7 @@ class CloneRepos < GithubCommon
       end
       
       puts " --> Cloning '#{repo_name}'"
-      `git clone #{existing_repos[repo_name][:clone_url]}`
+      `git clone #{@web_endpoint}#{@organization}/#{repo_name}.git`
     end
   end
 end
