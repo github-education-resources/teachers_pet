@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'io/console'
+require 'octokit'
+
+puts "Create a personal access token: https://github.com/settings/applications"
+print "Token: "
+token = STDIN.noecho(&:gets).chomp
+puts
+
+print "Repository (name/owner): "
+nwo = gets.chomp
+
+client = Octokit::Client.new :access_token => token
+
+forks = client.forks(nwo)
+
+puts "Are you sure you want to add #{forks.count} users as collaborators on '#{nwo}'?"
+print "Please type the name of the repository to confirm: "
+confirm = gets.chomp
+
+if confirm == nwo
+  forks.each do |fork|
+    if fork.owner.type == "User"
+      result = client.add_collab(nwo, fork.owner)
+      puts "#{fork.owner.login} - #{result}"
+    else
+      puts "#{fork.owner.login} - false (Organization)"
+    end
+  end
+end

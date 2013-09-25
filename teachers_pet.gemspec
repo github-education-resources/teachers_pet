@@ -11,6 +11,10 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
 
   s.files         = `git ls-files`.split $/
+  s.require_paths = ['lib']
+
+  s.bindir        = 'bin'
+  s.executables  << 'forkcollab'
 
   s.add_dependency 'octokit'
 end
