@@ -6,6 +6,14 @@ Scripts for working with github for academic purposes.
 Author - Mike Helmick, University of Cincinnati
 local github name: @helmicmt
 
+Installation
+============
+
+ * Clone this git repository
+ * Install the following ruby gems
+ ** octokit
+ ** highline
+
 Basic Setup
 ===========
 

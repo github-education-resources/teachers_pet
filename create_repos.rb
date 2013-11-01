@@ -44,7 +44,7 @@ class RepoCreator < GithubCommon
     # For each student - create a repository, and give permissions to their "team"
     # The repository name is teamName-repository
     puts "\nCreating assignment repositories for students..."
-    @students.keys.each do |student|
+    @students.keys.sort.each do |student|
       unless org_teams.key?(student)
         puts("  ** ERROR ** - no team for #{student}")
         next

@@ -55,8 +55,11 @@ class CloneRepos < GithubCommon
         next
       end
       
-      puts " --> Cloning '#{repo_name}'"
-      `git clone #{@web_endpoint}#{@organization}/#{repo_name}.git`
+      
+      sshEndpoint = @web_endpoint.gsub("https://","git@").gsub("/",":")
+      command = "git clone #{sshEndpoint}#{@organization}/#{repo_name}.git"
+      puts " --> Cloning: '#{command}'"
+      `#{command}`
     end
   end
 end

@@ -55,7 +55,11 @@ class GithubCommon
 
   protected
   def repository?(organization, repo_name)
-    @client.repository("#{organization}/#{repo_name}")
+    begin
+      @client.repository("#{organization}/#{repo_name}")
+    rescue
+      return false
+    end
   end
   
   def get_existing_repos_by_names(organization)

@@ -43,7 +43,7 @@ class PushFiles < GithubCommon
     # For each student - if an appropraite repository exists,
     # add it to the list.
     remotes_to_add = Hash.new
-    @students.keys.each do |student|
+    @students.keys.sort.each do |student|
       unless org_teams.key?(student)
         puts("  ** ERROR ** - no team for #{student}")
         next
