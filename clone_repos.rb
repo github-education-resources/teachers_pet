@@ -30,6 +30,18 @@ class CloneRepos < GithubCommon
   end
 
   def create
+    cloneMethod = 'https'
+    choose do |menu|
+      menu.prompt = "Clona via? "
+      menu.choice :ssh do
+        cloneMethod = 'ssh'
+      end 
+      menu.choice :https do 
+        cloneMethod = 'https'
+      end 
+    end
+    
+    
     confirm("Clone all repositories?")
     
     # create a repo for each student
@@ -58,6 +70,9 @@ class CloneRepos < GithubCommon
       
       sshEndpoint = @web_endpoint.gsub("https://","git@").gsub("/",":")
       command = "git clone #{sshEndpoint}#{@organization}/#{repo_name}.git"
+      if cloneMethod.eql?('https')
+        command = "git clone #{@web_endpoint}#{@organization}/#{repo_name}.git"
+      end
       puts " --> Cloning: '#{command}'"
       `#{command}`
     end

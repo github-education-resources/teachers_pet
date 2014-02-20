@@ -18,7 +18,7 @@ class PushFiles < GithubCommon
 
   def read_info
     @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
-    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Fall2013' }
+    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Spring2014' }
     @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
     @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = 'instructors' }
   end

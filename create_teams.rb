@@ -20,7 +20,7 @@ class TeamCreator < GithubCommon
   end
 
   def read_info
-    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Fall2013' }
+    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Spring2014' }
     @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
     @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = 'instructors' }
   end
@@ -32,7 +32,7 @@ class TeamCreator < GithubCommon
 
   def create
     init_client()
-    confirm("Create teams for #{@students.size} students?")
+    confirm("Create teams for #{@students.size} students/teams?")
 
     existing = Hash.new
     teams = @client.organization_teams(@organization)
@@ -40,22 +40,22 @@ class TeamCreator < GithubCommon
 
     puts "\nDetermining which students need teams created..."
     todo = Hash.new
-    @students.keys.each do |student|
-      if existing[student].nil?
-        puts " -> #{student}"
-        todo[student] = true
+    @students.keys.each do |team|
+      if existing[team].nil?
+        puts " -> #{team}"
+        todo[team] = true
       end
     end
 
     if todo.empty?
       puts "\nAll teams exist"
     else
-      puts "\nCreating teams..."
-      todo.keys.each do |student|
-        puts " -> '#{student}' ..."
+      puts "\nCreating team..."
+      todo.keys.each do |team|
+        puts " -> '#{team}' ..."
         @client.create_team(@organization,
             {
-              :name => student,
+              :name => team,
               :permission => 'push'
             })
       end
@@ -79,9 +79,10 @@ class TeamCreator < GithubCommon
         puts "Validating membership for team '#{team[:name]}'"
         # If there isn't a team member that is the same name as the team, and we already know
         # there is a student with the same name, add that student to the team.
-        unless team_members.key?(team[:name])
+        #unless team_members.key?(team[:name])
+        @students[team[:name]].each do |student|
           puts "  -> Adding '#{team[:name]}' to the team"
-          @client.add_team_member(team[:id], team[:name])
+          @client.add_team_member(team[:id], student)
         end
         # Originally, instructors were added to the student's team, but that isn't needed
         # since instructors are addded to the Owners team that can see all repositories.

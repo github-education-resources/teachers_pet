@@ -92,18 +92,33 @@ class GithubCommon
   end
 
   def read_file(filename, type)
-    set = Hash.new
+    map = Hash.new
     puts "Loading #{type}:"
-    File.open(filename).each_line do |user|
+    File.open(filename).each_line do |team|
+      # Team can be a single user, or a team name and multiple users      
       # Trim whitespace, otherwise issues occur
-      user.strip!
-      abort("No users can be named 'owners' (in any case)") if 'owners'.eql?(user.downcase)
-      if set[user].nil?
-        puts " -> #{user}"
-        set[user] = true
+      team.strip!
+      items = team.split(' ')
+      items.each do |item|
+        abort("No users can be named 'owners' (in any case)") if 'owners'.eql?(item.downcase)
+      end
+      
+      if map[items[0]].nil?
+        map[items[0]] = Array.new
+        puts " -> #{items[0]}"
+        if (items.size > 1) 
+          print "  \\-> members: "
+          1.upto(items.size - 1) do |i|
+            print "#{items[i]} " 
+            map[items[0]] << items[i]
+          end
+          print "\n"
+        else
+          map[items[0]] << items[0]
+        end
       end
     end
-    return set
+    return map
   end
 
   def confirm(message, abort_on_no = true)
