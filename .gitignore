@@ -1,6 +1,7 @@
 # project specific
 instructors
 students
+teams
 
 *.gem
 *.rbc
