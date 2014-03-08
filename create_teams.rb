@@ -1,11 +1,14 @@
 #!/usr/bin/ruby
 
-# Author: Mike Helmick - mike.helmick@uc.edu
+# Author: Mike Helmick
 # Creates "teams" for an origanization. In this scenario - each team consists of
 # one student, and any instructors for the course.
 
 # The students and instructors files contain 1 userid per line.
+#  - For teams, the students file should be "teamName studentName studentName"
 # We recommend that instructors also be created as students for ease of testing.
+
+$LOAD_PATH << File.dirname(__FILE__)
 
 require 'rubygems'
 require 'highline/question'
@@ -13,6 +16,7 @@ require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
 require 'github_common'
+require 'config'
 
 class TeamCreator < GithubCommon
 
@@ -20,9 +24,9 @@ class TeamCreator < GithubCommon
   end
 
   def read_info
-    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Spring2014' }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
-    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = 'instructors' }
+    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organization }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
+    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = Configuration.instructorsFile }
   end
 
   def load_files

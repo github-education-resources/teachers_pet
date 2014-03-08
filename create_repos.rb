@@ -1,7 +1,9 @@
 #!/usr/bin/ruby
 
-# Author: Mike Helmick - mike.helmick@uc.edu
+# Author: Mike Helmick
 # Script to create assignment repositories for students under the appropriate organization
+
+$LOAD_PATH << File.dirname(__FILE__)
 
 require 'rubygems'
 require 'highline/question'
@@ -9,6 +11,7 @@ require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
 require 'github_common'
+require 'config'
 
 class RepoCreator < GithubCommon
 
@@ -17,9 +20,9 @@ class RepoCreator < GithubCommon
 
   def read_info()
     @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
-    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Spring2014' }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
-    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = 'instructors' }
+    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organization }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
+    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = Configuration.instructorsFile }
     @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
   end
 
@@ -62,7 +65,7 @@ class RepoCreator < GithubCommon
       @client.create_repository(repo_name,
           {
             :description => "#{@repository} created for #{student}",
-            :private => true, ## Current default, repositories are private to the student & instructors
+            :private => !Configuration.reposPublic, ## Current default, repositories are private to the student & instructors
             :has_issues => true, # seems like a resonable default
             :has_wiki => false,
             :has_downloads => false,

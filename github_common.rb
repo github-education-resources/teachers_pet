@@ -1,4 +1,8 @@
+$LOAD_PATH << File.dirname(__FILE__)
 
+require 'config'
+
+## Common code for the edugit scripts.
 class GithubCommon
 
   def initialize
@@ -6,8 +10,8 @@ class GithubCommon
 
   def config_githib
     return unless @username.nil?
-    @api_endpoint = ask('What is the API endpoint?') { |q| q.default = 'https://github.uc.edu/api/v3' }
-    @web_endpoint = ask("What is the Web endpoint?") { |q| q.default = 'https://github.uc.edu/' }
+    @api_endpoint = ask('What is the API endpoint?') { |q| q.default = Configuration.apiEndpoint }
+    @web_endpoint = ask("What is the Web endpoint?") { |q| q.default = Configuration.webEndpoint }
 
     @username = ask('What is your username? (You must be an owner for the organization)?') { |q| q.default = ENV['USER'] }
 
@@ -131,7 +135,7 @@ class GithubCommon
       menu.choice :no do confirmed = false end
     end
     if abort_on_no && !confirmed
-      abort("Creation cancled by user")
+      abort("Creation canceled by user")
     end
     return confirmed
   end

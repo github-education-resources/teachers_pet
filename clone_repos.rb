@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# Author: Mike Helmick - mike.helmick@uc.edu
+# Author: Mike Helmick
 # Clones all student repositories for a particular assignment
 #
 # Currently this will clone all student repositories into the current 
@@ -13,6 +13,7 @@ require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
 require 'github_common'
+require 'config'
 
 class CloneRepos < GithubCommon
 
@@ -21,8 +22,8 @@ class CloneRepos < GithubCommon
 
   def read_info()
     @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
-    @organization = ask("What is the organization name?") { |q| q.default = 'CS2-Fall2013' }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = 'students' }
+    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organiation }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
   end
 
   def load_files()
