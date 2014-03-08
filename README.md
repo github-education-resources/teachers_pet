@@ -2,27 +2,21 @@
 
 Command line tools that are useful for teaching
 
-## Usage
-
-`gem install teachers_pet`
-
-`forkcollab` - give collab access to everyone who has forked your repository
-
 ## Installation
 
- * Clone this git repository
- * Install the following ruby gems
-     * octokit
-     * highline
+* `gem install teachers_pet`
+* Install the following ruby gems
+    * octokit
+    * highline
 
 ## Basic Setup
 
- * Create an organization (you will be an owner by default). The organization should reflect the name of your course.
- * Add the github username of all students to the 'students' file (one per line)
- ** If you are doing individual assignments, use a single username per line
- ** If you are doing team assignments, one team per line in the format "teamName username username username"
- * Add the github username of all instructors to the 'instructors' file (one per line)
- * Run create_teams.rb
+* Create an organization (you will be an owner by default). The organization should reflect the name of your course.
+* Add the github username of all students to the 'students' file (one per line)
+    * If you are doing individual assignments, use a single username per line
+    * If you are doing team assignments, one team per line in the format "teamName username username username"
+* Add the github username of all instructors to the 'instructors' file (one per line)
+* Run create_teams.rb
 
 ## Passwords / OAuth
 
@@ -32,17 +26,25 @@ If you put this OAuth token in an environment variable called 'ghe_oauth', these
 
 The OAuth token will need the following permissions
 
- * repo
- * public_repo
- * write:org
- * repo:status
- * read:org
- * user
- * admin:org
+* repo
+* public_repo
+* write:org
+* repo:status
+* read:org
+* user
+* admin:org
 
-## Creating Assignments
+## Creating assignments
 
 For each assignment, run create\_repos.rb to create a repository for each student. The repositories are technically created per team, but if you use create\_teams.rb first, then there will be one team per student.
+
+## Collaborator access
+
+Give collaborator access to everyone who has forked your repository.
+
+```bash
+./bin/forkcollab
+```
 
 ### Pushing starter files
 
@@ -60,7 +62,7 @@ When grading, use the clone\_repos.rb script to clone all the repositories in th
 
 Each class is an 'organization' on github. This allows the instructors (github organization Owners) to create, push, pull, and administer all repositories. This achieves two goals:
 
- * Instructors can push code starter code to all students
- * Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
+* Instructors can push code starter code to all students
+* Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
 
 Each student is given a team in the organization. The team name is the same as the student's github username. The course instructors are also added as team members for each team (see the goals above).
