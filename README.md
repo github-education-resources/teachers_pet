@@ -12,5 +12,6 @@ That's it for now.
 
 ## Related projects
 
+* https://education.github.com/guide
 * https://github.com/hogbait/6170_repo_management
 * https://github.com/mikehelmick/edugit-scripts
