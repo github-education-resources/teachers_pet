@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-$LOAD_PATH << File.dirname(__FILE__)
+$LOAD_PATH << File.join(File.dirname(__FILE__), ',,', 'lib')
 
 require 'rubygems'
 require 'highline/question'
@@ -19,7 +19,7 @@ class PushFiles < GithubCommon
 
   def read_info
     @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
-    
+
     @organization = ask("What is the organization name?") { |q| q.default = Configuration.organization }
     @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
     @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = Configuration.sshEndpoint }
@@ -50,7 +50,7 @@ class PushFiles < GithubCommon
         next
       end
       repo_name = "#{student}-#{@repository}"
-      
+
       unless repository?(@organization, repo_name)
         puts("  ** ERROR ** - no repository called #{repo_name}")
       end

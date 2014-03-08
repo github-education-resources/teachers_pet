@@ -8,7 +8,7 @@
 #  - For teams, the students file should be "teamName studentName studentName"
 # We recommend that instructors also be created as students for ease of testing.
 
-$LOAD_PATH << File.dirname(__FILE__)
+$LOAD_PATH << File.join(File.dirname(__FILE__), ',,', 'lib')
 
 require 'rubygems'
 require 'highline/question'

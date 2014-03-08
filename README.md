@@ -16,7 +16,7 @@ Command line tools that are useful for teaching
     * If you are doing individual assignments, use a single username per line
     * If you are doing team assignments, one team per line in the format "teamName username username username"
 * Add the github username of all instructors to the 'instructors' file (one per line)
-* Run create_teams.rb
+* Run `create_teams`
 
 ## Passwords / OAuth
 
@@ -36,7 +36,7 @@ The OAuth token will need the following permissions
 
 ## Creating assignments
 
-For each assignment, run create\_repos.rb to create a repository for each student. The repositories are technically created per team, but if you use create\_teams.rb first, then there will be one team per student.
+For each assignment, run `create_repos` to create a repository for each student. The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
 ## Collaborator access
 
@@ -50,13 +50,13 @@ Give collaborator access to everyone who has forked your repository.
 
 This is the workflow that we use. Create a private repository on github. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
 
-While in the directory for the starter file repository, run the "push\_repos.rb" script.
+While in the directory for the starter file repository, run the `push_repos` script.
 
 This works by creating a git remote for each repository and thing doing a push to that repository.
 
 ### Pulling repositories for grading
 
-When grading, use the clone\_repos.rb script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when create\_repos is run.
+When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
 
 ## Philosophy
 

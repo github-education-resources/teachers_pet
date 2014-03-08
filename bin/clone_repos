@@ -3,9 +3,9 @@
 # Author: Mike Helmick
 # Clones all student repositories for a particular assignment
 #
-# Currently this will clone all student repositories into the current 
+# Currently this will clone all student repositories into the current
 
-$LOAD_PATH << File.dirname(__FILE__)
+$LOAD_PATH << File.join(File.dirname(__FILE__), ',,', 'lib')
 
 require 'rubygems'
 require 'highline/question'
@@ -36,15 +36,15 @@ class CloneRepos < GithubCommon
       menu.prompt = "Clona via? "
       menu.choice :ssh do
         cloneMethod = 'ssh'
-      end 
-      menu.choice :https do 
+      end
+      menu.choice :https do
         cloneMethod = 'https'
-      end 
+      end
     end
-    
-    
+
+
     confirm("Clone all repositories?")
-    
+
     # create a repo for each student
     init_client()
 
@@ -62,13 +62,13 @@ class CloneRepos < GithubCommon
         next
       end
       repo_name = "#{student}-#{@repository}"
-      
+
       unless repository?(@organization, repo_name)
         puts " ** ERROR ** - Can't find expected repository '#{repo_name}'"
         next
       end
-      
-      
+
+
       sshEndpoint = @web_endpoint.gsub("https://","git@").gsub("/",":")
       command = "git clone #{sshEndpoint}#{@organization}/#{repo_name}.git"
       if cloneMethod.eql?('https')
@@ -84,4 +84,3 @@ cloner = CloneRepos.new
 cloner.read_info()
 cloner.load_files()
 cloner.create()
-

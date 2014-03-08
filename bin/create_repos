@@ -3,7 +3,7 @@
 # Author: Mike Helmick
 # Script to create assignment repositories for students under the appropriate organization
 
-$LOAD_PATH << File.dirname(__FILE__)
+$LOAD_PATH << File.join(File.dirname(__FILE__), ',,', 'lib')
 
 require 'rubygems'
 require 'highline/question'
@@ -33,7 +33,7 @@ class RepoCreator < GithubCommon
 
   def create
     confirm("Create #{@students.keys.size} repositories for students and give access to instructors?")
-    
+
     # create a repo for each student
     init_client()
 
@@ -58,7 +58,7 @@ class RepoCreator < GithubCommon
         puts " --> Already exists, skipping '#{repo_name}'"
         next
       end
-      
+
       git_ignore_template = "C++" ## This is specific to my current class, you'll want to change
       git_ignore_template = '' unless @add_init_files
       puts " --> Creating '#{repo_name}'"
@@ -82,4 +82,3 @@ creator = RepoCreator.new
 creator.read_info()
 creator.load_files()
 creator.create()
-
