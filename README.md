@@ -1,6 +1,6 @@
 # teachers_pet
 
-Command line tools that are useful for teaching
+Command line tools to help teachers use GitHub in their classrooms.
 
 ## Usage
 
