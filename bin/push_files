@@ -4,6 +4,6 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'teachers_pet/actions/push_files'
 
 pusher = TeachersPet::Actions::PushFiles.new
-pusher.read_info()
-pusher.load_files()
-pusher.push()
+pusher.read_info
+pusher.load_files
+pusher.push

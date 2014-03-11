@@ -15,17 +15,13 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CloneRepos < Base
-
-      def initialize()
-      end
-
-      def read_info()
+      def read_info
         @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
       end
 
-      def load_files()
+      def load_files
         @students = read_file(@student_file, 'Students')
       end
 
@@ -45,7 +41,7 @@ module TeachersPet
         confirm("Clone all repositories?")
 
         # create a repo for each student
-        init_client()
+        self.init_client
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
