@@ -1,8 +1,14 @@
+# project specific
+instructors
+students
+teams
+
 *.gem
 *.rbc
 .bundle
 .config
 coverage
+Gemfile.lock
 InstalledFiles
 lib/bundler/man
 pkg
@@ -16,3 +22,13 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
