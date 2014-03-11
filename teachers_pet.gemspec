@@ -1,20 +1,26 @@
-require File.expand_path("../lib/teachers_pet/version", __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'teachers_pet/version'
 
 Gem::Specification.new do |s|
   s.name          = 'teachers_pet'
   s.version       = TeachersPet::VERSION
-  s.summary       = "Command line tools for teachers"
-  s.description   = "A simple hello world gem"
+  s.summary       = "Command line tools to help teachers use GitHub in their classrooms"
   s.authors       = ["John Britton"]
   s.email         = 'public@johndbritton.com'
-  s.homepage      = 'http://github.com/johndbritton/teachers_pet'
+  s.homepage      = 'http://github.com/education/teachers_pet'
   s.license       = 'MIT'
 
-  s.files         = `git ls-files`.split $/
+  s.bindir        = 'bin'
+  s.files         = `git ls-files -z`.split("\x0")
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.bindir        = 'bin'
-  s.executables  << 'forkcollab'
-
+  s.add_dependency 'highline'
   s.add_dependency 'octokit'
+
+  s.add_development_dependency 'bundler', '~> 1.5'
+  s.add_development_dependency 'rake'
 end
