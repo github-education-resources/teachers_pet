@@ -12,18 +12,18 @@ require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
-require 'github_common'
-require 'config'
+require 'teachers_pet/github_common'
+require 'teachers_pet/configuration'
 
-class CloneRepos < GithubCommon
+class CloneRepos < TeachersPet::GithubCommon
 
   def initialize()
   end
 
   def read_info()
     @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
-    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organiation }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
+    @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organiation }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
   end
 
   def load_files()

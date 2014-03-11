@@ -15,18 +15,19 @@ require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
-require 'github_common'
-require 'config'
 
-class TeamCreator < GithubCommon
+require 'teachers_pet/github_common'
+require 'teachers_pet/configuration'
+
+class TeamCreator < TeachersPet::GithubCommon
 
   def initialize
   end
 
   def read_info
-    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organization }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
-    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = Configuration.instructorsFile }
+    @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
+    @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = TeachersPet::Configuration.instructorsFile }
   end
 
   def load_files

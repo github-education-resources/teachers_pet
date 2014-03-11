@@ -7,22 +7,22 @@ require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
 require 'octokit'
-require 'github_common'
-require 'config'
+require 'teachers_pet/github_common'
+require 'teachers_pet/configuration'
 
 # This script should be run within a working directory that is a git repository.
 # It will add a remote that is the name of each student team to your repository
 
-class PushFiles < GithubCommon
+class PushFiles < TeachersPet::GithubCommon
   def initalize
   end
 
   def read_info
     @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
 
-    @organization = ask("What is the organization name?") { |q| q.default = Configuration.organization }
-    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = Configuration.studentsFile }
-    @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = Configuration.sshEndpoint }
+    @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+    @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
+    @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = TeachersPet::Configuration.sshEndpoint }
   end
 
   def load_files
@@ -54,7 +54,7 @@ class PushFiles < GithubCommon
       unless repository?(@organization, repo_name)
         puts("  ** ERROR ** - no repository called #{repo_name}")
       end
-      if Configuration.remoteSsh
+      if TeachersPet::Configuration.remoteSsh
         remotes_to_add[student] = "git@#{@sshEndpoint}:#{@organization}/#{repo_name}.git"
       else
         remotes_to_add[student] = "#{@web_endpoint}#{@organization}/#{repo_name}.git"
