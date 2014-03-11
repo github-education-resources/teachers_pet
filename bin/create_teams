@@ -4,6 +4,6 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'teachers_pet/actions/create_teams'
 
 creator = TeachersPet::Actions::CreateTeams.new
-creator.read_info()
-creator.load_files()
-creator.create()
+creator.read_info
+creator.load_files
+creator.create

@@ -19,10 +19,6 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CreateTeams < Base
-
-      def initialize
-      end
-
       def read_info
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
@@ -35,7 +31,7 @@ module TeachersPet
       end
 
       def create
-        init_client()
+        self.init_client
         confirm("Create teams for #{@students.size} students/teams?")
 
         existing = Hash.new

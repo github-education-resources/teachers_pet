@@ -13,9 +13,6 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class PushFiles < Base
-      def initalize
-      end
-
       def read_info
         @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
 
@@ -30,7 +27,7 @@ module TeachersPet
 
       def push
         confirm("Push files to student repositories?")
-        init_client()
+        self.init_client
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?

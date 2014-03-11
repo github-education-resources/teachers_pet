@@ -13,10 +13,7 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CreateRepos < Base
-      def initialize()
-      end
-
-      def read_info()
+      def read_info
         @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
@@ -24,7 +21,7 @@ module TeachersPet
         @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
       end
 
-      def load_files()
+      def load_files
         @students = read_file(@student_file, 'Students')
         @instructors = read_file(@instructor_file, 'Instructors')
       end
@@ -33,7 +30,7 @@ module TeachersPet
         confirm("Create #{@students.keys.size} repositories for students and give access to instructors?")
 
         # create a repo for each student
-        init_client()
+        self.init_client
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?

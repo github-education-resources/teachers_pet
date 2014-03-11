@@ -6,9 +6,6 @@ require 'configuration'
 module TeachersPet
   module Actions
     class Base
-      def initialize
-      end
-
       def config_githib
         return unless @username.nil?
         @api_endpoint = ask('What is the API endpoint?') { |q| q.default = Configuration.apiEndpoint }
@@ -35,7 +32,7 @@ module TeachersPet
       end
 
       def init_client
-        config_githib()
+        self.config_githib
         puts "=" * 50
         puts "Authenticating to github..."
         Octokit.configure do |c|
