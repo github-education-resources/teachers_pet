@@ -1,6 +1,6 @@
 # teachers_pet
 
-Command line tools that are useful for teaching
+Command line tools to help teachers use GitHub in their classrooms.
 
 ## Installation
 
@@ -66,3 +66,10 @@ Each class is an 'organization' on github. This allows the instructors (github o
 * Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
 
 Each student is given a team in the organization. The team name is the same as the student's github username. The course instructors are also added as team members for each team (see the goals above).
+
+## Related projects
+
+* https://education.github.com/guide
+* https://github.com/hogbait/6170_repo_management
+* https://github.com/mikehelmick/edugit-scripts
+* https://github.com/UCSB-CS-Using-GitHub-In-Courses/github-acad-scripts
