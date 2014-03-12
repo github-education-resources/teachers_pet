@@ -42,7 +42,7 @@ For each assignment, run `create_repos` to create a repository for each student.
 Give collaborator access to everyone who has forked your repository.
 
 ```bash
-./bin/forkcollab
+fork_collab
 ```
 
 ### Pushing starter files
