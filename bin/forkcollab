@@ -21,11 +21,12 @@ confirm = gets.chomp
 
 if confirm == nwo
   forks.each do |fork|
+    login = fork.owner.login
     if fork.owner.type == "User"
-      result = client.add_collab(nwo, fork.owner)
-      puts "#{fork.owner.login} - #{result}"
+      result = client.add_collab(nwo, login)
+      puts "#{login} - #{result}"
     else
-      puts "#{fork.owner.login} - false (Organization)"
+      puts "#{login} - false (Organization)"
     end
   end
 end
