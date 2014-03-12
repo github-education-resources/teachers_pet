@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+require 'teachers_pet/actions/fork_collab'
+
+collaborator = TeachersPet::Actions::ForkCollab.new
+collaborator.read_info
+collaborator.run
