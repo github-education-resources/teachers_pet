@@ -64,6 +64,12 @@ module TeachersPet
           `git push #{remote} master`
         end
       end
+
+      def run
+        self.read_info
+        self.load_files
+        self.push
+      end
     end
   end
 end

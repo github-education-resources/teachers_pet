@@ -3,7 +3,4 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
 require 'teachers_pet/actions/clone_repos'
 
-cloner = TeachersPet::Actions::CloneRepos.new
-cloner.read_info
-cloner.load_files
-cloner.create
+TeachersPet::Actions::CloneRepos.new.run

@@ -91,6 +91,12 @@ module TeachersPet
           end
         end
       end
+
+      def run
+        self.read_info
+        self.load_files
+        self.create
+      end
     end
   end
 end

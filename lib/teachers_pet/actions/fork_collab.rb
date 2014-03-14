@@ -18,7 +18,7 @@ module TeachersPet
         @client.forks(@repository)
       end
 
-      def run
+      def promote
         self.init_client
 
         forks = self.get_forks
@@ -34,6 +34,11 @@ module TeachersPet
             puts "#{login} - false (Organization)"
           end
         end
+      end
+
+      def run
+        self.read_info
+        self.promote
       end
     end
   end
