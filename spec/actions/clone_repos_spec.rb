@@ -30,28 +30,18 @@ describe TeachersPet::Actions::CloneRepos do
       cloner.stub(get_auth_method: 'password')
       respond("What is your password?", 'abc123')
 
-      stub_request(:get, 'https://testteacher:abc123@api.github.com/orgs/testorg').to_return(
-        headers: {
-          'Content-Type' => 'application/json'
-        },
-        body: {
-          login: 'testorg',
-          url: 'https://api.github.com/orgs/testorg'
-        }.to_json
+      stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
+        login: 'testorg',
+        url: 'https://api.github.com/orgs/testorg'
       )
 
-      stub_request(:get, 'https://testteacher:abc123@api.github.com/orgs/testorg/teams').to_return(
-        headers: {
-          'Content-Type' => 'application/json'
-        },
-        body: [
-          {
-            url: 'https://api.github.com/teams/1',
-            name: 'Owners',
-            id: 1
-          }
-        ].to_json
-      )
+      stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams', [
+        {
+          url: 'https://api.github.com/teams/1',
+          name: 'Owners',
+          id: 1
+        }
+      ])
 
       cloner.run
     end

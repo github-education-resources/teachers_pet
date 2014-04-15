@@ -20,3 +20,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+
+def stub_get_json(url, response)
+  stub_request(:get, url).to_return(
+    headers: {
+      'Content-Type' => 'application/json'
+    },
+    body: response.to_json
+  )
+end
