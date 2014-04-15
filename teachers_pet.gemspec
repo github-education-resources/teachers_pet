@@ -22,5 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'octokit'
 
   s.add_development_dependency 'bundler', '~> 1.5'
+  s.add_development_dependency 'guard-rspec', '~> 4.2'
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec', '~> 2.14'
+  s.add_development_dependency 'webmock', '~> 1.17'
 end

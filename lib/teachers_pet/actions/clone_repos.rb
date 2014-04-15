@@ -25,10 +25,10 @@ module TeachersPet
         @students = read_file(@student_file, 'Students')
       end
 
-      def create
+      def get_clone_method
         cloneMethod = 'https'
         choose do |menu|
-          menu.prompt = "Clona via? "
+          menu.prompt = "Clone via? "
           menu.choice :ssh do
             cloneMethod = 'ssh'
           end
@@ -37,6 +37,11 @@ module TeachersPet
           end
         end
 
+        cloneMethod
+      end
+
+      def create
+        cloneMethod = self.get_clone_method
 
         confirm("Clone all repositories?")
 

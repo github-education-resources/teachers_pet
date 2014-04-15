@@ -6,6 +6,20 @@ require 'configuration'
 module TeachersPet
   module Actions
     class Base
+      def get_auth_method
+        choose do |menu|
+          menu.prompt = "Login via oAuth or Password? "
+          menu.choice :oAuth do
+            auth_method = 'oauth'
+          end
+          menu.choice :Password do
+            auth_method = 'password'
+          end
+        end
+
+        auth_method
+      end
+
       def config_github
         return unless @username.nil?
         @api_endpoint = ask('What is the API endpoint?') { |q| q.default = Configuration.apiEndpoint }
@@ -13,15 +27,7 @@ module TeachersPet
 
         @username = ask('What is your username? (You must be an owner for the organization)?') { |q| q.default = ENV['USER'] }
 
-        choose do |menu|
-          menu.prompt = "Login via oAuth or Password? "
-          menu.choice :oAuth do
-            @authmethod = 'oauth'
-          end
-          menu.choice :Password do
-            @authmethod = 'password'
-          end
-        end
+        @authmethod = self.get_auth_method
 
         if @authmethod == 'oauth'
             @oauthtoken = ask('What is your oAuth token?') { |q| q.default = ENV['ghe_oauth'] }
@@ -51,7 +57,7 @@ module TeachersPet
       end
 
       def read_organization(organization)
-        abort("Githib client not initialized") if @client.nil?
+        abort("GitHub client not initialized") if @client.nil?
         @client.organization(organization)
       end
 
