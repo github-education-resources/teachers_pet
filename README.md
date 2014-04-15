@@ -1,4 +1,4 @@
-# teachers_pet
+# teachers_pet [![Build Status](https://travis-ci.org/education/teachers-pet.svg?branch=master)](https://travis-ci.org/education/teachers-pet)
 
 Command line tools to help teachers use GitHub in their classrooms.
 
