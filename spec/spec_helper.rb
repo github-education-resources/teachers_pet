@@ -1,3 +1,4 @@
+require 'json'
 require 'webmock/rspec'
 
 require_relative File.join('..', 'lib', 'teachers_pet')
