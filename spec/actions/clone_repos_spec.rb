@@ -30,12 +30,12 @@ describe TeachersPet::Actions::CloneRepos do
       cloner.stub(get_auth_method: 'password')
       respond("What is your password?", 'abc123')
 
-      stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
+      org_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
         login: 'testorg',
         url: 'https://api.github.com/orgs/testorg'
       )
 
-      stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams', [
+      teams_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams', [
         {
           url: 'https://api.github.com/teams/1',
           name: 'Owners',
@@ -44,6 +44,9 @@ describe TeachersPet::Actions::CloneRepos do
       ])
 
       cloner.run
+
+      expect(org_stub).to have_been_requested.once
+      expect(teams_stub).to have_been_requested.once
     end
   end
 end
