@@ -17,11 +17,9 @@ describe TeachersPet::Actions::CloneRepos do
 
   describe '#run' do
     it "prompts for the repository" do
-      students_file_path = File.join(File.dirname(__FILE__), '..', 'fixtures', 'students.csv')
-
       respond("What repository name should be cloned for each student?", 'testrepo')
       respond("What is the organization name?", 'testorg')
-      respond("What is the name of the list of student IDs", students_file_path)
+      respond("What is the name of the list of student IDs", students_list_fixture_path)
       cloner.stub(get_clone_method: 'https')
       respond("What is the organization name?", "testorg")
       respond("What is the API endpoint?", TeachersPet::Configuration.apiEndpoint)
@@ -30,23 +28,23 @@ describe TeachersPet::Actions::CloneRepos do
       cloner.stub(get_auth_method: 'password')
       respond("What is your password?", 'abc123')
 
-      org_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
+      request_stubs = []
+
+      request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
         login: 'testorg',
         url: 'https://api.github.com/orgs/testorg'
       )
-
-      teams_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams', [
-        {
-          url: 'https://api.github.com/teams/1',
-          name: 'Owners',
-          id: 1
-        }
-      ])
+      request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams', student_teams)
+      student_usernames.each do |username|
+        request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo", {})
+        cloner.should_receive(:execute).with("git clone https://www.github.com/testorg/#{username}-testrepo.git").once
+      end
 
       cloner.run
 
-      expect(org_stub).to have_been_requested.once
-      expect(teams_stub).to have_been_requested.once
+      request_stubs.each do |request_stub|
+        expect(request_stub).to have_been_requested.once
+      end
     end
   end
 end

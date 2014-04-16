@@ -1,3 +1,4 @@
+require 'csv'
 require 'json'
 require 'webmock/rspec'
 
@@ -18,4 +19,22 @@ def stub_get_json(url, response)
     },
     body: response.to_json
   )
+end
+
+def students_list_fixture_path
+  File.join(File.dirname(__FILE__), 'fixtures', 'students.csv')
+end
+
+def student_usernames
+  CSV.read(students_list_fixture_path).flatten
+end
+
+def student_teams
+  student_usernames.each_with_index.map do |username, i|
+    {
+      url: "https://api.github.com/teams/#{i}",
+      name: username,
+      id: i
+    }
+  end
 end
