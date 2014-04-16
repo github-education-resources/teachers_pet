@@ -61,6 +61,10 @@ module TeachersPet
         @client.organization(organization)
       end
 
+      def execute(command)
+        `#{command}`
+      end
+
       protected
       def repository?(organization, repo_name)
         begin
