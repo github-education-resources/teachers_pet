@@ -35,7 +35,7 @@ The OAuth token will need the following permissions
 * user
 * admin:org
 
-## Commands
+## Actions
 
 ### Creating assignments
 
@@ -69,12 +69,6 @@ Each class is an 'organization' on github. This allows the instructors (github o
 * Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
 
 Each student is given a team in the organization. The team name is the same as the student's github username. The course instructors are also added as team members for each team (see the goals above).
-
-## Development
-
-1. Clone the repository
-2. Run `bundle install`
-2. Run the commands using `bundle exec ./bin/*`
 
 ## Related projects
 
