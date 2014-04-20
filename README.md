@@ -35,11 +35,13 @@ The OAuth token will need the following permissions
 * user
 * admin:org
 
-## Creating assignments
+## Commands
+
+### Creating assignments
 
 For each assignment, run `create_repos` to create a repository for each student. The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
-## Collaborator access
+### Collaborator access
 
 Give collaborator access to everyone who has forked your repository.
 
