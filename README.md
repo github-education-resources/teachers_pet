@@ -19,6 +19,8 @@ Each student is given a team in the organization. The team name is the same as t
 gem install teachers_pet
 ```
 
+To use the latest-and-greatest code from this repository, see the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Basic Setup
 
 * Create an organization (you will be an owner by default). The organization should reflect the name of your course.
