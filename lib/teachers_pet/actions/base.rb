@@ -7,6 +7,8 @@ module TeachersPet
   module Actions
     class Base
       def get_auth_method
+        auth_method = nil
+
         choose do |menu|
           menu.prompt = "Login via oAuth or Password? "
           menu.choice :oAuth do
