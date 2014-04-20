@@ -2,6 +2,15 @@
 
 Command line tools to help teachers use GitHub in their classrooms.
 
+## Philosophy
+
+Each class is an 'organization' on GitHub. This allows the instructors (GitHub organization Owners) to create, push, pull, and administer all repositories. This achieves two goals:
+
+* Instructors can push code starter code to all students
+* Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
+
+Each student is given a team in the organization. The team name is the same as the student's GitHub username. The course instructors are also added as team members for each team (see the goals above).
+
 ## Installation
 
 [Install Ruby 1.9.3+](https://www.ruby-lang.org/en/installation/), then run
@@ -66,15 +75,6 @@ This works by creating a git remote for each repository and thing doing a push t
 ### Pulling repositories for grading
 
 When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
-
-## Philosophy
-
-Each class is an 'organization' on GitHub. This allows the instructors (GitHub organization Owners) to create, push, pull, and administer all repositories. This achieves two goals:
-
-* Instructors can push code starter code to all students
-* Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
-
-Each student is given a team in the organization. The team name is the same as the student's GitHub username. The course instructors are also added as team members for each team (see the goals above).
 
 ## Related projects
 
