@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_dependency 'highline'
-  s.add_dependency 'octokit'
+  s.add_dependency 'highline', '~> 1.6.21'
+  s.add_dependency 'octokit', '~> 3.1.0'
 
   s.add_development_dependency 'bundler', '~> 1.5'
   s.add_development_dependency 'guard-rspec', '~> 4.2'
