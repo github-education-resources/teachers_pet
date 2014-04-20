@@ -21,11 +21,11 @@ gem install teachers_pet
 
 ## Passwords / OAuth
 
-The scripts will ask for your GitHub password in order to run. If you have two factor authentication enabled, you might want to create a new OAuth personal token to run these scripts. You can do this here: https://github.com/settings/tokens/new (or settings screen on your enterprise installation).
+The scripts will ask for your GitHub password in order to run. If you have [two factor authentication](https://help.github.com/articles/about-two-factor-authentication) enabled, [create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use)
 
-If you put this OAuth token in an environment variable called 'ghe_oauth', these scripts will automatically pick up that value.
+https://github.com/settings/tokens/new (or replace `github.com` with your host for GitHub Enterprise)
 
-The OAuth token will need the following permissions
+with the following permissions:
 
 * repo
 * public_repo
@@ -34,6 +34,12 @@ The OAuth token will need the following permissions
 * read:org
 * user
 * admin:org
+
+Then, add the following line to your `.bash_profile`:
+
+```bash
+export ghe_oauth="YOUR_TOKEN_HERE"
+```
 
 ## Actions
 
