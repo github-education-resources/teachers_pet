@@ -2,28 +2,41 @@
 
 Command line tools to help teachers use GitHub in their classrooms.
 
+## Philosophy
+
+Each class is an 'organization' on GitHub. This allows the instructors (GitHub organization Owners) to create, push, pull, and administer all repositories. This achieves two goals:
+
+* Instructors can push code starter code to all students
+* Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
+
+Each student is given a team in the organization. The team name is the same as the student's GitHub username. The course instructors are also added as team members for each team (see the goals above).
+
 ## Installation
+
+[Install Ruby 1.9.3+](https://www.ruby-lang.org/en/installation/), then run
 
 ```bash
 gem install teachers_pet
 ```
 
+To use the latest-and-greatest code from this repository, see the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Basic Setup
 
 * Create an organization (you will be an owner by default). The organization should reflect the name of your course.
-* Add the github username of all students to the 'students' file (one per line)
+* Add the GitHub username of all students to the 'students' file (one per line)
     * If you are doing individual assignments, use a single username per line
     * If you are doing team assignments, one team per line in the format "teamName username username username"
-* Add the github username of all instructors to the 'instructors' file (one per line)
+* Add the GitHub username of all instructors to the 'instructors' file (one per line)
 * Run `create_teams`
 
 ## Passwords / OAuth
 
-The scripts will ask for your github password in order to run. If you have two factor authentication enabled, you might want to create a new OAuth personal token to run these scripts. You can do this here: https://github.com/settings/tokens/new (or settings screen on your enterprise installation).
+The scripts will ask for your GitHub password in order to run. If you have [two factor authentication](https://help.github.com/articles/about-two-factor-authentication) enabled, [create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use)
 
-If you put this OAuth token in an environment variable called 'ghe_oauth', these scripts will automatically pick up that value.
+https://github.com/settings/tokens/new (or replace `github.com` with your host for GitHub Enterprise)
 
-The OAuth token will need the following permissions
+with the following permissions:
 
 * repo
 * public_repo
@@ -33,11 +46,19 @@ The OAuth token will need the following permissions
 * user
 * admin:org
 
-## Creating assignments
+Then, add the following line to your `.bash_profile`:
+
+```bash
+export ghe_oauth="YOUR_TOKEN_HERE"
+```
+
+## Actions
+
+### Creating assignments
 
 For each assignment, run `create_repos` to create a repository for each student. The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
-## Collaborator access
+### Collaborator access
 
 Give collaborator access to everyone who has forked your repository.
 
@@ -47,7 +68,7 @@ fork_collab
 
 ### Pushing starter files
 
-This is the workflow that we use. Create a private repository on github. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
+This is the workflow that we use. Create a private repository on GitHub. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
 
 While in the directory for the starter file repository, run the `push_repos` script.
 
@@ -56,21 +77,6 @@ This works by creating a git remote for each repository and thing doing a push t
 ### Pulling repositories for grading
 
 When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
-
-## Philosophy
-
-Each class is an 'organization' on github. This allows the instructors (github organization Owners) to create, push, pull, and administer all repositories. This achieves two goals:
-
-* Instructors can push code starter code to all students
-* Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
-
-Each student is given a team in the organization. The team name is the same as the student's github username. The course instructors are also added as team members for each team (see the goals above).
-
-## Development
-
-1. Clone the repository
-2. Run `bundle install`
-2. Run the commands using `bundle exec ./bin/*`
 
 ## Related projects
 

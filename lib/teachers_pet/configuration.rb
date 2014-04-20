@@ -4,7 +4,7 @@ module TeachersPet
   class Configuration
 
     # For github.com: 'https://api.github.com/'
-    # For github enterprise: 'https://yourServer.com/api/v3'
+    # For GitHub Enterprise: 'https://yourServer.com/api/v3'
     @@API_ENDPOINT = 'https://api.github.com/'
 
     def self.apiEndpoint
@@ -12,7 +12,7 @@ module TeachersPet
     end
 
     # For github.com: https://www.github.com/'
-    # For github enterprise: ''https://yourServer.com/'
+    # For GitHub Enterprise: ''https://yourServer.com/'
     @@WEB_ENDPOINT = 'https://www.github.com/'
 
     def self.webEndpoint
@@ -33,7 +33,7 @@ module TeachersPet
       @@STUDENTS_FILE
     end
 
-    # The name of the file that contains the github usernames of the instructors
+    # The name of the file that contains the GitHub usernames of the instructors
     @@INSTRUCTORS_FILE = 'instructors'
 
     def self.instructorsFile
@@ -41,7 +41,7 @@ module TeachersPet
     end
 
     # The default is to create the repositories as public.
-    # If youare using github enterprise or a paid account, it make sense to make this private
+    # If you are using GitHub enterprise or a paid account, it make sense to make this private
     @@REPOS_PUBLIC = true
 
     def self.reposPublic
@@ -49,7 +49,7 @@ module TeachersPet
     end
 
     # github.com - set to 'github.com'
-    # github enterprise - 'yourserver.com'
+    # GitHub Enterprise - 'yourserver.com'
     @@SSH_ENDPOINT = 'github.com'
 
     def self.sshEndpoint

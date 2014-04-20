@@ -40,7 +40,7 @@ module TeachersPet
       def init_client
         self.config_github
         puts "=" * 50
-        puts "Authenticating to github..."
+        puts "Authenticating to GitHub..."
         Octokit.configure do |c|
           c.api_endpoint = @api_endpoint
           c.web_endpoint = @web_endpoint
