@@ -4,6 +4,8 @@ Command line tools to help teachers use GitHub in their classrooms.
 
 ## Installation
 
+[Install Ruby 1.9.3+](https://www.ruby-lang.org/en/installation/), then run
+
 ```bash
 gem install teachers_pet
 ```
