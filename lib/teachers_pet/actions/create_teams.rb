@@ -64,11 +64,11 @@ module TeachersPet
         puts "\nAdjusting team memberships"
         teams = @client.organization_teams(@organization)
         teams.each do |team|
-          team_members = get_team_members(team[:id])
+          team_members = get_team_member_logins(team[:id])
           if team[:name].eql?('Owners')
             puts "*** OWNERS *** - Ensuring instructors are owners"
             @instructors.keys.each do |instructor|
-              unless team_members.key?(instructor)
+              unless team_members.include?(instructor)
                 @client.add_team_member(team[:id], instructor)
                 puts " -> '#{instructor}' has been made an owner for this course"
               else
@@ -79,7 +79,7 @@ module TeachersPet
             puts "Validating membership for team '#{team[:name]}'"
             # If there isn't a team member that is the same name as the team, and we already know
             # there is a student with the same name, add that student to the team.
-            #unless team_members.key?(team[:name])
+            #unless team_members.include?(team[:name])
             @students[team[:name]].each do |student|
               puts "  -> Adding '#{team[:name]}' to the team"
               @client.add_team_member(team[:id], student)

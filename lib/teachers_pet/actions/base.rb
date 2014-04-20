@@ -97,12 +97,10 @@ module TeachersPet
         return teams
       end
 
-      def get_team_members(team_id)
-        team_members = Hash.new
-        @client.team_members(team_id).each do |member|
-          team_members[member[:login]] = member
+      def get_team_member_logins(team_id)
+        @client.team_members(team_id).map do |member|
+          member[:login]
         end
-        return team_members
       end
 
       def read_file(filename, type)
