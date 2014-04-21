@@ -24,10 +24,10 @@ To use the latest-and-greatest code from this repository, see the instructions i
 ## Basic Setup
 
 * Create an organization (you will be an owner by default). The organization should reflect the name of your course.
-* Add the GitHub username of all students to the 'students' file (one per line)
-    * If you are doing individual assignments, use a single username per line
-    * If you are doing team assignments, one team per line in the format "teamName username username username"
-* Add the GitHub username of all instructors to the 'instructors' file (one per line)
+* Create a `students` file (you will be prompted for the path later)
+    * Individual assignments: one username per line
+    * Group assignments: one team per line in the format `teamName username username username`
+* Add the GitHub username of all instructors to an 'instructors.csv' file (one per line)
 * Run `create_teams`
 
 ## Passwords / OAuth
