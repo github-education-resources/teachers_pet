@@ -13,8 +13,8 @@ describe TeachersPet::Actions::CreateTeams do
 
   it "creates teams if none exist" do
     respond("What is the organization name?", 'testorg')
-    respond("What is the name of the list of student IDs", students_list_fixture_path)
-    respond("What is the name of the list of instructor IDs", instructors_list_fixture_path)
+    respond("What is the filename of the list of students?", students_list_fixture_path)
+    respond("What is the filename of the list of instructors?", instructors_list_fixture_path)
     stub_github_config
 
     teams_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [])

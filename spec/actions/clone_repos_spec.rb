@@ -18,7 +18,7 @@ describe TeachersPet::Actions::CloneRepos do
   it "runs" do
     respond("What repository name should be cloned for each student?", 'testrepo')
     respond("What is the organization name?", 'testorg')
-    respond("What is the name of the list of student IDs", students_list_fixture_path)
+    respond("What is the filename of the list of students?", students_list_fixture_path)
     action.stub(get_clone_method: 'https')
     respond("What is the organization name?", "testorg")
     stub_github_config

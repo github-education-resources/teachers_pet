@@ -16,8 +16,8 @@ module TeachersPet
       def read_info
         @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
-        @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = TeachersPet::Configuration.instructorsFile }
+        @student_file = self.get_students_file_path
+        @instructor_file = self.get_instructors_file_path
         @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
       end
 
@@ -71,7 +71,7 @@ module TeachersPet
               })
         end
       end
-      
+
       def run
         self.read_info
         self.load_files

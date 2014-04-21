@@ -1,7 +1,7 @@
 # project specific
-instructors
-students
-teams
+/instructors
+/students
+/teams
 
 *.gem
 *.rbc
