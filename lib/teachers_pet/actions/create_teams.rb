@@ -21,8 +21,8 @@ module TeachersPet
     class CreateTeams < Base
       def read_info
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
-        @instructor_file = ask('What is the name of the list of instructor IDs') { |q| q.default = TeachersPet::Configuration.instructorsFile }
+        @student_file = self.get_students_file_path
+        @instructor_file = self.get_instructors_file_path
       end
 
       def load_files

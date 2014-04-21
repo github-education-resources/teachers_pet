@@ -27,7 +27,7 @@ module TeachersPet
     end
 
     # The name fo the file that contains the team definitions / students
-    @@STUDENTS_FILE = 'students'
+    @@STUDENTS_FILE = './students'
 
     def self.studentsFile
       @@STUDENTS_FILE

@@ -76,6 +76,14 @@ module TeachersPet
         end
       end
 
+      def get_students_file_path
+        ask("What is the name of the list of student IDs") { |q| q.default = TeachersPet::Configuration.studentsFile }
+      end
+
+      def get_instructors_file_path
+        ask("What is the name of the list of instructor IDs") { |q| q.default = TeachersPet::Configuration.instructorsFile }
+      end
+
       def get_existing_repos_by_names(organization)
         repos = Hash.new
         response = @client.organization_repositories(organization)

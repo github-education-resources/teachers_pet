@@ -17,7 +17,7 @@ module TeachersPet
         @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
 
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = ask('What is the name of the list of student IDs') { |q| q.default = TeachersPet::Configuration.studentsFile }
+        @student_file = self.get_students_file_path
         @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = TeachersPet::Configuration.sshEndpoint }
       end
 
