@@ -32,19 +32,9 @@ To use the latest-and-greatest code from this repository, see the instructions i
 
 ## Passwords / OAuth
 
-The scripts will ask for your GitHub password in order to run. If you have [two factor authentication](https://help.github.com/articles/about-two-factor-authentication) enabled, [create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use)
+The scripts will ask for your GitHub password in order to run. If you have [two factor authentication](https://help.github.com/articles/about-two-factor-authentication) enabled, [create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use) (replace `github.com` with your host for GitHub Enterprise):
 
-https://github.com/settings/tokens/new (or replace `github.com` with your host for GitHub Enterprise)
-
-with the following permissions:
-
-* repo
-* public_repo
-* write:org
-* repo:status
-* read:org
-* user
-* admin:org
+https://github.com/settings/tokens/new?description=teachers-pet&scopes=repo%2Cpublic_repo%2Cwrite%3Aorg%2Crepo%3Astatus%2Cread%3Aorg%2Cuser%2Cadmin%3Aorg
 
 Then, add the following line to your `.bash_profile`:
 
