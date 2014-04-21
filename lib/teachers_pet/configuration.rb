@@ -34,7 +34,7 @@ module TeachersPet
     end
 
     # The name of the file that contains the GitHub usernames of the instructors
-    @@INSTRUCTORS_FILE = 'instructors'
+    @@INSTRUCTORS_FILE = './instructors'
 
     def self.instructorsFile
       @@INSTRUCTORS_FILE
