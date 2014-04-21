@@ -27,7 +27,7 @@ To use the latest-and-greatest code from this repository, see the instructions i
 * Create a `students` file (you will be prompted for the path later)
     * Individual assignments: one username per line
     * Group assignments: one team per line in the format `teamName username username username`
-* Add the GitHub username of all instructors to an 'instructors.csv' file (one per line)
+* Add the GitHub username of all instructors to an 'instructors' file (one per line)
 * Run `create_teams`
 
 ## Passwords / OAuth

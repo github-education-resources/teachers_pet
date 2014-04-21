@@ -22,11 +22,11 @@ def stub_get_json(url, response)
 end
 
 def students_list_fixture_path
-  File.join(File.dirname(__FILE__), 'fixtures', 'students.csv')
+  File.join(File.dirname(__FILE__), 'fixtures', 'students')
 end
 
 def instructors_list_fixture_path
-  File.join(File.dirname(__FILE__), 'fixtures', 'instructors.csv')
+  File.join(File.dirname(__FILE__), 'fixtures', 'instructors')
 end
 
 def student_usernames
