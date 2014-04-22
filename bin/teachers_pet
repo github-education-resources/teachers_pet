@@ -62,6 +62,7 @@ opts = Slop.parse do
     on :s, :students=, 'Student file path'
     on :i, :instructors=, 'Instructors file path'
     on :p, :private, 'Create private repos' # optional
+    on :init, 'Add init files, README.md and .gitignore'
 
     run do |opts,args|
         opts = update(opts)

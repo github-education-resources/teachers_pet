@@ -13,6 +13,13 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CreateRepos < Base
+      def read_args(args)
+        @repository = args[:repo]
+        @student_file = args[:students]
+        @instructor_file = args[:instructors]
+        @add_init_files = args[:init_files]
+      end
+
       def read_info
         @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
@@ -72,8 +79,12 @@ module TeachersPet
         end
       end
 
-      def run
-        self.read_info
+      def run(args=None)
+        if args
+          self.read_args(args)
+        else
+          self.read_info
+        end
         self.load_files
         self.create
       end
