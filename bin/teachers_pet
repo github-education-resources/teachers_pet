@@ -1,0 +1,91 @@
+#!/usr/bin/env ruby
+
+require 'slop'
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+require 'teachers_pet'
+
+# Looks at config file and fills in any missing options
+def update(opts)
+  opts = opts.to_hash
+return opts
+end
+
+opts = Slop.parse do
+  on '-v', 'Print the version' do
+    puts TeachersPet::VERSION
+  end
+
+  command 'create_teams' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint' 
+    on :web=, 'Web endpoint'
+    #Create teams
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    on :i, :instructors=, 'Instructors file path'
+
+    run do |opts,args|
+        opts = update(opts)
+        puts opts
+        TeachersPet::Actions::CreateTeams.new.run
+    end
+  end
+
+  command 'create_repos' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Create repos
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    on :i, :instructors=, 'Instructors file path'
+    on :p, :private, 'Create private repos' # optional
+
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::CreateRepos.new.run
+    end
+  end
+
+
+  command 'push_files' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Push files
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :ssh=, 'SSH endpoint'
+
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::PushFiles.new.run
+    end 
+  end 
+  
+  command 'clone_repos' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Clone repos
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::CloneRepos.new.run
+    end
+  end
+end
+
