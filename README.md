@@ -1,4 +1,4 @@
-# teachers_pet [![Build Status](https://travis-ci.org/education/teachers-pet.svg?branch=master)](https://travis-ci.org/education/teachers-pet)
+# teachers_pet [![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet)
 
 Command line tools to help teachers use GitHub in their classrooms.
 
@@ -34,7 +34,7 @@ To use the latest-and-greatest code from this repository, see the instructions i
 
 The scripts will ask for your GitHub password in order to run. If you have [two factor authentication](https://help.github.com/articles/about-two-factor-authentication) enabled, [create a personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use) (replace `github.com` with your host for GitHub Enterprise):
 
-https://github.com/settings/tokens/new?description=teachers-pet&scopes=repo%2Cpublic_repo%2Cwrite%3Aorg%2Crepo%3Astatus%2Cread%3Aorg%2Cuser%2Cadmin%3Aorg
+https://github.com/settings/tokens/new?description=teachers_pet&scopes=repo%2Cpublic_repo%2Cwrite%3Aorg%2Crepo%3Astatus%2Cread%3Aorg%2Cuser%2Cadmin%3Aorg
 
 Then, add the following line to your `.bash_profile`:
 
