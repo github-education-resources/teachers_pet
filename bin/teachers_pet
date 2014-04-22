@@ -7,7 +7,23 @@ require 'teachers_pet'
 
 # Looks at config file and fills in any missing options
 def update(opts)
-  opts = opts.to_hash
+  opts = opts.to_hash # slop method
+  defaults  = {
+    :api            => TeachersPet::Configuration.apiEndpoint,
+    :web            => TeachersPet::Configuration.webEndpoint,
+    :org            => TeachersPet::Configuration.organization,
+    :students       => TeachersPet::Configuration.studentsFile,
+    :instructors    => TeachersPet::Configuration.instructorsFile,
+    :private        => not(TeachersPet::Configuration.reposPublic), # come back to this
+    :ssh            => TeachersPet::Configuration.sshEndpoint,
+    :remote         => TeachersPet::Configuration.sshEndpoint 
+  }
+  # update missing options
+  defaults.each do |key, val|
+    if not opts[key]
+      opts[key] = val
+    end
+  end
 return opts
 end
 
