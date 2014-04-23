@@ -18,6 +18,7 @@ module TeachersPet
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
+        @public_repos = self.get_public_repo_setting
         @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
       end
 
@@ -27,7 +28,8 @@ module TeachersPet
       end
 
       def create
-        confirm("Create #{@students.keys.size} repositories for students and give access to instructors?")
+        pub_private_text = @public_repos ? 'public' : 'private'
+        confirm("Create #{@students.keys.size} #{pub_private_text} repositories for students and give access to instructors?")
 
         # create a repo for each student
         self.init_client
@@ -60,7 +62,7 @@ module TeachersPet
           @client.create_repository(repo_name,
               {
                 :description => "#{@repository} created for #{student}",
-                :private => !TeachersPet::Configuration.reposPublic, ## Current default, repositories are private to the student & instructors
+                :private => !@public_repo,
                 :has_issues => true, # seems like a resonable default
                 :has_wiki => false,
                 :has_downloads => false,
