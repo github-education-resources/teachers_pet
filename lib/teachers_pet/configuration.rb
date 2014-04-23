@@ -40,14 +40,6 @@ module TeachersPet
       @@INSTRUCTORS_FILE
     end
 
-    # The default is to create the repositories as public.
-    # If you are using GitHub enterprise or a paid account, it make sense to make this private
-    @@REPOS_PUBLIC = true
-
-    def self.reposPublic
-      @@REPOS_PUBLIC
-    end
-
     # github.com - set to 'github.com'
     # GitHub Enterprise - 'yourserver.com'
     @@SSH_ENDPOINT = 'github.com'

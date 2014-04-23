@@ -18,7 +18,8 @@ module TeachersPet
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
-        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
+        @public_repos = confirm('Create repositories as public?', false)
+        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)        
       end
 
       def load_files
@@ -27,7 +28,8 @@ module TeachersPet
       end
 
       def create
-        confirm("Create #{@students.keys.size} repositories for students and give access to instructors?")
+        pub_private_text = @public_repos ? 'public' : 'private'
+        confirm("Create #{@students.keys.size} #{pub_private_text} repositories for students and give access to instructors?")
 
         # create a repo for each student
         self.init_client
@@ -56,11 +58,11 @@ module TeachersPet
 
           git_ignore_template = "C++" ## This is specific to my current class, you'll want to change
           git_ignore_template = '' unless @add_init_files
-          puts " --> Creating '#{repo_name}'"
+          puts " --> Creating '#{repo_name}' public? #{@public_repos}"
           @client.create_repository(repo_name,
               {
                 :description => "#{@repository} created for #{student}",
-                :private => !TeachersPet::Configuration.reposPublic, ## Current default, repositories are private to the student & instructors
+                :private => !@public_repos,
                 :has_issues => true, # seems like a resonable default
                 :has_wiki => false,
                 :has_downloads => false,
