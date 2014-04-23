@@ -77,7 +77,7 @@ module TeachersPet
           @client.create_repository(repo_name,
               {
                 :description => "#{@repository} created for #{student}",
-                :private => !@public_repo,
+                :private => !@public_repos,
                 :has_issues => true, # seems like a resonable default
                 :has_wiki => false,
                 :has_downloads => false,
