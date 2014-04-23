@@ -85,7 +85,7 @@ opts = Slop.parse do
 
     run do |opts,args|
         opts = update(opts)
-        TeachersPet::Actions::PushFiles.new.run
+        TeachersPet::Actions::PushFiles.new.run(opts)
     end 
   end 
   

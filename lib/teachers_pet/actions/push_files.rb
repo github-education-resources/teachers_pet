@@ -13,21 +13,20 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class PushFiles < Base
-      def read_info
-        @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
-
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = self.get_students_file_path
-        @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = TeachersPet::Configuration.sshEndpoint }
+      def read_args(args)
+        @repository = args[:repo]
+        @organization = args[:org]
+        @student_file = args[:students]
+        @sshEndpoint = args[:ssh]
       end
 
       def load_files
         @students = read_file(@student_file, 'Students')
       end
 
-      def push
+      def push(args)
         confirm("Push files to student repositories?")
-        self.init_client
+        self.init_client(args)
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
@@ -65,10 +64,10 @@ module TeachersPet
         end
       end
 
-      def run
-        self.read_info
+      def run(args)
+        self.read_args(args)
         self.load_files
-        self.push
+        self.push(args)
       end
     end
   end
