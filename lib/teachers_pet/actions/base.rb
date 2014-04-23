@@ -39,21 +39,6 @@ module TeachersPet
         end
       end
 
-      def get_public_repo_setting
-        public_repos = false
-
-        choose do |menu|
-          menu.prompt = "Create repositories as public or private?"
-          menu.choice :public do
-            public_repos = true
-          end
-          menu.choice :private do
-            public_repos = false
-          end
-        end
-        public_repos
-      end
-
       def init_client
         self.config_github
         puts "=" * 50

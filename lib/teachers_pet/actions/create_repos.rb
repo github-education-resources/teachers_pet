@@ -27,6 +27,21 @@ module TeachersPet
         @instructors = read_file(@instructor_file, 'Instructors')
       end
 
+      def get_public_repo_setting
+        public_repos = false
+
+        choose do |menu|
+          menu.prompt = "Create repositories as public or private?"
+          menu.choice :public do
+            public_repos = true
+          end
+          menu.choice :private do
+            public_repos = false
+          end
+        end
+        public_repos
+      end
+
       def create
         pub_private_text = @public_repos ? 'public' : 'private'
         confirm("Create #{@students.keys.size} #{pub_private_text} repositories for students and give access to instructors?")
