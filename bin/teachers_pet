@@ -48,7 +48,7 @@ opts = Slop.parse do
     run do |opts,args|
         opts = update(opts)
         puts opts
-        TeachersPet::Actions::CreateTeams.new.run
+        TeachersPet::Actions::CreateTeams.new.run(opts)
     end
   end
 

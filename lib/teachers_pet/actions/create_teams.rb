@@ -19,10 +19,10 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CreateTeams < Base
-      def read_info
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = self.get_students_file_path
-        @instructor_file = self.get_instructors_file_path
+      def read_args(args)
+        @organization = args[:org]
+        @student_file = args[:students]
+        @instructor_file = args[:instructors]
       end
 
       def load_files
@@ -30,8 +30,8 @@ module TeachersPet
         @instructors = read_file(@instructor_file, 'Instructors')
       end
 
-      def create
-        self.init_client
+      def create(args)
+        self.init_client(args)
         confirm("Create teams for #{@students.size} students/teams?")
 
         existing = Hash.new
@@ -92,10 +92,10 @@ module TeachersPet
         end
       end
 
-      def run
-        self.read_info
+      def run(args)
+        self.read_args(args)
         self.load_files
-        self.create
+        self.create(args)
       end
     end
   end
