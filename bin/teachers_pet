@@ -16,7 +16,8 @@ def update(opts)
     :instructors    => TeachersPet::Configuration.instructorsFile,
     :private        => not(TeachersPet::Configuration.reposPublic), # come back to this
     :ssh            => TeachersPet::Configuration.sshEndpoint,
-    :remote         => TeachersPet::Configuration.sshEndpoint 
+    :push           => TeachersPet::Configuration.remoteSsh,
+    :clone          => TeachersPet::Configuration.clone
   }
   # update missing options
   defaults.each do |key, val|
@@ -102,7 +103,7 @@ opts = Slop.parse do
     
     run do |opts,args|
         opts = update(opts)
-        TeachersPet::Actions::CloneRepos.new.run
+        TeachersPet::Actions::CloneRepos.new.run(opts)
     end
   end
 end

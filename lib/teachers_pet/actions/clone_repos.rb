@@ -15,38 +15,24 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CloneRepos < Base
-      def read_info
-        @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = self.get_students_file_path
+      def read_args(args)
+        @repository = args[:repo]
+        @organization = args[:org]
+        @student_file = args[:students]
+        @authmethod = args[:auth]
       end
 
       def load_files
         @students = read_file(@student_file, 'Students')
       end
 
-      def get_clone_method
-        cloneMethod = 'https'
-        choose do |menu|
-          menu.prompt = "Clone via? "
-          menu.choice :ssh do
-            cloneMethod = 'ssh'
-          end
-          menu.choice :https do
-            cloneMethod = 'https'
-          end
-        end
-
-        cloneMethod
-      end
-
-      def create
-        cloneMethod = self.get_clone_method
+      def clone(args)
+        cloneMethod = args[:clone]
 
         confirm("Clone all repositories?")
 
         # create a repo for each student
-        self.init_client
+        self.init_client(args)
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
@@ -79,10 +65,10 @@ module TeachersPet
         end
       end
 
-      def run
-        self.read_info
+      def run(args)
+        self.read_args(args)
         self.load_files
-        self.create
+        self.clone(args)
       end
     end
   end
