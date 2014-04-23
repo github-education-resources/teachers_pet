@@ -106,5 +106,20 @@ opts = Slop.parse do
         TeachersPet::Actions::CloneRepos.new.run(opts)
     end
   end
+  command 'fork_collab' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Forkcollab
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::ForkCollab.new.run(opts)
+    end
+  end
 end
 
