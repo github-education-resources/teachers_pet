@@ -10,16 +10,16 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class ForkCollab < Base
-      def read_info
-        @repository = ask("Which repository? (name/owner)")
+      def read_info(args)
+        @repository = args(repo)
       end
 
       def get_forks
         @client.forks(@repository)
       end
 
-      def promote
-        self.init_client
+      def promote(args)
+        self.init_client(args)
 
         forks = self.get_forks
 
@@ -37,8 +37,8 @@ module TeachersPet
       end
 
       def run
-        self.read_info
-        self.promote
+        self.read_args(args)
+        self.promote(args)
       end
     end
   end

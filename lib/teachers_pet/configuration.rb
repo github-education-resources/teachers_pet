@@ -63,5 +63,12 @@ module TeachersPet
       @@REMOTE_SSH
     end
 
+    ## Clone method, can be set to 'ssh' or 'https'
+    @@CLONE = 'ssh'
+
+    def self.clone
+      @@CLONE
+    end
+
   end
 end

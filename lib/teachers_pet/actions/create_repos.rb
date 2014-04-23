@@ -13,24 +13,25 @@ require 'teachers_pet/actions/base'
 module TeachersPet
   module Actions
     class CreateRepos < Base
-      def read_info
-        @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        @student_file = self.get_students_file_path
-        @instructor_file = self.get_instructors_file_path
-        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
+      def read_args(args)
+        @organization = args[:org]
+        @repository = args[:repo]
+        @student_file = args[:students]
+        @instructor_file = args[:instructors]
+        @add_init_files = args[:init_files]
       end
+
 
       def load_files
         @students = read_file(@student_file, 'Students')
         @instructors = read_file(@instructor_file, 'Instructors')
       end
 
-      def create
+      def create(args)
         confirm("Create #{@students.keys.size} repositories for students and give access to instructors?")
 
         # create a repo for each student
-        self.init_client
+        self.init_client(args)
 
         org_hash = read_organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
@@ -60,7 +61,7 @@ module TeachersPet
           @client.create_repository(repo_name,
               {
                 :description => "#{@repository} created for #{student}",
-                :private => !TeachersPet::Configuration.reposPublic, ## Current default, repositories are private to the student & instructors
+                :private => args[:private],
                 :has_issues => true, # seems like a resonable default
                 :has_wiki => false,
                 :has_downloads => false,
@@ -72,10 +73,10 @@ module TeachersPet
         end
       end
 
-      def run
-        self.read_info
+      def run(args=None)
+        self.read_args(args)
         self.load_files
-        self.create
+        self.create(args)
       end
     end
   end

@@ -1,0 +1,125 @@
+#!/usr/bin/env ruby
+
+require 'slop'
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+require 'teachers_pet'
+
+# Looks at config file and fills in any missing options
+def update(opts)
+  opts = opts.to_hash # slop method
+  defaults  = {
+    :api            => TeachersPet::Configuration.apiEndpoint,
+    :web            => TeachersPet::Configuration.webEndpoint,
+    :org            => TeachersPet::Configuration.organization,
+    :students       => TeachersPet::Configuration.studentsFile,
+    :instructors    => TeachersPet::Configuration.instructorsFile,
+    :private        => not(TeachersPet::Configuration.reposPublic), # come back to this
+    :ssh            => TeachersPet::Configuration.sshEndpoint,
+    :push           => TeachersPet::Configuration.remoteSsh,
+    :clone          => TeachersPet::Configuration.clone
+  }
+  # update missing options
+  defaults.each do |key, val|
+    if not opts[key]
+      opts[key] = val
+    end
+  end
+puts opts
+return opts
+end
+
+opts = Slop.parse do
+  on '-v', 'Print the version' do
+    puts TeachersPet::VERSION
+  end
+
+  command 'create_teams' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint' 
+    on :web=, 'Web endpoint'
+    #Create teams
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    on :i, :instructors=, 'Instructors file path'
+
+    run do |opts,args|
+        opts = update(opts)
+        puts opts
+        TeachersPet::Actions::CreateTeams.new.run(opts)
+    end
+  end
+
+  command 'create_repos' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Create repos
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    on :i, :instructors=, 'Instructors file path'
+    on :p, :private, 'Create private repos' # optional
+    on :init, 'Add init files, README.md and .gitignore'
+
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::CreateRepos.new.run(opts)
+    end
+  end
+
+
+  command 'push_files' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Push files
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :ssh=, 'SSH endpoint'
+
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::PushFiles.new.run(opts)
+    end 
+  end 
+  
+  command 'clone_repos' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Clone repos
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    on :s, :students=, 'Student file path'
+    
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::CloneRepos.new.run(opts)
+    end
+  end
+  command 'fork_collab' do
+    # Base options
+    on :u, :user=, 'Organization owner'
+    on :a, :auth=, 'Authorization method'
+    on :api=, 'API endpoint'
+    on :web=, 'Web endpoint'
+    # Forkcollab
+    on :r, :repo=, 'Repository name'
+    on :o, :org=, 'Organization name'
+    
+    run do |opts,args|
+        opts = update(opts)
+        TeachersPet::Actions::ForkCollab.new.run(opts)
+    end
+  end
+end
+

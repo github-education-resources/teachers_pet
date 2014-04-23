@@ -22,25 +22,35 @@ module TeachersPet
         auth_method
       end
 
-      def config_github
+      def config_github(args)
         return unless @username.nil?
-        @api_endpoint = ask('What is the API endpoint?') { |q| q.default = Configuration.apiEndpoint }
-        @web_endpoint = ask("What is the Web endpoint?") { |q| q.default = Configuration.webEndpoint }
 
-        @username = ask('What is your username? (You must be an owner for the organization)?') { |q| q.default = ENV['USER'] }
+        @api_endpoint = args[:api]
+        @web_endpoint = args[:web]
 
-        @authmethod = self.get_auth_method
-
+        @username = args[:user]
+        @authmethod = args[:auth]
+        
+        # Check if user entered bad/no command line arg for auth
+        if !(@authmethod == 'oauth' || @authmethod == 'password')
+          @authmethod = self.get_auth_method
+        end
+        
         if @authmethod == 'oauth'
-            @oauthtoken = ask('What is your oAuth token?') { |q| q.default = ENV['ghe_oauth'] }
+          if ENV['ghe_oauth']
+            @oauthtoken = ENV['ghe_oauth']
+          else
+            @oauthtoken = ask('What is your oAuth token?') { |q| }
+          end
+        elsif @authmethod == 'password'
+          @password = ask('What is your password?') { |q| q.echo = false }
         end
-        if @authmethod == 'password'
-            @password = ask('What is your password?') { |q| q.echo = false }
-        end
+
+
       end
 
-      def init_client
-        self.config_github
+      def init_client(args)
+        self.config_github(args)
         puts "=" * 50
         puts "Authenticating to GitHub..."
         Octokit.configure do |c|
@@ -76,13 +86,6 @@ module TeachersPet
         end
       end
 
-      def get_students_file_path
-        ask("What is the filename of the list of students?") { |q| q.default = TeachersPet::Configuration.studentsFile }
-      end
-
-      def get_instructors_file_path
-        ask("What is the filename of the list of instructors?") { |q| q.default = TeachersPet::Configuration.instructorsFile }
-      end
 
       def get_existing_repos_by_names(organization)
         repos = Hash.new
