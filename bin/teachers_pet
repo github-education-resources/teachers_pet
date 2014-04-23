@@ -24,6 +24,7 @@ def update(opts)
       opts[key] = val
     end
   end
+puts opts
 return opts
 end
 
@@ -66,7 +67,7 @@ opts = Slop.parse do
 
     run do |opts,args|
         opts = update(opts)
-        TeachersPet::Actions::CreateRepos.new.run
+        TeachersPet::Actions::CreateRepos.new.run(opts)
     end
   end
 
