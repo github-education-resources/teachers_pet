@@ -18,28 +18,13 @@ module TeachersPet
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
-        @public_repos = self.get_public_repo_setting
-        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
+        @public_repos = confirm('Create repositories as public?', false)
+        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)        
       end
 
       def load_files
         @students = read_file(@student_file, 'Students')
         @instructors = read_file(@instructor_file, 'Instructors')
-      end
-
-      def get_public_repo_setting
-        public_repos = false
-
-        choose do |menu|
-          menu.prompt = "Create repositories as public or private?"
-          menu.choice :public do
-            public_repos = true
-          end
-          menu.choice :private do
-            public_repos = false
-          end
-        end
-        public_repos
       end
 
       def create
@@ -73,7 +58,7 @@ module TeachersPet
 
           git_ignore_template = "C++" ## This is specific to my current class, you'll want to change
           git_ignore_template = '' unless @add_init_files
-          puts " --> Creating '#{repo_name}'"
+          puts " --> Creating '#{repo_name}' public? #{@public_repos}"
           @client.create_repository(repo_name,
               {
                 :description => "#{@repository} created for #{student}",

@@ -47,6 +47,10 @@ def respond(question, response)
   action.stub(:ask).with(question).and_return(response)
 end
 
+def confirm(question, response)
+  action.stub(:confirm).with(question, false).and_return(response)
+end
+
 def stub_github_config
   respond("What is the API endpoint?", TeachersPet::Configuration.apiEndpoint)
   respond("What is the Web endpoint?", TeachersPet::Configuration.webEndpoint)
