@@ -11,7 +11,7 @@ module TeachersPet
   module Actions
     class ForkCollab < Base
       def read_info
-        @repository = ask("Which repository? (name/owner)")
+        @repository = ask("Which repository? (owner/repo)")
       end
 
       def get_forks
