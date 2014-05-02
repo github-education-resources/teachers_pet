@@ -1,6 +1,7 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..')
 
 require 'configuration'
+require 'octokit'
 
 ## Common code for the edugit scripts.
 module TeachersPet
