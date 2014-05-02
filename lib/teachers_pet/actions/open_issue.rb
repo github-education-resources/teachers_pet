@@ -14,15 +14,18 @@ module TeachersPet
       def read_info
         @repository = ask("What repository will the issue be raised in?") { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        
         @issue = {}
         @issue[:title] = ask("What is the title of the issue?")
-        @issue_file = self.get_issue_file_path
+        @issue_file = ask("What is the path to the file containing the issue body?")
+        
+        # Add labels to issue
+        options = {}
+        options[:labels] = ask("Optionally add any labels, seperated by commas:")
+        @issue[:options] = options
+
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
-      end
-
-      def get_issue_file_path
-        ask("What is the name of the file containing the issue body?")
       end
 
       def load_files
@@ -55,7 +58,7 @@ module TeachersPet
           end
 
           # Create the issue with octokit
-          @client.create_issue("#{@organization}/#{repo_name}", @issue[:title], @issue[:body])
+          @client.create_issue("#{@organization}/#{repo_name}", @issue[:title], @issue[:body], @issue[:options])
         end
       end
 
