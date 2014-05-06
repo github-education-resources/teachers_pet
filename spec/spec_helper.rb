@@ -29,6 +29,10 @@ def instructors_list_fixture_path
   File.join(File.dirname(__FILE__), 'fixtures', 'instructors')
 end
 
+def issue_fixture_path
+  File.join(File.dirname(__FILE__), 'fixtures', 'issue')
+end
+
 def student_usernames
   CSV.read(students_list_fixture_path).flatten
 end
