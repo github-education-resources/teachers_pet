@@ -48,10 +48,10 @@ describe TeachersPet::Actions::OpenIssue do
         end
       end
       issue_body = File.read(issue_fixture_path).gsub("\n", "\\n")
-      labels_list = labels.split(",").map(&:strip)
+      labels_list = labels.split(",").map(&:strip).to_s.delete(' ')
       stub_request(:post, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/issues").
          with(:body => "{\"labels\":#{labels_list},\"title\":\"Issue Test\",\"body\":\"#{issue_body}\"}").
-         to_return(:status => 200)
+         to_return(:status => 201)
     end
 
     action.run
@@ -65,12 +65,9 @@ describe TeachersPet::Actions::OpenIssue do
     common_test("")
   end
 
-  it "open issue default labels" do
+  it "open issue with labels" do
     common_test("bug, feature")
   end
 
-  it "open issue custom labels" do
-    common_test("label1, label2")
-  end
 
 end
