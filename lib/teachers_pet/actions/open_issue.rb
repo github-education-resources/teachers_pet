@@ -52,7 +52,7 @@ module TeachersPet
           end
           repo_name = "#{student}-#{@repository}"
 
-          if !repository?(@organization, repo_name)
+          unless repository?(@organization, repo_name)
             puts " --> Repository not found, skipping '#{repo_name}'"
             next
           end

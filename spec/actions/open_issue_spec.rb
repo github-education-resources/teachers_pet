@@ -68,6 +68,4 @@ describe TeachersPet::Actions::OpenIssue do
   it "open issue with labels" do
     common_test("bug, feature")
   end
-
-
 end
