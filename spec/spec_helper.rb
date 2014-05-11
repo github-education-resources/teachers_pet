@@ -30,7 +30,7 @@ def instructors_list_fixture_path
 end
 
 def issue_fixture_path
-  File.join(File.dirname(__FILE__), 'fixtures', 'issue')
+  File.join(File.dirname(__FILE__), 'fixtures', 'issue.md')
 end
 
 def student_usernames
