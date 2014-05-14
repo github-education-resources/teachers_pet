@@ -9,7 +9,6 @@ require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'octokit'
 require 'teachers_pet/actions/base'
 
 module TeachersPet

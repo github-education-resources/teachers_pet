@@ -4,7 +4,6 @@ require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'octokit'
 require 'teachers_pet/actions/base'
 
 # This script should be run within a working directory that is a git repository.
