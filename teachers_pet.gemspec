@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
+  s.required_ruby_version = '>= 1.9.3'
+
   s.add_dependency 'highline', '~> 1.6.21'
   s.add_dependency 'octokit', '~> 3.1.0'
 
