@@ -64,6 +64,12 @@ While in the directory for the starter file repository, run the `push_repos` scr
 
 This works by creating a git remote for each repository and thing doing a push to that repository.
 
+### Opening issues
+
+After running `create_repos`, instructors can open issues in repos with `open_issue`.  This action requires an `issue.md` file containing the body of the issue.  The issue title and optional tags are added at runtime.
+
+One issue will be opened in every repo defined by the `students` file and repository name given by the user.
+
 ### Pulling repositories for grading
 
 When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
