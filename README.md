@@ -70,6 +70,8 @@ After running `create_repos`, instructors can open issues in repos with `open_is
 
 One issue will be opened in every repo defined by the `students` file and repository name given by the user.
 
+Open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching.
+
 ### Pulling repositories for grading
 
 When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
