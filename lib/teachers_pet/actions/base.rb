@@ -2,6 +2,7 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), '..')
 
 require 'configuration'
 require 'octokit'
+require 'highline/import'
 
 ## Common code for the edugit scripts.
 module TeachersPet
@@ -113,11 +114,11 @@ module TeachersPet
       end
 
       def read_file(filename, type)
+        # Return a hash with team name as key and list of member(s) as value.
         map = Hash.new
         puts "Loading #{type}:"
         File.open(filename).each_line do |team|
-          # Team can be a single user, or a team name and multiple users
-          # Trim whitespace, otherwise issues occur
+          # Each line is a single user, or a team name and multiple users
           team.strip!
           items = team.split(' ')
           items.each do |item|
@@ -143,7 +144,6 @@ module TeachersPet
       end
 
       def confirm(message, abort_on_no = true)
-        # confirm
         confirmed = false
         choose do |menu|
           menu.prompt = message
