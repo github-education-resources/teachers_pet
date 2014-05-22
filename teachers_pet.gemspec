@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'octokit', '~> 3.1.0'
 
   s.add_development_dependency 'bundler', '~> 1.5'
+  s.add_development_dependency 'coveralls', '~> 0.7'
   s.add_development_dependency 'guard-rspec', '~> 4.2'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 2.14'
