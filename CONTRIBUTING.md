@@ -17,3 +17,10 @@ bundle exec rspec
 # or
 bundle exec guard
 ```
+
+To see test coverage information:
+
+```bash
+bundle exec rspec
+open coverage/index.html
+```
