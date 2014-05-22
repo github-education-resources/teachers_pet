@@ -1,6 +1,9 @@
 require 'simplecov'
 SimpleCov.start do
-  add_group 'Actions', '/lib/teachers_pet/actions'
+  add_group 'Actions' do |src_file|
+    file = src_file.filename
+    file.include?('/lib/teachers_pet/actions/') && !file.end_with?('/base.rb')
+  end
   add_group 'Specs', '/spec/'
 end
 
