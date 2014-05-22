@@ -27,5 +27,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'guard-rspec', '~> 4.2'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 2.14'
+  # https://github.com/colszowka/simplecov/issues/281
+  s.add_development_dependency 'simplecov', '~> 0.7.1'
   s.add_development_dependency 'webmock', '~> 1.17'
 end

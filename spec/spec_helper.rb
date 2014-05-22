@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'csv'
 require 'json'
 require 'webmock/rspec'
