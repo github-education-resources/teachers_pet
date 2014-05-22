@@ -1,5 +1,8 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_group 'Actions', '/lib/teachers_pet/actions'
+  add_group 'Specs', '/spec/'
+end
 
 require 'csv'
 require 'json'
