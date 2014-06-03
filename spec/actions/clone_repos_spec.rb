@@ -4,22 +4,22 @@ describe TeachersPet::Actions::CloneRepos do
   let(:action) { TeachersPet::Actions::CloneRepos.new }
 
   def respond(question, response)
-    action.stub(:ask).with(question).and_return(response)
+    allow(action).to receive(:ask).with(question).and_return(response)
   end
 
   before do
     # fallback
-    action.stub(:ask){|question| raise("can't ask \"#{question}\"") }
-    action.stub(:choose){ raise("can't choose()") }
+    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
+    allow(action).to receive(:choose){ raise("can't choose()") }
 
-    action.stub(:confirm)
+    allow(action).to receive(:confirm)
   end
 
   it "runs" do
     respond("What repository name should be cloned for each student?", 'testrepo')
     respond("What is the organization name?", 'testorg')
     respond("What is the filename of the list of students?", students_list_fixture_path)
-    action.stub(get_clone_method: 'https')
+    allow(action).to receive(:get_clone_method) { 'https' }
     respond("What is the organization name?", "testorg")
     stub_github_config
 
@@ -32,7 +32,7 @@ describe TeachersPet::Actions::CloneRepos do
     request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', student_teams)
     student_usernames.each do |username|
       request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo", {})
-      action.should_receive(:execute).with("git clone https://www.github.com/testorg/#{username}-testrepo.git").once
+      expect(action).to receive(:execute).with("git clone https://www.github.com/testorg/#{username}-testrepo.git").once
     end
 
     action.run
