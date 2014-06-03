@@ -5,7 +5,6 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
 
 require 'rubygems'
 require 'highline/question'
-require 'highline/import'
 require 'teachers_pet/actions/base'
 
 module TeachersPet
