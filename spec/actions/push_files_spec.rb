@@ -4,15 +4,15 @@ describe TeachersPet::Actions::PushFiles do
   let(:action) { TeachersPet::Actions::PushFiles.new }
 
   def respond(question, response)
-    action.stub(:ask).with(question).and_return(response)
+    allow(action).to receive(:ask).with(question).and_return(response)
   end
 
   before do
     # fallback
-    action.stub(:ask){|question| raise("can't ask \"#{question}\"") }
-    action.stub(:choose){ raise("can't choose()") }
+    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
+    allow(action).to receive(:choose){ raise("can't choose()") }
 
-    action.stub(:confirm)
+    allow(action).to receive(:confirm)
   end
 
   it "runs" do

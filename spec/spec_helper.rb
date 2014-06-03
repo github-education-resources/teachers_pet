@@ -14,7 +14,6 @@ require 'webmock/rspec'
 require_relative File.join('..', 'lib', 'teachers_pet')
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.order = 'random'
@@ -57,17 +56,17 @@ def student_teams
 end
 
 def respond(question, response)
-  action.stub(:ask).with(question).and_return(response)
+  allow(action).to receive(:ask).with(question).and_return(response)
 end
 
 def confirm(question, response)
-  action.stub(:confirm).with(question, false).and_return(response)
+  allow(action).to receive(:confirm).with(question, false).and_return(response)
 end
 
 def stub_github_config
   respond("What is the API endpoint?", TeachersPet::Configuration.apiEndpoint)
   respond("What is the Web endpoint?", TeachersPet::Configuration.webEndpoint)
   respond("What is your username? (You must be an owner for the organization)?", 'testteacher')
-  action.stub(get_auth_method: 'password')
+  allow(action).to receive(:get_auth_method) { 'password' }
   respond("What is your password?", 'abc123')
 end

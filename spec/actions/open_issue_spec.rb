@@ -5,10 +5,10 @@ describe TeachersPet::Actions::OpenIssue do
 
   before do
     # fallback
-    action.stub(:ask){|question| raise("can't ask \"#{question}\"") }
-    action.stub(:choose){ raise("can't choose()") }
+    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
+    allow(action).to receive(:choose){ raise("can't choose()") }
 
-    action.stub(:confirm)
+    allow(action).to receive(:confirm)
   end
 
   def common_test(labels)
