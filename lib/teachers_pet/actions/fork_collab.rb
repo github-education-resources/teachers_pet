@@ -17,7 +17,9 @@ module TeachersPet
         forks.each do |fork|
           login = fork.owner.login
           if fork.owner.type == "User"
-            result = @client.add_collab(self.repository, login)
+            unless self.options[:dry_run]
+              result = @client.add_collab(self.repository, login)
+            end
             puts "#{login} - #{result}"
           else
             puts "#{login} - false (Organization)"

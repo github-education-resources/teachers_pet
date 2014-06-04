@@ -7,13 +7,15 @@ module TeachersPet
 
     option :repository, required: true, banner: 'OWNER/REPO'
 
-    option :oauth, type: :boolean, desc: "Use token authentication, instead of a username + password."
+    option :oauth, type: :boolean, desc: "Use token authentication, instead of a username + password. See https://github.com/education/teachers_pet#authentication for more info."
     option :username, default: ENV['USER']
     option :password
     option :token
 
     option :api, default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
     option :web, default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
+
+    option :dry_run, type: :boolean
 
     desc "fork_collab", "Give collaborator access to everyone who has forked a particular repository."
     def fork_collab
