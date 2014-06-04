@@ -7,7 +7,7 @@ module TeachersPet
 
     option :repository, required: true, banner: 'OWNER/REPO'
 
-    option :oauth, type: :boolean, desc: "Use token authentication, instead of a username + password."
+    option :oauth, type: :boolean, desc: "Use token authentication, instead of a username + password. See https://github.com/education/teachers_pet#authentication for more info."
     option :username, default: ENV['USER']
     option :password
     option :token
