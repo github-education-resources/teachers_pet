@@ -1,3 +1,4 @@
+require 'active_support/core_ext/hash/keys'
 require_relative 'base'
 
 # Common code for the interactive scripts
@@ -7,7 +8,7 @@ module TeachersPet
       attr_reader :options
 
       def initialize(opts)
-        @options = opts
+        @options = opts.symbolize_keys
       end
 
       ## TODO remove after fully off of Highline ##
