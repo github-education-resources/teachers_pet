@@ -1,16 +1,8 @@
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require 'highline/compatibility'
-require_relative 'interactive'
+require_relative 'non_interactive'
 
 module TeachersPet
   module Actions
-    class ForkCollab < Interactive
-      def read_info
-        @repository = ask("Which repository? (owner/repo)")
-      end
-
+    class ForkCollab < NonInteractive
       def get_forks
         @client.forks(@repository)
       end
@@ -25,7 +17,7 @@ module TeachersPet
         forks.each do |fork|
           login = fork.owner.login
           if fork.owner.type == "User"
-            result = @client.add_collab(@repository, login)
+            result = @client.add_collab(self.options[:repository], login)
             puts "#{login} - #{result}"
           else
             puts "#{login} - false (Organization)"
@@ -34,7 +26,6 @@ module TeachersPet
       end
 
       def run
-        self.read_info
         self.promote
       end
     end
