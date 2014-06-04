@@ -12,7 +12,7 @@ describe TeachersPet::Actions::ForkCollab do
       expect(TeachersPet::Actions::ForkCollab).to receive(:new).with(
         'api' => 'https://api.github.com/',
         'repository' => 'testorg/testrepo',
-        'username' => 'afeld',
+        'username' => ENV['USER'],
         'web' => 'https://www.github.com/'
       ).once.and_call_original
       expect_any_instance_of(TeachersPet::Actions::ForkCollab).to receive(:run).once
@@ -20,7 +20,7 @@ describe TeachersPet::Actions::ForkCollab do
       teachers_pet(:fork_collab, repository: 'testorg/testrepo')
     end
 
-    it "runs" do
+    it "succeeds with all required arguments" do
       request_stubs = []
       request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/repos/testorg/testrepo/forks?per_page=100', [
         {
