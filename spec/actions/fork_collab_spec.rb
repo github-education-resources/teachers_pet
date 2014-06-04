@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::ForkCollab do
+  let(:cls) { TeachersPet::Actions::ForkCollab }
+
+  def expect_to_be_run_with(opts)
+    expect(cls).to receive(:new).with(opts).once.and_call_original
+    expect_any_instance_of(cls).to receive(:run).once
+  end
+
   context 'through CLI' do
     it "requires the repository be specified" do
       expect {
@@ -9,14 +16,12 @@ describe TeachersPet::Actions::ForkCollab do
     end
 
     it "passes the options to the action" do
-      expect(TeachersPet::Actions::ForkCollab).to receive(:new).with(
+      expect_to_be_run_with(
         'api' => 'https://api.github.com/',
         'repository' => 'testorg/testrepo',
         'username' => ENV['USER'],
         'web' => 'https://www.github.com/'
-      ).once.and_call_original
-      expect_any_instance_of(TeachersPet::Actions::ForkCollab).to receive(:run).once
-
+      )
       teachers_pet(:fork_collab, repository: 'testorg/testrepo')
     end
 
