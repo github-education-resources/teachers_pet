@@ -1,4 +1,5 @@
-Dir.glob(File.join(File.dirname(__FILE__), '**', '*.rb'), &method(:require))
+require 'require_all'
+require_rel '.'
 
 module TeachersPet
 end
