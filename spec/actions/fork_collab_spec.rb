@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::ForkCollab do
+  include CliHelpers
+
   let(:cls) { TeachersPet::Actions::ForkCollab }
 
   def expect_to_be_run_with(opts)

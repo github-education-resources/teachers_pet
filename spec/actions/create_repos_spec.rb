@@ -1,15 +1,9 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::CreateRepos do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::CreateRepos.new }
-
-  before do
-    # fallback
-    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
-    allow(action).to receive(:choose){ raise("can't choose()") }
-
-    allow(action).to receive(:confirm)
-  end
 
   def common_test(create_as_public)
     respond("What repository name should be created for each student?", 'testrepo')

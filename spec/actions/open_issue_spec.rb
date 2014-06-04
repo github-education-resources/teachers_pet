@@ -1,20 +1,13 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::OpenIssue do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::OpenIssue.new }
 
-  before do
-    # fallback
-    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
-    allow(action).to receive(:choose){ raise("can't choose()") }
-
-    allow(action).to receive(:confirm)
-  end
-
   def common_test(labels)
-    
     issue_title = "Issue Test"
-    
+
     # Respond to action prompts
     respond("What repository will the issue be raised in?", 'testrepo')
     respond("What is the organization name?", 'testorg')
