@@ -30,7 +30,7 @@ module TeachersPet
         @authmethod = self.get_auth_method
 
         if @authmethod == 'oauth'
-            @oauthtoken = ask('What is your oAuth token?') { |q| q.default = ENV['ghe_oauth'] }
+            @oauthtoken = ask('What is your oAuth token?') { |q| q.default = ENV['TEACHERS_PET_GITHUB_TOKEN'] }
         end
         if @authmethod == 'password'
             @password = ask('What is your password?') { |q| q.echo = false }

@@ -47,7 +47,7 @@ https://github.com/settings/tokens/new?description=teachers_pet&scopes=repo%2Cpu
 Then, add the following line to your `.bash_profile`:
 
 ```bash
-export ghe_oauth="YOUR_TOKEN_HERE"
+export TEACHERS_PET_GITHUB_TOKEN="YOUR_TOKEN_HERE"
 ```
 
 ## Actions
