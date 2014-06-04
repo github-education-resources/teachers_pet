@@ -22,7 +22,7 @@ module TeachersPet
       #############################################
 
       def get_auth_method
-        options[:oauth] ? 'oauth' : 'password'
+        options[:token] ? 'oauth' : 'password'
       end
 
       def config_github

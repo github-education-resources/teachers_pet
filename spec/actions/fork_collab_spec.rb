@@ -26,7 +26,7 @@ describe TeachersPet::Actions::ForkCollab do
       teachers_pet(:fork_collab, repository: 'testorg/testrepo', password: 'abc123')
     end
 
-    it "succeeds with all required arguments" do
+    it "succeeds for basic auth" do
       request_stubs = []
       request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/repos/testorg/testrepo/forks?per_page=100', [
         {
@@ -42,6 +42,30 @@ describe TeachersPet::Actions::ForkCollab do
         repository: 'testorg/testrepo',
         username: 'testteacher',
         password: 'abc123'
+      )
+
+      request_stubs.each do |request_stub|
+        expect(request_stub).to have_been_requested.once
+      end
+    end
+
+    it "succeeds for OAuth" do
+      request_stubs = []
+      request_stubs << stub_get_json('https://api.github.com/repos/testorg/testrepo/forks?per_page=100', [
+        {
+          owner: {
+            login: 'teststudent',
+            type: 'User'
+          }
+        }
+      ]).with(headers: {'Authorization' => 'token tokentokentoken'})
+
+      request_stubs << stub_request(:put, 'https://api.github.com/repos/testorg/testrepo/collaborators/teststudent').
+        with(headers: {'Authorization' => 'token tokentokentoken'})
+
+      teachers_pet(:fork_collab,
+        repository: 'testorg/testrepo',
+        token: 'tokentokentoken'
       )
 
       request_stubs.each do |request_stub|
