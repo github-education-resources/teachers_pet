@@ -9,7 +9,7 @@ module TeachersPet
 
     option :username, default: ENV['USER']
     option :password
-    option :token, desc: "Provide a token instead of a username+password to authenticate via OAuth. See https://github.com/education/teachers_pet#authentication."
+    option :token, default: ENV['TEACHERS_PET_GITHUB_TOKEN'], desc: "Provide a token instead of a username+password to authenticate via OAuth. See https://github.com/education/teachers_pet#authentication."
 
     option :api, default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
     option :web, default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
