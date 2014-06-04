@@ -1,5 +1,7 @@
 # teachers_pet [![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet)
 
+**WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README correspoding to the latest release.**
+
 Command line tools to help teachers use GitHub in their classrooms.
 
 ## Philosophy
