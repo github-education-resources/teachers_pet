@@ -5,15 +5,15 @@ module TeachersPet
   class Cli < Thor
     # TODO figure out a way to display options as groups
 
-    option :repository, required: true
+    option :repository, required: true, banner: 'OWNER/REPO'
 
-    option :oauth, type: :boolean
+    option :oauth, type: :boolean, desc: "Use token authentication, instead of a username + password."
     option :username, default: ENV['USER']
     option :password
     option :token
 
-    option :api, default: Configuration.apiEndpoint
-    option :web, default: Configuration.webEndpoint
+    option :api, default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
+    option :web, default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
 
     desc "fork_collab", "Give collaborator access to everyone who has forked a particular repository."
     def fork_collab
