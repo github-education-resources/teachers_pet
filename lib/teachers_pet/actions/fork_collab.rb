@@ -1,14 +1,12 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 module TeachersPet
   module Actions
-    class ForkCollab < Base
+    class ForkCollab < Interactive
       def read_info
         @repository = ask("Which repository? (owner/repo)")
       end

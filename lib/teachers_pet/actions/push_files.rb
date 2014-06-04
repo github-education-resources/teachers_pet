@@ -1,17 +1,15 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 # This script should be run within a working directory that is a git repository.
 # It will add a remote that is the name of each student team to your repository
 
 module TeachersPet
   module Actions
-    class PushFiles < Base
+    class PushFiles < Interactive
       def read_info
         @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
 

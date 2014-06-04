@@ -1,24 +1,22 @@
 # Author: Mike Helmick
 # Script to create assignment repositories for students under the appropriate organization
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 module TeachersPet
   module Actions
-    class CreateRepos < Base
+    class CreateRepos < Interactive
       def read_info
         @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
         @public_repos = confirm('Create repositories as public?', false)
-        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)        
+        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
       end
 
       def load_files

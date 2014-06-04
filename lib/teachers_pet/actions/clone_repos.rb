@@ -3,17 +3,15 @@
 #
 # Currently this will clone all student repositories into the current
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 module TeachersPet
   module Actions
-    class CloneRepos < Base
+    class CloneRepos < Interactive
       def read_info
         @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
