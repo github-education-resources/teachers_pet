@@ -6,18 +6,15 @@
 #  - For teams, the students file should be "teamName studentName studentName"
 # We recommend that instructors also be created as students for ease of testing.
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
 require 'highline/compatibility'
-
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 module TeachersPet
   module Actions
-    class CreateTeams < Base
+    class CreateTeams < Interactive
       def read_info
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
         @student_file = self.get_students_file_path

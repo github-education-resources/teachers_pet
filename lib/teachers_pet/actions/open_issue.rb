@@ -1,24 +1,22 @@
 # Opens a single issue in each repository.  The body of the issue is loaded
 # from a file and the user is prompted for the title.
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', '..')
-
 require 'rubygems'
 require 'highline/question'
 require 'highline/import'
-require 'teachers_pet/actions/base'
+require_relative 'interactive'
 
 module TeachersPet
   module Actions
-    class OpenIssue < Base
+    class OpenIssue < Interactive
       def read_info
         @repository = ask("What repository will the issue be raised in?") { |q| q.validate = /\w+/ }
         @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
-        
+
         @issue = {}
         @issue[:title] = ask("What is the title of the issue?")
         @issue_file = ask("What is the path to the file containing the issue body?")
-        
+
         # Add labels to issue
         options = {}
         options[:labels] = ask("Optionally add any labels, seperated by commas:")
@@ -43,7 +41,7 @@ module TeachersPet
         puts "Found organization at: #{org_hash[:login]}"
 
         org_teams = get_teams_by_name(@organization)
-        
+
         puts "\nCreating issue in repositories..."
         @students.keys.sort.each do |student|
           unless org_teams.key?(student)

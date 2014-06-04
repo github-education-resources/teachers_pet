@@ -20,8 +20,10 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
+  s.add_dependency 'activesupport', '~> 4.0'
   s.add_dependency 'highline', '~> 1.6.21'
   s.add_dependency 'octokit', '~> 3.1.0'
+  s.add_dependency 'thor', '~> 0.19.1'
 
   s.add_development_dependency 'bundler', '~> 1.5'
   s.add_development_dependency 'guard-rspec', '~> 4.2'

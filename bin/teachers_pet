@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require_relative File.join('..', 'lib', 'teachers_pet', 'cli')
+TeachersPet::Cli.start(ARGV)
