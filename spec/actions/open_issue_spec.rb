@@ -4,7 +4,7 @@ describe TeachersPet::Actions::OpenIssue do
   include CliHelpers
 
   context 'through CLI' do
-    def common_test(labels)
+    def common_test(labels='')
       issue_title = "Issue Test"
       request_stubs = []
 
@@ -15,8 +15,7 @@ describe TeachersPet::Actions::OpenIssue do
       request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', student_teams)
       student_usernames.each do |username|
         # Action checks that repos exist already
-        stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo").
-           to_return(:status => 200, :body => "", :headers => {})
+        request_stubs << stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo")
       end
 
       # create the issue in each repo
@@ -29,9 +28,9 @@ describe TeachersPet::Actions::OpenIssue do
         end
         issue_body = File.read(issue_fixture_path).gsub("\n", "\\n")
         labels_list = labels.split(",").map(&:strip).to_s.delete(' ')
-        stub_request(:post, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/issues").
-           with(:body => "{\"labels\":#{labels_list},\"title\":\"#{issue_title}\",\"body\":\"#{issue_body}\"}").
-           to_return(:status => 201)
+        request_stubs << stub_request(:post, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/issues").
+          with(body: "{\"labels\":#{labels_list},\"title\":\"#{issue_title}\",\"body\":\"#{issue_body}\"}").
+          to_return(status: 201)
       end
 
       teachers_pet(:open_issue,
@@ -55,11 +54,11 @@ describe TeachersPet::Actions::OpenIssue do
     end
 
     it "open issue no labels" do
-      common_test("")
+      common_test
     end
 
     it "open issue with labels" do
-      common_test("bug, feature")
+      common_test('bug, feature')
     end
   end
 end
