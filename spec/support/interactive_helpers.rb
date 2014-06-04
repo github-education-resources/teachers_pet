@@ -1,4 +1,18 @@
+require 'active_support/concern'
+
 module InteractiveHelpers
+  extend ActiveSupport::Concern
+
+  included do
+    before do
+      # fallback
+      allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
+      allow(action).to receive(:choose){ raise("can't choose()") }
+
+      allow(action).to receive(:confirm)
+    end
+  end
+
   def respond(question, response)
     allow(action).to receive(:ask).with(question).and_return(response)
   end

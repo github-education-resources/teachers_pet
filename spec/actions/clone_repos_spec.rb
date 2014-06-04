@@ -5,18 +5,6 @@ describe TeachersPet::Actions::CloneRepos do
 
   let(:action) { TeachersPet::Actions::CloneRepos.new }
 
-  def respond(question, response)
-    allow(action).to receive(:ask).with(question).and_return(response)
-  end
-
-  before do
-    # fallback
-    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
-    allow(action).to receive(:choose){ raise("can't choose()") }
-
-    allow(action).to receive(:confirm)
-  end
-
   it "runs" do
     respond("What repository name should be cloned for each student?", 'testrepo')
     respond("What is the organization name?", 'testorg')

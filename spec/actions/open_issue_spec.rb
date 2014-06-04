@@ -5,14 +5,6 @@ describe TeachersPet::Actions::OpenIssue do
 
   let(:action) { TeachersPet::Actions::OpenIssue.new }
 
-  before do
-    # fallback
-    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
-    allow(action).to receive(:choose){ raise("can't choose()") }
-
-    allow(action).to receive(:confirm)
-  end
-
   def common_test(labels)
     issue_title = "Issue Test"
 

@@ -5,14 +5,6 @@ describe TeachersPet::Actions::CreateTeams do
 
   let(:action) { TeachersPet::Actions::CreateTeams.new }
 
-  before do
-    # fallback
-    allow(action).to receive(:ask){|question| raise("can't ask \"#{question}\"") }
-    allow(action).to receive(:choose){ raise("can't choose()") }
-
-    allow(action).to receive(:confirm)
-  end
-
   it "creates teams if none exist" do
     respond("What is the organization name?", 'testorg')
     respond("What is the filename of the list of students?", students_list_fixture_path)
