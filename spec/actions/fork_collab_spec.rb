@@ -15,14 +15,27 @@ describe TeachersPet::Actions::ForkCollab do
       }.to raise_error(Thor::RequiredArgumentMissingError, /--repository/)
     end
 
+    it "requires a password when using basic auth" do
+      expect {
+        teachers_pet(:fork_collab, repository: 'testorg/testrepo')
+      }.to raise_error(Thor::RequiredArgumentMissingError, /--password/)
+    end
+
+    it "requires a token when using OAuth" do
+      expect {
+        teachers_pet(:fork_collab, oauth: true, repository: 'testorg/testrepo')
+      }.to raise_error(Thor::RequiredArgumentMissingError, /--token/)
+    end
+
     it "passes the options to the action" do
       expect_to_be_run_with(
         'api' => 'https://api.github.com/',
+        'password' => 'abc123',
         'repository' => 'testorg/testrepo',
         'username' => ENV['USER'],
         'web' => 'https://www.github.com/'
       )
-      teachers_pet(:fork_collab, repository: 'testorg/testrepo')
+      teachers_pet(:fork_collab, repository: 'testorg/testrepo', password: 'abc123')
     end
 
     it "succeeds with all required arguments" do

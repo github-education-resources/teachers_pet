@@ -17,6 +17,20 @@ module TeachersPet
 
     desc "fork_collab", "Give collaborator access to everyone who has forked a particular repository."
     def fork_collab
+      if options['oauth']
+        unless options['token']
+          raise RequiredArgumentMissingError.new("'--token' required when using OAuth")
+        end
+      else # basic auth
+        unless options['username']
+          raise RequiredArgumentMissingError.new("'--username' required when using basic auth")
+        end
+
+        unless options['password']
+          raise RequiredArgumentMissingError.new("'--password' required when using basic auth")
+        end
+      end
+
       TeachersPet::Actions::ForkCollab.new(options).run
     end
   end
