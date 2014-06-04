@@ -71,3 +71,8 @@ def stub_github_config
   allow(action).to receive(:get_auth_method) { 'password' }
   respond("What is your password?", 'abc123')
 end
+
+def teachers_pet(action, opts={})
+  script = TeachersPet::Cli.new
+  script.invoke(action, [], opts)
+end
