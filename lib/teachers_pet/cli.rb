@@ -15,6 +15,8 @@ module TeachersPet
     option :api, default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
     option :web, default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
 
+    option :dry_run, type: :boolean
+
     desc "fork_collab", "Give collaborator access to everyone who has forked a particular repository."
     def fork_collab
       if options['oauth']
