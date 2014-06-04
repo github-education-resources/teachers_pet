@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::CreateRepos do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::CreateRepos.new }
 
   before do

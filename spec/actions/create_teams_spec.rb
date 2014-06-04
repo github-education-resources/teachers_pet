@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::CreateTeams do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::CreateTeams.new }
 
   before do

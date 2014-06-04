@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::PushFiles do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::PushFiles.new }
 
   def respond(question, response)

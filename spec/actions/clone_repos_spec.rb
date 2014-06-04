@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::CloneRepos do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::CloneRepos.new }
 
   def respond(question, response)

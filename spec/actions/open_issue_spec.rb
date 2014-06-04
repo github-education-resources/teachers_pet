@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::OpenIssue do
+  include InteractiveHelpers
+
   let(:action) { TeachersPet::Actions::OpenIssue.new }
 
   before do
@@ -12,9 +14,8 @@ describe TeachersPet::Actions::OpenIssue do
   end
 
   def common_test(labels)
-    
     issue_title = "Issue Test"
-    
+
     # Respond to action prompts
     respond("What repository will the issue be raised in?", 'testrepo')
     respond("What is the organization name?", 'testorg')
