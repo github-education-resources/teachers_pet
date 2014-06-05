@@ -14,7 +14,7 @@ module TeachersPet
     class CloneRepos < Interactive
       def read_info
         @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        @organization = ask("What is the organization name?")
         @student_file = self.get_students_file_path
       end
 

@@ -8,8 +8,8 @@ module TeachersPet
       option :password
       option :token, default: ENV['TEACHERS_PET_GITHUB_TOKEN'], desc: "Provide a token instead of a username+password to authenticate via OAuth. See https://github.com/education/teachers_pet#authentication."
 
-      option :api, default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
-      option :web, default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
+      option :api, banner: 'ORIGIN', default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
+      option :web, banner: 'ORIGIN', default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
     end
 
 
@@ -24,7 +24,7 @@ module TeachersPet
     end
 
 
-    option :organization, default: TeachersPet::Configuration.organization
+    option :organization, required: true
     option :repository, required: true
 
     option :title, desc: "The title of the issue to be created"

@@ -16,7 +16,7 @@ module TeachersPet
   module Actions
     class CreateTeams < Interactive
       def read_info
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        @organization = ask("What is the organization name?")
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
       end
