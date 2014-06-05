@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
-require 'teachers_pet/actions/open_issue'
-
-TeachersPet::Actions::OpenIssue.new.run

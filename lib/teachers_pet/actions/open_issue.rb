@@ -1,29 +1,22 @@
-# Opens a single issue in each repository.  The body of the issue is loaded
-# from a file and the user is prompted for the title.
-
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require_relative 'interactive'
+require_relative 'non_interactive'
 
 module TeachersPet
   module Actions
-    class OpenIssue < Interactive
+    class OpenIssue < NonInteractive
       def read_info
-        @repository = ask("What repository will the issue be raised in?") { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        @repository = self.options[:repository]
+        @organization = self.options[:organization]
 
-        @issue = {}
-        @issue[:title] = ask("What is the title of the issue?")
-        @issue_file = ask("What is the path to the file containing the issue body?")
+        @issue = {
+          title: self.options[:title],
+          options: {
+            labels: self.options[:labels]
+          }
+        }
+        @issue_file = self.options[:body]
 
-        # Add labels to issue
-        options = {}
-        options[:labels] = ask("Optionally add any labels, seperated by commas:")
-        @issue[:options] = options
-
-        @student_file = self.get_students_file_path
-        @instructor_file = self.get_instructors_file_path
+        @student_file = self.options[:students]
+        @instructor_file = self.options[:instructors]
       end
 
       def load_files
@@ -33,10 +26,10 @@ module TeachersPet
       end
 
       def create
-        confirm("Create issue '#{@issue[:title]}' in #{@students.keys.size} student repositories - '#{@repository}'?")
+        # confirm("Create issue '#{@issue[:title]}' in #{@students.keys.size} student repositories - '#{@repository}'?")
         self.init_client
 
-        org_hash = read_organization(@organization)
+        org_hash = @client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"
 

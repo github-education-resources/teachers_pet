@@ -62,11 +62,8 @@ Give collaborator access to everyone who has forked your repository.
 
 ```bash
 teachers_pet fork_collab --repository=USER/REPO
-```
 
-Learn more with
-
-```bash
+# learn more via
 teachers_pet help fork_collab
 ```
 
@@ -80,11 +77,16 @@ This works by creating a git remote for each repository and thing doing a push t
 
 ### Opening issues
 
-After running `create_repos`, instructors can open issues in repos with `open_issue`.  This action requires an `issue.md` file containing the body of the issue.  The issue title and optional tags are added at runtime.
+After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching.
+
+```bash
+teachers_pet open_issue --repository=REPO --body=./issue.md
+
+# learn more via
+teachers_pet help open_issue
+```
 
 One issue will be opened in every repo defined by the `students` file and repository name given by the user.
-
-Open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching.
 
 ### Pulling repositories for grading
 
