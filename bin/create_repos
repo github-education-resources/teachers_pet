@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
-require 'teachers_pet/actions/create_repos'
-
-TeachersPet::Actions::CreateRepos.new.run

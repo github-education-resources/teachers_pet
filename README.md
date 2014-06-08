@@ -54,7 +54,13 @@ export TEACHERS_PET_GITHUB_TOKEN="YOUR_TOKEN_HERE"
 
 ### Creating assignments
 
-For each assignment, run `create_repos` to create a repository for each student. The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
+For each assignment, run `create_repos` to create a repository for each student.  Learn the options via
+
+```bash
+teachers_pet help create_repos
+```
+
+The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
 ### Collaborator access
 

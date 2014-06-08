@@ -1,22 +1,13 @@
-# Author: Mike Helmick
-# Script to create assignment repositories for students under the appropriate organization
-
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require 'highline/compatibility'
-require_relative 'interactive'
-
 module TeachersPet
   module Actions
-    class CreateRepos < Interactive
+    class CreateRepos < NonInteractive
       def read_info
-        @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?")
-        @student_file = self.get_students_file_path
-        @instructor_file = self.get_instructors_file_path
-        @public_repos = confirm('Create repositories as public?', false)
-        @add_init_files = confirm('Add .gitignore and README.md files? (skip this if you are pushing starter files.)', false)
+        @repository = self.options[:repository]
+        @organization = self.options[:organization]
+        @student_file = self.options[:students]
+        @instructor_file = self.options[:instructors]
+        @public_repos = self.options[:public]
+        @add_init_files = !!self.options[:init_files]
       end
 
       def load_files
@@ -25,13 +16,10 @@ module TeachersPet
       end
 
       def create
-        pub_private_text = @public_repos ? 'public' : 'private'
-        confirm("Create #{@students.keys.size} #{pub_private_text} repositories for students and give access to instructors?")
-
         # create a repo for each student
         self.init_client
 
-        org_hash = read_organization(@organization)
+        org_hash = @client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"
 

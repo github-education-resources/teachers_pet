@@ -13,5 +13,13 @@ module TeachersPet
       option :api, banner: 'ORIGIN', default: Configuration.apiEndpoint, desc: "The API endpoint of your GitHub Enterprise instance, if you have one."
       option :web, banner: 'ORIGIN', default: Configuration.webEndpoint, desc: "The URL of your GitHub Enterprise instance, if you have one."
     end
+
+    def self.students_option
+      option :students, default: TeachersPet::Configuration.studentsFile, banner: 'PATH', desc: "The path to the file containing the list of students"
+    end
+
+    def self.instructors_option
+      option :instructors, default: TeachersPet::Configuration.instructorsFile, banner: 'PATH', desc: "The path to the file containing the list of instructors"
+    end
   end
 end
