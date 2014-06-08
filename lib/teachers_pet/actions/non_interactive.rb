@@ -11,20 +11,6 @@ module TeachersPet
         @options = opts.symbolize_keys
       end
 
-      ## TODO remove after fully off of Highline ##
-      def ask(*args)
-        raise "Shouldn't be ask()ing: #{args}"
-      end
-
-      def choose(*args)
-        raise "Shouldn't be choose()ing: #{args}"
-      end
-
-      def confirm(*args)
-        raise "Shouldn't be confirm()ing: #{args}"
-      end
-      #############################################
-
       def get_auth_method
         options[:token] ? 'oauth' : 'password'
       end

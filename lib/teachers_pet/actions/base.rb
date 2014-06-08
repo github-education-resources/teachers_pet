@@ -32,18 +32,6 @@ module TeachersPet
         end
       end
 
-      def get_existing_repos_by_names(organization)
-        repos = Hash.new
-        response = @client.organization_repositories(organization)
-        print " Org repo names"
-        response.each do |repo|
-          repos[repo[:name]] = repo
-          print " '#{repo[:name]}'"
-        end
-        print "\n";
-        return repos
-      end
-
       def get_teams_by_name(organization)
         org_teams = @client.organization_teams(organization)
         teams = Hash.new
