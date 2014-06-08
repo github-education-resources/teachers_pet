@@ -4,8 +4,6 @@ describe TeachersPet::Actions::CreateRepos do
   include CliHelpers
 
   def common_test(create_as_public)
-    # confirm("Add .gitignore and README.md files? (skip this if you are pushing starter files.)", false)
-
     request_stubs = []
 
     request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
@@ -16,7 +14,7 @@ describe TeachersPet::Actions::CreateRepos do
     student_usernames.each do |username|
       # Check for the repos existing already
       stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo").
-         to_return(:status => 404, :body => "", :headers => {})
+        to_return(status: 404)
     end
 
     student_usernames.each do |username|
@@ -28,8 +26,7 @@ describe TeachersPet::Actions::CreateRepos do
         end
       end
       stub_request(:post, "https://testteacher:abc123@api.github.com/orgs/testorg/repos").
-         with(:body => "{\"description\":\"testrepo created for #{username}\",\"private\":#{!create_as_public},\"has_issues\":true,\"has_wiki\":false,\"has_downloads\":false,\"team_id\":#{team_id},\"auto_init\":false,\"gitignore_template\":\"\",\"name\":\"#{username}-testrepo\"}").
-         to_return(:status => 200)
+        with(body: "{\"description\":\"testrepo created for #{username}\",\"private\":#{!create_as_public},\"has_issues\":true,\"has_wiki\":false,\"has_downloads\":false,\"team_id\":#{team_id},\"auto_init\":false,\"gitignore_template\":\"\",\"name\":\"#{username}-testrepo\"}")
     end
 
     teachers_pet(:create_repos,
