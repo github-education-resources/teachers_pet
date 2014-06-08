@@ -19,13 +19,6 @@ module TeachersPet
       @@WEB_ENDPOINT
     end
 
-    # The name of your organization
-    @@ORGANIZATION = 'edugit-test'
-
-    def self.organization
-      @@ORGANIZATION
-    end
-
     # The name fo the file that contains the team definitions / students
     @@STUDENTS_FILE = './students'
 

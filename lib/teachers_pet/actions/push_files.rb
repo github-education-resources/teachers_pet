@@ -13,7 +13,7 @@ module TeachersPet
       def read_info
         @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
 
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        @organization = ask("What is the organization name?")
         @student_file = self.get_students_file_path
         @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = TeachersPet::Configuration.sshEndpoint }
       end

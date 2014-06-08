@@ -12,7 +12,7 @@ module TeachersPet
     class CreateRepos < Interactive
       def read_info
         @repository = ask('What repository name should be created for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?") { |q| q.default = TeachersPet::Configuration.organization }
+        @organization = ask("What is the organization name?")
         @student_file = self.get_students_file_path
         @instructor_file = self.get_instructors_file_path
         @public_repos = confirm('Create repositories as public?', false)
