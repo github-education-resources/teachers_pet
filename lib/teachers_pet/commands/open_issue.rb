@@ -7,9 +7,8 @@ module TeachersPet
     option :body, banner: 'PATH', desc: "The path to the file containing the issue body (.txt or .md)"
     option :labels, banner: 'LABEL1,LABEL2'
 
-    option :students, default: TeachersPet::Configuration.studentsFile, banner: 'PATH', desc: "The path to the file containing the list of students"
-    option :instructors, default: TeachersPet::Configuration.instructorsFile, banner: 'PATH', desc: "The path to the file containing the list of instructors"
-
+    students_option
+    instructors_option
     common_options
 
     desc "open_issue", "Opens a single issue in each repository in the organization."
