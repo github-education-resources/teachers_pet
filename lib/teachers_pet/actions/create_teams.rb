@@ -1,4 +1,3 @@
-# Author: Mike Helmick
 # Creates "teams" for an origanization. In this scenario - each team consists of
 # one student, and any instructors for the course.
 
@@ -6,19 +5,13 @@
 #  - For teams, the students file should be "teamName studentName studentName"
 # We recommend that instructors also be created as students for ease of testing.
 
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require 'highline/compatibility'
-require_relative 'interactive'
-
 module TeachersPet
   module Actions
-    class CreateTeams < Interactive
+    class CreateTeams < NonInteractive
       def read_info
-        @organization = ask("What is the organization name?")
-        @student_file = self.get_students_file_path
-        @instructor_file = self.get_instructors_file_path
+        @organization = self.options[:organization]
+        @student_file = self.options[:students]
+        @instructor_file = self.options[:instructors]
       end
 
       def load_files
@@ -28,7 +21,6 @@ module TeachersPet
 
       def create
         self.init_client
-        confirm("Create teams for #{@students.size} students/teams?")
 
         existing = Hash.new
         teams = @client.organization_teams(@organization)

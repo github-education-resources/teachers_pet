@@ -62,6 +62,10 @@ teachers_pet help create_repos
 
 The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
+```bash
+teachers_pet help create_teams
+```
+
 ### Collaborator access
 
 Give collaborator access to everyone who has forked your repository.

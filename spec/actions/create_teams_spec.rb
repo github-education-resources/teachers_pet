@@ -1,16 +1,9 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::CreateTeams do
-  include InteractiveHelpers
-
-  let(:action) { TeachersPet::Actions::CreateTeams.new }
+  include CliHelpers
 
   it "creates teams if none exist" do
-    respond("What is the organization name?", 'testorg')
-    respond("What is the filename of the list of students?", students_list_fixture_path)
-    respond("What is the filename of the list of instructors?", instructors_list_fixture_path)
-    stub_github_config
-
     teams_stub = stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [])
 
     request_stubs = []
@@ -22,7 +15,15 @@ describe TeachersPet::Actions::CreateTeams do
          }.to_json)
     end
 
-    action.run
+    teachers_pet(:create_teams,
+      organization: 'testorg',
+
+      students: students_list_fixture_path,
+      instructors: instructors_list_fixture_path,
+
+      username: 'testteacher',
+      password: 'abc123'
+    )
 
     expect(teams_stub).to have_been_requested.twice
     request_stubs.each do |request_stub|
