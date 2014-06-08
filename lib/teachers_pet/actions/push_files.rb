@@ -1,21 +1,11 @@
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require 'highline/compatibility'
-require_relative 'interactive'
-
-# This script should be run within a working directory that is a git repository.
-# It will add a remote that is the name of each student team to your repository
-
 module TeachersPet
   module Actions
-    class PushFiles < Interactive
+    class PushFiles < NonInteractive
       def read_info
-        @repository = ask('What repository name should pushed to for each student?') { |q| q.validate = /\w+/ }
-
-        @organization = ask("What is the organization name?")
-        @student_file = self.get_students_file_path
-        @sshEndpoint = ask('What is the ssh endpoint?') { |q| q.default = TeachersPet::Configuration.sshEndpoint }
+        @repository = self.options[:repository]
+        @organization = self.options[:organization]
+        @student_file = self.options[:students]
+        @sshEndpoint = self.options[:ssh]
       end
 
       def load_files
@@ -23,10 +13,9 @@ module TeachersPet
       end
 
       def push
-        confirm("Push files to student repositories?")
         self.init_client
 
-        org_hash = read_organization(@organization)
+        org_hash = @client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:url]}"
 

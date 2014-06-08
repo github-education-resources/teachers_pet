@@ -81,9 +81,13 @@ teachers_pet help fork_collab
 
 This is the workflow that we use. Create a private repository on GitHub. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
 
-While in the directory for the starter file repository, run the `push_files` script.
+While in the directory for the starter file repository, run the `push_files` command. Learn the options via
 
-This works by creating a git remote for each repository and thing doing a push to that repository.
+```bash
+teachers_pet help push_files
+```
+
+This works by creating a Git remote for each repository and thing doing a push to that repository.
 
 ### Opening issues
 

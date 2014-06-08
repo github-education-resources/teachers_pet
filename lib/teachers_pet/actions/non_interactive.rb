@@ -1,7 +1,7 @@
 require 'active_support/core_ext/hash/keys'
 require_relative 'base'
 
-# Common code for the interactive scripts
+# Common code for the CLI scripts
 module TeachersPet
   module Actions
     class NonInteractive < Base
