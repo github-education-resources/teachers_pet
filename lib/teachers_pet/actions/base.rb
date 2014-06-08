@@ -1,10 +1,16 @@
+require 'active_support/core_ext/hash/keys'
 require 'octokit'
 require_relative File.join('..', 'configuration')
 
-## Common code for the edugit scripts.
 module TeachersPet
   module Actions
     class Base
+      attr_reader :options
+
+      def initialize(opts)
+        @options = opts.symbolize_keys
+      end
+
       def init_client
         self.config_github
         puts "=" * 50
@@ -74,7 +80,27 @@ module TeachersPet
             end
           end
         end
-        return map
+
+        map
+      end
+
+      def get_auth_method
+        options[:token] ? 'oauth' : 'password'
+      end
+
+      def config_github
+        return unless @username.nil?
+        @api_endpoint = options[:api]
+        @web_endpoint = options[:web]
+        @username = options[:username]
+        @authmethod = self.get_auth_method
+
+        case @authmethod
+        when 'oauth'
+          @oauthtoken = options[:token]
+        when 'password'
+          @password = options[:password]
+        end
       end
     end
   end

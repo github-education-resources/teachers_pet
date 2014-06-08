@@ -2,8 +2,7 @@ require 'simplecov'
 SimpleCov.start do
   add_group 'Actions' do |src_file|
     file = src_file.filename
-    file.include?(File.join('lib', 'teachers_pet', 'actions')) &&
-      !%w(base.rb non_interactive.rb).include?(File.basename(file))
+    file.include?(File.join('lib', 'teachers_pet', 'actions')) && File.basename(file) != 'base.rb'
   end
   add_group 'Specs', '/spec/'
 end
