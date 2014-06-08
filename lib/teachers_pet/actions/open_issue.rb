@@ -1,5 +1,3 @@
-require_relative 'non_interactive'
-
 module TeachersPet
   module Actions
     class OpenIssue < NonInteractive
