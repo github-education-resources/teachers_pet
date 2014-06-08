@@ -16,6 +16,10 @@ module TeachersPet
         raise "Shouldn't be ask()ing: #{args}"
       end
 
+      def choose(*args)
+        raise "Shouldn't be choose()ing: #{args}"
+      end
+
       def confirm(*args)
         raise "Shouldn't be confirm()ing: #{args}"
       end

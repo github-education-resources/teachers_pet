@@ -1,6 +1,6 @@
 # teachers_pet [![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet)
 
-**WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README correspoding to the latest release.**
+**WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README corresponding to the latest release.**
 
 Command line tools to help teachers use GitHub in their classrooms.
 
@@ -90,7 +90,11 @@ One issue will be opened in every repo defined by the `students` file and reposi
 
 ### Pulling repositories for grading
 
-When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
+When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.  Learn more via
+
+```bash
+teachers_pet help clone_repos
+```
 
 ## Related projects
 

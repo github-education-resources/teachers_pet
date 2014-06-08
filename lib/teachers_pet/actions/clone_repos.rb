@@ -1,21 +1,10 @@
-# Author: Mike Helmick
-# Clones all student repositories for a particular assignment
-#
-# Currently this will clone all student repositories into the current
-
-require 'rubygems'
-require 'highline/question'
-require 'highline/import'
-require 'highline/compatibility'
-require_relative 'interactive'
-
 module TeachersPet
   module Actions
-    class CloneRepos < Interactive
+    class CloneRepos < NonInteractive
       def read_info
-        @repository = ask('What repository name should be cloned for each student?') { |q| q.validate = /\w+/ }
-        @organization = ask("What is the organization name?")
-        @student_file = self.get_students_file_path
+        @repository = self.options[:repository]
+        @organization = self.options[:organization]
+        @student_file = self.options[:students]
       end
 
       def load_files
@@ -23,29 +12,16 @@ module TeachersPet
       end
 
       def get_clone_method
-        cloneMethod = 'https'
-        choose do |menu|
-          menu.prompt = "Clone via? "
-          menu.choice :ssh do
-            cloneMethod = 'ssh'
-          end
-          menu.choice :https do
-            cloneMethod = 'https'
-          end
-        end
-
-        cloneMethod
+        self.options[:clone_method]
       end
 
       def create
         cloneMethod = self.get_clone_method
 
-        confirm("Clone all repositories?")
-
         # create a repo for each student
         self.init_client
 
-        org_hash = read_organization(@organization)
+        org_hash = @client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:url]}"
 
