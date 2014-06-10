@@ -2,7 +2,7 @@
 
 **WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README corresponding to the latest release.**
 
-Command line tools to help teachers use GitHub in their classrooms.
+Command line tool to help teachers use GitHub in their classrooms.
 
 ## Philosophy
 
@@ -31,12 +31,13 @@ To use the latest-and-greatest code from this repository, see the instructions i
 
 ## Basic Setup
 
-* Create an organization (you will be an owner by default). The organization should reflect the name of your course.
-* Create a `students` file (you will be prompted for the path later)
+1. Create an organization (you will be an owner by default). The organization should reflect the name of your course. See [the classroom guide](https://education.github.com/guide#2-create-an-organization-for-your-class) for more info.
+1. Have each student/instructor create GitHub accounts.
+1. Create a `students` file (you can use an alternate filename and specify with the `--students` option if you like)
     * Individual assignments: one username per line
     * Group assignments: one team per line in the format `teamName username username username`
-* Add the GitHub username of all instructors to an 'instructors' file (one per line)
-* Run `create_teams`
+1. Add the GitHub username of all instructors to an `instructors` file (one per line)
+1. Run `create_teams`
 
 ## Authentication
 
@@ -44,10 +45,11 @@ The scripts will ask for your GitHub password in order to run. If you have [two 
 
 https://github.com/settings/tokens/new?description=teachers_pet&scopes=repo%2Cpublic_repo%2Cwrite%3Aorg%2Crepo%3Astatus%2Cread%3Aorg%2Cuser%2Cadmin%3Aorg
 
-Then, add the following line to your `.bash_profile`:
+Once created, specify the token using the `--token` option, or on Mac/Linux, replace `YOUR_TOKEN_HERE` and run the following:
 
 ```bash
-export TEACHERS_PET_GITHUB_TOKEN="YOUR_TOKEN_HERE"
+echo "export TEACHERS_PET_GITHUB_TOKEN=YOUR_TOKEN_HERE" >> ~/.bash_profile
+source ~/.bash_profile
 ```
 
 ## Actions
@@ -55,26 +57,26 @@ export TEACHERS_PET_GITHUB_TOKEN="YOUR_TOKEN_HERE"
 **To learn the options for each action, run**
 
 ```bash
-teachers_pet help ACTION
+teachers_pet help
+# or
+teachers_pet help COMMAND
 ```
 
 ### Creating assignments
 
-For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
+When using the [sandboxing](https://education.github.com/guide/sandboxing) setup, you will need to create the repositories for the students.  For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
 ### Collaborator access
 
-Give collaborator access to everyone who has forked your repository using `fork_collab`.
+Give [collaborator access](https://help.github.com/articles/what-are-the-different-access-permissions#collaborator) to everyone who has forked your repository using `fork_collab`.  Mostly useful for GitHub demonstrations, where the students can quickly be added to a repository without having to worry about collecting usernames.
 
 ### Pushing starter files
 
-This is the workflow that we use. Create a private repository on GitHub. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
-
-While in the directory for the starter file repository, use the `push_files` action.  This works by creating a Git remote for each repository and thing doing a push to that repository.
+When creating repositories for students, you will often want to include boilerplate files.  After running `create_repos`, create a canonical copy of the starter files (e.g. `.gitignore`, `Makefile`s, etc.) in a repository.  From the local clone of the repository, use the `push_files` action to place that code in the repositories for each student.  This works by creating a Git remote for each student repository, and doing a `git push` to each one.
 
 ### Opening issues
 
-After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching by using `open_issue`.  One issue will be opened in every repo defined by the `students` file and repository name given by the user.
+After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching, using the `open_issue` command.
 
 ### Pulling repositories for grading
 
