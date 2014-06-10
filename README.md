@@ -61,10 +61,11 @@ The scripts will ask for your GitHub password in order to run. If you have [two 
 
 https://github.com/settings/tokens/new?description=teachers_pet&scopes=repo%2Cpublic_repo%2Cwrite%3Aorg%2Crepo%3Astatus%2Cread%3Aorg%2Cuser%2Cadmin%3Aorg
 
-Once created, specify the token using the `--token` option, or on Mac/Linux, replace `YOUR_TOKEN_HERE` and run the following:
+Once created, specify the token using the `--token` option, or if you add the `TEACHERS_PET_GITHUB_TOKEN` environment variable to your `.bash_profile` (or equivalent – example below), it will be picked up by `teachers_pet`.
 
 ```bash
-echo "export TEACHERS_PET_GITHUB_TOKEN=YOUR_TOKEN_HERE" >> ~/.bash_profile
+# replace YOUR_TOKEN_HERE below
+echo "\n\nexport TEACHERS_PET_GITHUB_TOKEN=YOUR_TOKEN_HERE" >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
