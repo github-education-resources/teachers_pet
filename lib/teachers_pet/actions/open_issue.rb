@@ -12,14 +12,11 @@ module TeachersPet
           }
         }
         @issue_file = self.options[:body]
-
-        @student_file = self.options[:students]
-        @instructor_file = self.options[:instructors]
       end
 
       def load_files
-        @students = read_file(@student_file, 'Students')
-        @instructors = read_file(@instructor_file, 'Instructors')
+        @students = self.read_students_file
+        @instructors = self.read_instructors_file
         @issue[:body] = File.open(@issue_file).read
       end
 

@@ -84,6 +84,16 @@ module TeachersPet
         map
       end
 
+      def read_students_file
+        student_file = self.options[:students]
+        read_file(student_file, 'Students')
+      end
+
+      def read_instructors_file
+        student_file = self.options[:instructors]
+        read_file(student_file, 'Instructors')
+      end
+
       def get_auth_method
         options[:token] ? 'oauth' : 'password'
       end

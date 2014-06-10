@@ -4,15 +4,13 @@ module TeachersPet
       def read_info
         @repository = self.options[:repository]
         @organization = self.options[:organization]
-        @student_file = self.options[:students]
-        @instructor_file = self.options[:instructors]
         @public_repos = self.options[:public]
         @add_init_files = !!self.options[:init_files]
       end
 
       def load_files
-        @students = read_file(@student_file, 'Students')
-        @instructors = read_file(@instructor_file, 'Instructors')
+        @students = self.read_students_file
+        @instructors = self.read_instructors_file
       end
 
       def create

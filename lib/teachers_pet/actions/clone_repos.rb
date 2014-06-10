@@ -4,11 +4,10 @@ module TeachersPet
       def read_info
         @repository = self.options[:repository]
         @organization = self.options[:organization]
-        @student_file = self.options[:students]
       end
 
       def load_files
-        @students = read_file(@student_file, 'Students')
+        @students = self.read_students_file
       end
 
       def get_clone_method

@@ -1,22 +1,13 @@
-# Creates "teams" for an origanization. In this scenario - each team consists of
-# one student, and any instructors for the course.
-
-# The students and instructors files contain 1 userid per line.
-#  - For teams, the students file should be "teamName studentName studentName"
-# We recommend that instructors also be created as students for ease of testing.
-
 module TeachersPet
   module Actions
     class CreateTeams < Base
       def read_info
         @organization = self.options[:organization]
-        @student_file = self.options[:students]
-        @instructor_file = self.options[:instructors]
       end
 
       def load_files
-        @students = read_file(@student_file, 'Students')
-        @instructors = read_file(@instructor_file, 'Instructors')
+        @students = self.read_students_file
+        @instructors = self.read_instructors_file
       end
 
       def create
@@ -42,10 +33,9 @@ module TeachersPet
           todo.keys.each do |team|
             puts " -> '#{team}' ..."
             @client.create_team(@organization,
-                {
-                  name: team,
-                  permission: 'push'
-                })
+              name: team,
+              permission: 'push'
+            )
           end
         end
 
