@@ -29,7 +29,11 @@ gem update teachers_pet
 
 To use the latest-and-greatest code from this repository, see the instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Basic Setup
+## Typical workflow
+
+...when using the [sandboxing](https://education.github.com/guide/sandboxing) method with [private repositories](https://education.github.com/guide/private_repos):
+
+### Basic setup
 
 1. Create an organization (you will be an owner by default). The organization should reflect the name of your course. See [the classroom guide](https://education.github.com/guide#2-create-an-organization-for-your-class) for more info.
 1. Have each student/instructor create GitHub accounts.
@@ -38,6 +42,18 @@ To use the latest-and-greatest code from this repository, see the instructions i
     * Group assignments: one team per line in the format `teamName username username username`
 1. Add the GitHub username of all instructors to an `instructors` file (one per line)
 1. Run `create_teams`
+
+### Assignments
+
+```bash
+teachers_pet create_repos ...
+teachers_pet push_files ...
+# Multiple times:
+teachers_pet open_issue ...
+
+# Then, after the assignment is due,
+teachers_pet clone_repos ...
+```
 
 ## Authentication
 
