@@ -24,9 +24,9 @@ module TeachersPet
 
         case @authmethod
         when 'password'
-          @client = Octokit::Client.new(:login => @username, :password => @password)
+          @client = Octokit::Client.new(login: @username, password: @password)
         when 'oauth'
-          @client = Octokit::Client.new(:login => @username, :access_token => @oauthtoken)
+          @client = Octokit::Client.new(login: @username, access_token: @oauthtoken)
         end
       end
 

@@ -43,8 +43,8 @@ module TeachersPet
             puts " -> '#{team}' ..."
             @client.create_team(@organization,
                 {
-                  :name => team,
-                  :permission => 'push'
+                  name: team,
+                  permission: 'push'
                 })
           end
         end
