@@ -52,63 +52,36 @@ export TEACHERS_PET_GITHUB_TOKEN="YOUR_TOKEN_HERE"
 
 ## Actions
 
+**To learn the options for each action, run**
+
+```bash
+teachers_pet help ACTION
+```
+
 ### Creating assignments
 
-For each assignment, run `create_repos` to create a repository for each student.  Learn the options via
-
-```bash
-teachers_pet help create_repos
-```
-
-The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
-
-```bash
-teachers_pet help create_teams
-```
+For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
 
 ### Collaborator access
 
-Give collaborator access to everyone who has forked your repository.
-
-```bash
-teachers_pet fork_collab --repository=USER/REPO
-
-# learn more via
-teachers_pet help fork_collab
-```
+Give collaborator access to everyone who has forked your repository using `fork_collab`.
 
 ### Pushing starter files
 
 This is the workflow that we use. Create a private repository on GitHub. Clone it to your machine and place in all the necessary starter files (.gitignore and build files, like Makefile are highly recommended). Commit and push this repository to the origin.
 
-While in the directory for the starter file repository, run the `push_files` script.
-
-This works by creating a git remote for each repository and thing doing a push to that repository.
+While in the directory for the starter file repository, use the `push_files` action.  This works by creating a Git remote for each repository and thing doing a push to that repository.
 
 ### Opening issues
 
-After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching.
-
-```bash
-teachers_pet open_issue --repository=REPO --body=./issue.md
-
-# learn more via
-teachers_pet help open_issue
-```
-
-One issue will be opened in every repo defined by the `students` file and repository name given by the user.
+After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching by using `open_issue`.  One issue will be opened in every repo defined by the `students` file and repository name given by the user.
 
 ### Pulling repositories for grading
 
-When grading, use the `clone_repos` script to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.  Learn more via
-
-```bash
-teachers_pet help clone_repos
-```
+When grading, use the `clone_repos` command to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
 
 ## Related projects
 
 * https://education.github.com/guide
 * https://github.com/hogbait/6170_repo_management
-* https://github.com/mikehelmick/edugit-scripts
 * https://github.com/UCSB-CS-Using-GitHub-In-Courses/github-acad-scripts

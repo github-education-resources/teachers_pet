@@ -7,7 +7,7 @@
 
 module TeachersPet
   module Actions
-    class CreateTeams < NonInteractive
+    class CreateTeams < Base
       def read_info
         @organization = self.options[:organization]
         @student_file = self.options[:students]

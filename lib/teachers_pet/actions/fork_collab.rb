@@ -1,6 +1,6 @@
 module TeachersPet
   module Actions
-    class ForkCollab < NonInteractive
+    class ForkCollab < Base
       def repository
         self.options[:repository]
       end

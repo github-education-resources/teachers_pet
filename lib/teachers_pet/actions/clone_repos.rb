@@ -1,6 +1,6 @@
 module TeachersPet
   module Actions
-    class CloneRepos < NonInteractive
+    class CloneRepos < Base
       def read_info
         @repository = self.options[:repository]
         @organization = self.options[:organization]

@@ -1,17 +1,9 @@
 require 'spec_helper'
 
 describe TeachersPet::Actions::PushFiles do
-  include InteractiveHelpers
-
-  let(:action) { TeachersPet::Actions::PushFiles.new }
+  include CliHelpers
 
   it "runs" do
-    respond("What repository name should pushed to for each student?", 'assignment')
-    respond("What is the organization name?", 'testorg')
-    respond("What is the filename of the list of students?", students_list_fixture_path)
-    respond("What is the ssh endpoint?", 'github.com')
-    stub_github_config
-
     request_stubs = []
     request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg',
       login: 'testorg',
@@ -24,7 +16,15 @@ describe TeachersPet::Actions::PushFiles do
       }
     ])
 
-    action.run
+    teachers_pet(:push_files,
+      repository: 'assignment',
+      organization: 'testorg',
+
+      students: students_list_fixture_path,
+
+      username: 'testteacher',
+      password: 'abc123'
+    )
 
     request_stubs.each do |request_stub|
       expect(request_stub).to have_been_requested.once
