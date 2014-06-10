@@ -4,8 +4,8 @@ module TeachersPet
       def read_info
         @repository = self.repository
         @organization = self.organization
-        @public_repos = self.public
-        @add_init_files = !!self.init_files
+        @public_repos = self.public?
+        @add_init_files = self.init_files?
       end
 
       def load_files

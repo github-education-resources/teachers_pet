@@ -11,7 +11,7 @@ module TeachersPet
         forks.each do |fork|
           login = fork.owner.login
           if fork.owner.type == "User"
-            unless self.dry_run
+            unless self.dry_run?
               result = @client.add_collab(self.repository, login)
             end
             puts "#{login} - #{result}"

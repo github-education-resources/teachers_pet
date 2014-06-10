@@ -12,8 +12,10 @@ module TeachersPet
       end
 
       def method_missing(meth, *args, &block)
-        if self.options.has_key?(meth)
-          self.options[meth]
+        # Support boolean options ending, by calling them with '?' at the end
+        key = meth.to_s.sub(/\?\z/, '').to_sym
+        if self.options.has_key?(key)
+          self.options[key]
         else
           super
         end
