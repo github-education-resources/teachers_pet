@@ -7,7 +7,6 @@ module TeachersPet
         @student_file = self.options[:students]
         @instructor_file = self.options[:instructors]
         @public_repos = self.options[:public]
-        @add_init_files = !!self.options[:init_files]
       end
 
       def load_files
@@ -41,21 +40,16 @@ module TeachersPet
             next
           end
 
-          git_ignore_template = "C++" ## This is specific to my current class, you'll want to change
-          git_ignore_template = '' unless @add_init_files
           puts " --> Creating '#{repo_name}' public? #{@public_repos}"
           @client.create_repository(repo_name,
-              {
-                description: "#{@repository} created for #{student}",
-                private: !@public_repos,
-                has_issues: true, # seems like a resonable default
-                has_wiki: false,
-                has_downloads: false,
-                organization: @organization,
-                team_id: org_teams[student][:id],
-                auto_init: @add_init_files,
-                gitignore_template: git_ignore_template
-              })
+            description: "#{@repository} created for #{student}",
+            private: !@public_repos,
+            has_issues: true,
+            has_wiki: false,
+            has_downloads: false,
+            organization: @organization,
+            team_id: org_teams[student][:id]
+          )
         end
       end
 
