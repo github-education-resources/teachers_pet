@@ -2,10 +2,10 @@ module TeachersPet
   module Actions
     class CreateRepos < Base
       def read_info
-        @repository = self.options[:repository]
-        @organization = self.options[:organization]
-        @public_repos = self.options[:public]
-        @add_init_files = !!self.options[:init_files]
+        @repository = self.repository
+        @organization = self.organization
+        @public_repos = self.public
+        @add_init_files = !!self.init_files
       end
 
       def load_files

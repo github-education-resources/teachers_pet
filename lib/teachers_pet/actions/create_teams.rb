@@ -2,7 +2,7 @@ module TeachersPet
   module Actions
     class CreateTeams < Base
       def read_info
-        @organization = self.options[:organization]
+        @organization = self.organization
       end
 
       def load_files

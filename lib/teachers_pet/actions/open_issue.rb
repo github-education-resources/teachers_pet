@@ -2,16 +2,16 @@ module TeachersPet
   module Actions
     class OpenIssue < Base
       def read_info
-        @repository = self.options[:repository]
-        @organization = self.options[:organization]
+        @repository = self.repository
+        @organization = self.organization
 
         @issue = {
-          title: self.options[:title],
+          title: self.title,
           options: {
-            labels: self.options[:labels]
+            labels: self.labels
           }
         }
-        @issue_file = self.options[:body]
+        @issue_file = self.body
       end
 
       def load_files

@@ -2,8 +2,8 @@ module TeachersPet
   module Actions
     class CloneRepos < Base
       def read_info
-        @repository = self.options[:repository]
-        @organization = self.options[:organization]
+        @repository = self.repository
+        @organization = self.organization
       end
 
       def load_files
@@ -11,7 +11,7 @@ module TeachersPet
       end
 
       def get_clone_method
-        self.options[:clone_method]
+        self.clone_method
       end
 
       def create

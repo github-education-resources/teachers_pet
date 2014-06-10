@@ -11,6 +11,14 @@ module TeachersPet
         @options = opts.symbolize_keys
       end
 
+      def method_missing(meth, *args, &block)
+        if self.options.has_key?(meth)
+          self.options[meth]
+        else
+          super
+        end
+      end
+
       def init_client
         self.config_github
         puts "=" * 50
@@ -85,12 +93,12 @@ module TeachersPet
       end
 
       def read_students_file
-        student_file = self.options[:students]
+        student_file = self.students
         read_file(student_file, 'Students')
       end
 
       def read_instructors_file
-        student_file = self.options[:instructors]
+        student_file = self.instructors
         read_file(student_file, 'Instructors')
       end
 
