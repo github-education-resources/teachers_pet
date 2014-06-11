@@ -12,35 +12,28 @@ module TeachersPet
 
       def create
         self.init_client
-        existing = self.existing_teams_by_name
+        teams_by_name = self.existing_teams_by_name
 
-        puts "\nDetermining which students need teams created..."
-        todo = Hash.new
         @students.keys.each do |team_name|
-          if existing[team_name].nil?
-            puts " -> #{team_name}"
-            todo[team_name] = true
-          end
-        end
-
-        if todo.empty?
-          puts "\nAll teams exist"
-        else
-          puts "\nCreating team..."
-          todo.keys.each do |team_name|
-            puts " -> '#{team_name}' ..."
-            team = @client.create_team(@organization,
-              name: team_name,
-              permission: 'push'
-            )
-            existing[team_name] = team
+          if teams_by_name[team_name]
+            puts "Team @#{organization}/#{team_name} already exists."
+          else
+            teams_by_name[team_name] = self.create_team(team_name)
           end
         end
 
         puts "\nAdjusting team memberships"
-        existing.each do |team_name, team|
+        teams_by_name.each do |team_name, team|
           self.add_members(team)
         end
+      end
+
+      def create_team(name)
+        puts "Creating team @#{organization}/#{name} ..."
+        @client.create_team(@organization,
+          name: name,
+          permission: 'push'
+        )
       end
 
       def existing_teams_by_name
