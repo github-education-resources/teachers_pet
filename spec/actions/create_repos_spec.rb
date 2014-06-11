@@ -26,7 +26,7 @@ describe TeachersPet::Actions::CreateRepos do
         end
       end
       stub_request(:post, "https://testteacher:abc123@api.github.com/orgs/testorg/repos").
-        with(body: "{\"description\":\"testrepo created for #{username}\",\"private\":#{!create_as_public},\"has_issues\":true,\"has_wiki\":false,\"has_downloads\":false,\"team_id\":#{team_id},\"auto_init\":false,\"gitignore_template\":\"\",\"name\":\"#{username}-testrepo\"}")
+        with(body: "{\"description\":\"testrepo created for #{username}\",\"private\":#{!create_as_public},\"has_issues\":true,\"has_wiki\":false,\"has_downloads\":false,\"team_id\":#{team_id},\"name\":\"#{username}-testrepo\"}")
     end
 
     teachers_pet(:create_repos,

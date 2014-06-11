@@ -89,7 +89,7 @@ Give [collaborator access](https://help.github.com/articles/what-are-the-differe
 
 ### Pushing starter files
 
-When creating repositories for students, you will often want to include boilerplate files.  After running `create_repos`, create a canonical copy of the starter files (e.g. `.gitignore`, `Makefile`s, etc.) in a repository.  From the local clone of the repository, use the `push_files` action to place that code in the repositories for each student.  This works by creating a Git remote for each student repository, and doing a `git push` to each one.
+When creating repositories for students, you will often want to include boilerplate files.  After running `create_repos`, create a canonical copy of the starter files (e.g. [`.gitignore`](https://github.com/github/gitignore#readme), `Makefile`s, etc.) in a repository.  From the local clone of the repository, use the `push_files` action to place that code in the repositories for each student.  This works by creating a Git remote for each student repository, and doing a `git push` to each one.
 
 ### Opening issues
 
