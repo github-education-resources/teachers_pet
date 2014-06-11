@@ -13,6 +13,7 @@ describe TeachersPet::Actions::ForkCollab do
     it "passes the options to the action" do
       expect_to_be_run_with(TeachersPet::Actions::ForkCollab,
         'api' => 'https://api.github.com/',
+        'dry_run' => false,
         'password' => 'abc123',
         'repository' => 'testorg/testrepo',
         'username' => ENV['USER'],

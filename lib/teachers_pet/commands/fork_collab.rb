@@ -1,7 +1,7 @@
 module TeachersPet
   class Cli
     option :repository, required: true, banner: 'OWNER/REPO'
-    option :dry_run, type: :boolean
+    option :dry_run, type: :boolean, default: false
     common_options
 
     desc "fork_collab", "Give collaborator access to everyone who has forked a particular repository."
