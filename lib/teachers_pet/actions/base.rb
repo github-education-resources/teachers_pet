@@ -11,6 +11,16 @@ module TeachersPet
         @options = opts.symbolize_keys
       end
 
+      def method_missing(meth, *args, &block)
+        # Support boolean options ending, by calling them with '?' at the end
+        key = meth.to_s.sub(/\?\z/, '').to_sym
+        if self.options.has_key?(key)
+          self.options[key]
+        else
+          super
+        end
+      end
+
       def init_client
         self.config_github
         puts "=" * 50
@@ -82,6 +92,16 @@ module TeachersPet
         end
 
         map
+      end
+
+      def read_students_file
+        student_file = self.students
+        read_file(student_file, 'Students')
+      end
+
+      def read_instructors_file
+        student_file = self.instructors
+        read_file(student_file, 'Instructors')
       end
 
       def get_auth_method

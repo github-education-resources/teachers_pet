@@ -2,7 +2,7 @@ module TeachersPet
   class Cli
     option :organization, required: true
     option :repository, required: true
-    option :public, type: :boolean, desc: "Make the repositories public"
+    option :public, type: :boolean, default: false, desc: "Make the repositories public"
 
     students_option
     instructors_option

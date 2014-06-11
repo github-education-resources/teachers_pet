@@ -1,10 +1,6 @@
 module TeachersPet
   module Actions
     class ForkCollab < Base
-      def repository
-        self.options[:repository]
-      end
-
       def get_forks
         @client.forks(self.repository)
       end
@@ -15,7 +11,7 @@ module TeachersPet
         forks.each do |fork|
           login = fork.owner.login
           if fork.owner.type == "User"
-            unless self.options[:dry_run]
+            unless self.dry_run?
               result = @client.add_collab(self.repository, login)
             end
             puts "#{login} - #{result}"

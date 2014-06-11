@@ -2,14 +2,13 @@ module TeachersPet
   module Actions
     class PushFiles < Base
       def read_info
-        @repository = self.options[:repository]
-        @organization = self.options[:organization]
-        @student_file = self.options[:students]
-        @sshEndpoint = self.options[:ssh]
+        @repository = self.repository
+        @organization = self.organization
+        @sshEndpoint = self.ssh
       end
 
       def load_files
-        @students = read_file(@student_file, 'Students')
+        @students = self.read_students_file
       end
 
       def push
