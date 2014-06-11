@@ -20,12 +20,20 @@ module CommonHelpers
     File.join(fixtures_path, 'instructors')
   end
 
+  def empty_list_fixture_path
+    File.join(fixtures_path, 'empty')
+  end
+
   def issue_fixture_path
     File.join(fixtures_path, 'issue.md')
   end
 
   def student_usernames
     CSV.read(students_list_fixture_path).flatten
+  end
+
+  def instructor_usernames
+    CSV.read(instructors_list_fixture_path).flatten
   end
 
   def student_teams
