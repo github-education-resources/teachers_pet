@@ -45,31 +45,25 @@ module TeachersPet
         teams_by_name
       end
 
-      def add_members(team)
+      def add_users_to_team(team, usernames)
         team_members = get_team_member_logins(team[:id])
+        usernames.each do |username|
+          if team_members.include?(username)
+            puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
+          else
+            @client.add_team_member(team[:id], username)
+            puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
+          end
+        end
+      end
+
+      def add_members(team)
         if team[:name].eql?('Owners')
-          puts "*** OWNERS *** - Ensuring instructors are owners"
-          @instructors.keys.each do |instructor|
-            unless team_members.include?(instructor)
-              @client.add_team_member(team[:id], instructor)
-              puts " -> '#{instructor}' has been made an owner for this course"
-            else
-              puts " -> '#{instructor}' is already an owner"
-            end
-          end
+          self.add_users_to_team(team, @instructors.keys)
         elsif @students.key?(team[:name])
-          puts "Validating membership for team '#{team[:name]}'"
-          # If there isn't a team member that is the same name as the team, and we already know
-          # there is a student with the same name, add that student to the team.
-          #unless team_members.include?(team[:name])
-          @students[team[:name]].each do |student|
-            puts "  -> Adding '#{team[:name]}' to the team"
-            @client.add_team_member(team[:id], student)
-          end
-          # Originally, instructors were added to the student's team, but that isn't needed
-          # since instructors are addded to the Owners team that can see all repositories.
+          self.add_users_to_team(team, @students[team[:name]])
         else
-          puts "*** Team name '#{team[:name]}' does not match any students, ignoring. ***"
+          puts "*** Team @#{organization}/#{team[:name]} does not match any students, ignoring. ***"
         end
       end
 
