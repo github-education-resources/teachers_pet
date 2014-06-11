@@ -19,10 +19,10 @@ module TeachersPet
 
         puts "\nDetermining which students need teams created..."
         todo = Hash.new
-        @students.keys.each do |team|
-          if existing[team].nil?
-            puts " -> #{team}"
-            todo[team] = true
+        @students.keys.each do |team_name|
+          if existing[team_name].nil?
+            puts " -> #{team_name}"
+            todo[team_name] = true
           end
         end
 
@@ -30,17 +30,17 @@ module TeachersPet
           puts "\nAll teams exist"
         else
           puts "\nCreating team..."
-          todo.keys.each do |team|
-            puts " -> '#{team}' ..."
-            @client.create_team(@organization,
-              name: team,
+          todo.keys.each do |team_name|
+            puts " -> '#{team_name}' ..."
+            team = @client.create_team(@organization,
+              name: team_name,
               permission: 'push'
             )
+            teams.push(team)
           end
         end
 
         puts "\nAdjusting team memberships"
-        teams = @client.organization_teams(@organization)
         teams.each do |team|
           team_members = get_team_member_logins(team[:id])
           if team[:name].eql?('Owners')
