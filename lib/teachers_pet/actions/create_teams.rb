@@ -58,12 +58,13 @@ module TeachersPet
       end
 
       def add_members(team)
-        if team[:name].eql?('Owners')
+        team_name = team[:name]
+        if team_name == 'Owners'
           self.add_users_to_team(team, @instructors.keys)
-        elsif @students.key?(team[:name])
-          self.add_users_to_team(team, @students[team[:name]])
+        elsif @students.key?(team_name)
+          self.add_users_to_team(team, @students[team_name])
         else
-          puts "*** Team @#{organization}/#{team[:name]} does not match any students, ignoring. ***"
+          puts "*** Team @#{organization}/#{team_name} does not match any students, ignoring. ***"
         end
       end
 
