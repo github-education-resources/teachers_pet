@@ -5,6 +5,8 @@ module TeachersPet
     # TODO figure out a way to display options as groups
 
     def self.common_options
+      check_unknown_options!
+
       option :username, default: ENV['USER']
       option :password
       option :token, default: ENV['TEACHERS_PET_GITHUB_TOKEN'], desc: "Provide a token instead of a username+password to authenticate via OAuth. See https://github.com/education/teachers_pet#authentication."
