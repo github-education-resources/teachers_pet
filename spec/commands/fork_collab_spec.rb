@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TeachersPet::Actions::ForkCollab do
-  include CliHelpers
+describe 'fork_collab' do
+  include CommandHelpers
 
   context 'through CLI' do
     it "requires the repository be specified" do
