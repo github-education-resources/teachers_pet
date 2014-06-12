@@ -5,7 +5,6 @@ module TeachersPet
     option :public, type: :boolean, default: false, desc: "Make the repositories public"
 
     students_option
-    instructors_option
     common_options
 
     desc 'create_repos', "Create assignment repositories for students."

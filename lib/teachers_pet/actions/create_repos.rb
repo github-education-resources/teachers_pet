@@ -9,7 +9,6 @@ module TeachersPet
 
       def load_files
         @students = self.read_students_file
-        @instructors = self.read_instructors_file
       end
 
       def create

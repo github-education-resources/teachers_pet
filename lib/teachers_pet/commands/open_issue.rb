@@ -8,7 +8,6 @@ module TeachersPet
     option :labels, banner: 'LABEL1,LABEL2'
 
     students_option
-    instructors_option
     common_options
 
     desc "open_issue", "Opens a single issue in each repository in the organization."

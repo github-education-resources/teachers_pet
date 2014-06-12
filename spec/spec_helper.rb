@@ -4,6 +4,7 @@ SimpleCov.start do
     file = src_file.filename
     file.include?(File.join('lib', 'teachers_pet', 'actions')) && File.basename(file) != 'base.rb'
   end
+  add_group 'Commands', '/lib/teachers_pet/commands/'
   add_group 'Specs', '/spec/'
 end
 

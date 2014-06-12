@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TeachersPet::Actions::CloneRepos do
-  include CliHelpers
+describe 'clone_repos' do
+  include CommandHelpers
 
   it "runs" do
     request_stubs = []

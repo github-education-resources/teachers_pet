@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TeachersPet::Actions::CreateRepos do
-  include CliHelpers
+describe 'create_repos' do
+  include CommandHelpers
 
   def common_test(create_as_public)
     request_stubs = []
@@ -35,7 +35,6 @@ describe TeachersPet::Actions::CreateRepos do
       public: create_as_public,
 
       students: students_list_fixture_path,
-      instructors: instructors_list_fixture_path,
 
       username: 'testteacher',
       password: 'abc123'

@@ -16,7 +16,6 @@ module TeachersPet
 
       def load_files
         @students = self.read_students_file
-        @instructors = self.read_instructors_file
         @issue[:body] = File.open(@issue_file).read
       end
 

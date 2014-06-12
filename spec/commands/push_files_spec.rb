@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TeachersPet::Actions::PushFiles do
-  include CliHelpers
+describe 'push_files' do
+  include CommandHelpers
 
   it "runs" do
     request_stubs = []

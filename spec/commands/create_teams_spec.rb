@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TeachersPet::Actions::CreateTeams do
-  include CliHelpers
+describe 'create_teams' do
+  include CommandHelpers
 
   def stub_owners_only
     stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [
