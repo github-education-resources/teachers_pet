@@ -7,10 +7,10 @@ describe TeachersPet::Cli do
     # ...using an arbirtrary command
 
     # Make sure it short-circuits
-    expect(TeachersPet::Actions::CreateTeams).to_not receive(:new)
+    expect(TeachersPet::Actions::CreateStudentTeams).to_not receive(:new)
 
     output = capture(:stderr) {
-      TeachersPet::Cli.start(%w(create_teams --organization testorg --unsupported-option))
+      TeachersPet::Cli.start(%w(create_student_teams --organization testorg --unsupported-option))
     }
     expect(output).to include('--unsupported-option')
   end

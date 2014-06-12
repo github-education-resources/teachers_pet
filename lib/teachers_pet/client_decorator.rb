@@ -22,5 +22,15 @@ module TeachersPet
         member[:login]
       end
     end
+
+    def existing_teams_by_name(organization)
+      results = Hash.new
+      teams = self.organization_teams(organization)
+      teams.each do |team|
+        results[team[:name]] = team
+      end
+
+      results
+    end
   end
 end

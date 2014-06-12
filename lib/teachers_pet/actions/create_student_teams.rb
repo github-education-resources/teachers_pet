@@ -1,29 +1,21 @@
 module TeachersPet
   module Actions
-    class CreateTeams < Base
+    class CreateStudentTeams < Base
       def read_info
         @organization = self.organization
       end
 
-      def read_instructors_file
-        student_file = self.instructors
-        puts "Loading instructors:"
-        read_file(student_file)
-      end
-
       def load_files
         @students = self.read_students_file
-        @instructors = self.read_instructors_file
       end
 
       def create
         self.init_client
         self.create_student_teams
-        self.add_instructors_to_owners
       end
 
       def create_student_teams
-        teams_by_name = self.existing_teams_by_name
+        teams_by_name = self.client.existing_teams_by_name(@organization)
 
         @students.each do |key, value|
           if value
@@ -46,29 +38,12 @@ module TeachersPet
         end
       end
 
-      def add_instructors_to_owners
-        owners = self.existing_teams_by_name['Owners']
-        self.add_users_to_team(owners, @instructors.keys)
-      end
-
       def create_team(name)
         puts "Creating team @#{organization}/#{name} ..."
         self.client.create_team(@organization,
           name: name,
           permission: 'push'
         )
-      end
-
-      def existing_teams_by_name
-        unless @existing_teams_by_name
-          @existing_teams_by_name = Hash.new
-          teams = self.client.organization_teams(@organization)
-          teams.each do |team|
-            @existing_teams_by_name[team[:name]] = team
-          end
-        end
-
-        @existing_teams_by_name
       end
 
       def add_users_to_team(team, usernames)
