@@ -7,7 +7,7 @@ module TeachersPet
     class Base
       attr_reader :options
 
-      def initialize(opts)
+      def initialize(opts={})
         @options = opts.symbolize_keys
       end
 
