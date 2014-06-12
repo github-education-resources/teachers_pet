@@ -12,20 +12,32 @@ module CommonHelpers
     File.join(File.dirname(__FILE__), '..', 'fixtures')
   end
 
+  def fixture_path(filename)
+    File.join(fixtures_path, filename)
+  end
+
   def students_list_fixture_path
-    File.join(fixtures_path, 'students')
+    fixture_path('students')
   end
 
   def instructors_list_fixture_path
-    File.join(fixtures_path, 'instructors')
+    fixture_path('instructors')
+  end
+
+  def empty_list_fixture_path
+    fixture_path('empty')
   end
 
   def issue_fixture_path
-    File.join(fixtures_path, 'issue.md')
+    fixture_path('issue.md')
   end
 
   def student_usernames
     CSV.read(students_list_fixture_path).flatten
+  end
+
+  def instructor_usernames
+    CSV.read(instructors_list_fixture_path).flatten
   end
 
   def student_teams

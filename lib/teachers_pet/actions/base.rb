@@ -7,7 +7,7 @@ module TeachersPet
     class Base
       attr_reader :options
 
-      def initialize(opts)
+      def initialize(opts={})
         @options = opts.symbolize_keys
       end
 
@@ -63,9 +63,8 @@ module TeachersPet
         end
       end
 
-      def read_file(filename, type)
+      def read_file(filename)
         map = Hash.new
-        puts "Loading #{type}:"
         File.open(filename).each_line do |team|
           # Team can be a single user, or a team name and multiple users
           # Trim whitespace, otherwise issues occur
@@ -96,12 +95,14 @@ module TeachersPet
 
       def read_students_file
         student_file = self.students
-        read_file(student_file, 'Students')
+        puts "Loading students:"
+        read_file(student_file)
       end
 
       def read_instructors_file
         student_file = self.instructors
-        read_file(student_file, 'Instructors')
+        puts "Loading instructors:"
+        read_file(student_file)
       end
 
       def get_auth_method

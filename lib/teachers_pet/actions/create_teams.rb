@@ -12,60 +12,70 @@ module TeachersPet
 
       def create
         self.init_client
+        self.create_student_teams
+        self.add_instructors_to_owners
+      end
 
-        existing = Hash.new
-        teams = @client.organization_teams(@organization)
-        teams.each { |team| existing[team[:name]] = team }
+      def create_student_teams
+        teams_by_name = self.existing_teams_by_name
 
-        puts "\nDetermining which students need teams created..."
-        todo = Hash.new
-        @students.keys.each do |team|
-          if existing[team].nil?
-            puts " -> #{team}"
-            todo[team] = true
-          end
-        end
-
-        if todo.empty?
-          puts "\nAll teams exist"
-        else
-          puts "\nCreating team..."
-          todo.keys.each do |team|
-            puts " -> '#{team}' ..."
-            @client.create_team(@organization,
-              name: team,
-              permission: 'push'
-            )
-          end
-        end
-
-        puts "\nAdjusting team memberships"
-        teams = @client.organization_teams(@organization)
-        teams.each do |team|
-          team_members = get_team_member_logins(team[:id])
-          if team[:name].eql?('Owners')
-            puts "*** OWNERS *** - Ensuring instructors are owners"
-            @instructors.keys.each do |instructor|
-              unless team_members.include?(instructor)
-                @client.add_team_member(team[:id], instructor)
-                puts " -> '#{instructor}' has been made an owner for this course"
-              else
-                puts " -> '#{instructor}' is already an owner"
-              end
-            end
-          elsif @students.key?(team[:name])
-            puts "Validating membership for team '#{team[:name]}'"
-            # If there isn't a team member that is the same name as the team, and we already know
-            # there is a student with the same name, add that student to the team.
-            #unless team_members.include?(team[:name])
-            @students[team[:name]].each do |student|
-              puts "  -> Adding '#{team[:name]}' to the team"
-              @client.add_team_member(team[:id], student)
-            end
-            # Originally, instructors were added to the student's team, but that isn't needed
-            # since instructors are addded to the Owners team that can see all repositories.
+        @students.each do |key, value|
+          if value
+            # Create one team per group of students
+            team_name = key
+            usernames = value
           else
-            puts "*** Team name '#{team[:name]}' does not match any students, ignoring. ***"
+            # Create a team with the same name as the student, with that person as the only member
+            team_name = key
+            usernames = [value]
+          end
+
+          team = teams_by_name[team_name]
+          if team
+            puts "Team @#{organization}/#{team_name} already exists."
+          else
+            team = self.create_team(team_name)
+          end
+          self.add_users_to_team(team, usernames)
+        end
+      end
+
+      def add_instructors_to_owners
+        owners = self.existing_teams_by_name['Owners']
+        self.add_users_to_team(owners, @instructors.keys)
+      end
+
+      def create_team(name)
+        puts "Creating team @#{organization}/#{name} ..."
+        @client.create_team(@organization,
+          name: name,
+          permission: 'push'
+        )
+      end
+
+      def existing_teams_by_name
+        unless @existing_teams_by_name
+          @existing_teams_by_name = Hash.new
+          teams = @client.organization_teams(@organization)
+          teams.each do |team|
+            @existing_teams_by_name[team[:name]] = team
+          end
+        end
+
+        @existing_teams_by_name
+      end
+
+      def add_users_to_team(team, usernames)
+        # Minor optimization, mostly for testing
+        if usernames.any?
+          team_members = get_team_member_logins(team[:id])
+          usernames.each do |username|
+            if team_members.include?(username)
+              puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
+            else
+              @client.add_team_member(team[:id], username)
+              puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
+            end
           end
         end
       end
