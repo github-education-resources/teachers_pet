@@ -53,7 +53,7 @@ module TeachersPet
 
       def create_team(name)
         puts "Creating team @#{organization}/#{name} ..."
-        @client.create_team(@organization,
+        self.client.create_team(@organization,
           name: name,
           permission: 'push'
         )
@@ -62,7 +62,7 @@ module TeachersPet
       def existing_teams_by_name
         unless @existing_teams_by_name
           @existing_teams_by_name = Hash.new
-          teams = @client.organization_teams(@organization)
+          teams = self.client.organization_teams(@organization)
           teams.each do |team|
             @existing_teams_by_name[team[:name]] = team
           end
@@ -74,12 +74,12 @@ module TeachersPet
       def add_users_to_team(team, usernames)
         # Minor optimization, mostly for testing
         if usernames.any?
-          team_members = get_team_member_logins(team[:id])
+          team_members = self.client.get_team_member_logins(team[:id])
           usernames.each do |username|
             if team_members.include?(username)
               puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
             else
-              @client.add_team_member(team[:id], username)
+              self.client.add_team_member(team[:id], username)
               puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
             end
           end

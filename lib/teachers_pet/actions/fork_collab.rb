@@ -2,7 +2,7 @@ module TeachersPet
   module Actions
     class ForkCollab < Base
       def get_forks
-        @client.forks(self.repository)
+        self.client.forks(self.repository)
       end
 
       def promote
@@ -12,7 +12,7 @@ module TeachersPet
           login = fork.owner.login
           if fork.owner.type == "User"
             unless self.dry_run?
-              result = @client.add_collab(self.repository, login)
+              result = self.client.add_collab(self.repository, login)
             end
             puts "#{login} - #{result}"
           else

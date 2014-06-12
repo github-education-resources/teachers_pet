@@ -20,12 +20,12 @@ module TeachersPet
         # create a repo for each student
         self.init_client
 
-        org_hash = @client.organization(@organization)
+        org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:url]}"
 
         # Load the teams - there should be one team per student.
-        org_teams = get_teams_by_name(@organization)
+        org_teams = self.client.get_teams_by_name(@organization)
         # For each student - pull the repository if it exists
         puts "\nCloning assignment repositories for students..."
         @students.keys.each do |student|
@@ -35,7 +35,7 @@ module TeachersPet
           end
           repo_name = "#{student}-#{@repository}"
 
-          unless repository?(@organization, repo_name)
+          unless self.client.repository?(@organization, repo_name)
             puts " ** ERROR ** - Can't find expected repository '#{repo_name}'"
             next
           end
