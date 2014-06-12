@@ -40,9 +40,13 @@ To use the latest-and-greatest code from this repository, see the instructions i
 1. Create a `students` file (you can use an alternate filename and specify with the `--students` option if you like)
     * Individual assignments: one username per line
     * Group assignments: one team per line in the format `teamName username username username`
-1. Add the GitHub username of all instructors to an `instructors` file (one per line)
-1. Run `create_student_teams`
-1. Run `add_to_team` to add the other instructors to the Owners team
+1. Add the GitHub username of all instructors to an `Owners.csv` file (one per line)
+1. Run the following:
+
+    ```bash
+    teachers_pet create_student_teams ...
+    teachers_pet add_to_team --members Owners.csv ...
+    ```
 
 ### Assignments
 
