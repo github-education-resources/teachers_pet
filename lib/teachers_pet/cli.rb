@@ -16,9 +16,5 @@ module TeachersPet
     def self.students_option
       option :students, default: TeachersPet::Configuration.studentsFile, banner: 'PATH', desc: "The path to the file containing the list of students"
     end
-
-    def self.instructors_option
-      option :instructors, default: TeachersPet::Configuration.instructorsFile, banner: 'PATH', desc: "The path to the file containing the list of instructors"
-    end
   end
 end

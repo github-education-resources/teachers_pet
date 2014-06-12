@@ -99,12 +99,6 @@ module TeachersPet
         read_file(student_file)
       end
 
-      def read_instructors_file
-        student_file = self.instructors
-        puts "Loading instructors:"
-        read_file(student_file)
-      end
-
       def get_auth_method
         self.options[:token] ? 'oauth' : 'password'
       end

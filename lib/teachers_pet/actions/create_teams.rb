@@ -5,6 +5,12 @@ module TeachersPet
         @organization = self.organization
       end
 
+      def read_instructors_file
+        student_file = self.instructors
+        puts "Loading instructors:"
+        read_file(student_file)
+      end
+
       def load_files
         @students = self.read_students_file
         @instructors = self.read_instructors_file

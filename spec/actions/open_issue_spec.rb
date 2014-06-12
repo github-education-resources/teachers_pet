@@ -42,7 +42,6 @@ describe TeachersPet::Actions::OpenIssue do
         labels: labels,
 
         students: students_list_fixture_path,
-        instructors: instructors_list_fixture_path,
 
         username: 'testteacher',
         password: 'abc123'
