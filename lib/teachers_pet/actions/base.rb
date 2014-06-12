@@ -21,23 +21,29 @@ module TeachersPet
         end
       end
 
-      def init_client
-        self.config_github
-        puts "=" * 50
-        puts "Authenticating to GitHub..."
-        Octokit.configure do |c|
-          c.api_endpoint = @api_endpoint
-          c.web_endpoint = @web_endpoint
+      def octokit_config
+        opts = {
+          api_endpoint: self.api,
+          web_endpoint: self.web,
+          login: self.username,
           # Organizations can get big, pull in all pages
-          c.auto_paginate = true
+          auto_paginate: true
+        }
+
+        case self.get_auth_method
+        when 'password'
+          opts[:password] = self.password
+        when 'oauth'
+          opts[:access_token] = self.token
         end
 
-        case @authmethod
-        when 'password'
-          @client = Octokit::Client.new(login: @username, password: @password)
-        when 'oauth'
-          @client = Octokit::Client.new(login: @username, access_token: @oauthtoken)
-        end
+        opts
+      end
+
+      def init_client
+        puts "=" * 50
+        puts "Authenticating to GitHub..."
+        @client = Octokit::Client.new(self.octokit_config)
       end
 
       def repository?(organization, repo_name)
@@ -101,21 +107,6 @@ module TeachersPet
 
       def get_auth_method
         self.options[:token] ? 'oauth' : 'password'
-      end
-
-      def config_github
-        return unless @username.nil?
-        @api_endpoint = self.api
-        @web_endpoint = self.web
-        @username = self.username
-        @authmethod = self.get_auth_method
-
-        case @authmethod
-        when 'oauth'
-          @oauthtoken = self.token
-        when 'password'
-          @password = self.password
-        end
       end
     end
   end

@@ -38,7 +38,7 @@ module TeachersPet
           if TeachersPet::Configuration.remoteSsh
             remotes_to_add[student] = "git@#{@sshEndpoint}:#{@organization}/#{repo_name}.git"
           else
-            remotes_to_add[student] = "#{@web_endpoint}#{@organization}/#{repo_name}.git"
+            remotes_to_add[student] = "#{self.web}#{@organization}/#{repo_name}.git"
           end
         end
 

@@ -41,10 +41,10 @@ module TeachersPet
           end
 
 
-          sshEndpoint = @web_endpoint.gsub("https://","git@").gsub("/",":")
+          sshEndpoint = self.web.gsub("https://","git@").gsub("/",":")
           command = "git clone #{sshEndpoint}#{@organization}/#{repo_name}.git"
           if cloneMethod.eql?('https')
-            command = "git clone #{@web_endpoint}#{@organization}/#{repo_name}.git"
+            command = "git clone #{self.web}#{@organization}/#{repo_name}.git"
           end
           puts " --> Cloning: '#{command}'"
           self.execute(command)
