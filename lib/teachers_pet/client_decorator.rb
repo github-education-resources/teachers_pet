@@ -32,5 +32,28 @@ module TeachersPet
 
       results
     end
+
+    def create_team(organization, name)
+      puts "Creating team @#{organization}/#{name} ..."
+      super(organization,
+        name: name,
+        permission: 'push'
+      )
+    end
+
+    def add_users_to_team(organization, team, usernames)
+      # Minor optimization, mostly for testing
+      if usernames.any?
+        team_members = self.get_team_member_logins(team[:id])
+        usernames.each do |username|
+          if team_members.include?(username)
+            puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
+          else
+            self.add_team_member(team[:id], username)
+            puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
+          end
+        end
+      end
+    end
   end
 end
