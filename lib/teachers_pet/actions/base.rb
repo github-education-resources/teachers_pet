@@ -106,21 +106,21 @@ module TeachersPet
       end
 
       def get_auth_method
-        options[:token] ? 'oauth' : 'password'
+        self.options[:token] ? 'oauth' : 'password'
       end
 
       def config_github
         return unless @username.nil?
-        @api_endpoint = options[:api]
-        @web_endpoint = options[:web]
-        @username = options[:username]
+        @api_endpoint = self.api
+        @web_endpoint = self.web
+        @username = self.username
         @authmethod = self.get_auth_method
 
         case @authmethod
         when 'oauth'
-          @oauthtoken = options[:token]
+          @oauthtoken = self.token
         when 'password'
-          @password = options[:password]
+          @password = self.password
         end
       end
     end

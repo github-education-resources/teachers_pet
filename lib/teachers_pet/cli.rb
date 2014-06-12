@@ -1,5 +1,4 @@
 require 'thor'
-require_relative 'actions/fork_collab'
 
 module TeachersPet
   class Cli < Thor
