@@ -42,6 +42,7 @@ To use the latest-and-greatest code from this repository, see the instructions i
     * Group assignments: one team per line in the format `teamName username username username`
 1. Add the GitHub username of all instructors to an `instructors` file (one per line)
 1. Run `create_student_teams`
+1. Run `add_to_team` to add the other instructors to the Owners team
 
 ### Assignments
 
@@ -79,9 +80,9 @@ teachers_pet help
 teachers_pet help COMMAND
 ```
 
-### Giving co-teachers access
+### Giving others access
 
-To give co-teachers/TAs access to all of the private repositories, add them to the Owners team using `add_to_owners_team`.
+You may need to give other people access to various repositories using teams – the `add_to_team` command can help do this in bulk.
 
 ### Creating assignments
 

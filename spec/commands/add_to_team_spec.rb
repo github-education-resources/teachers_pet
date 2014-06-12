@@ -1,21 +1,18 @@
 require 'spec_helper'
 
-describe 'add_to_owners_team' do
+describe 'add_to_team' do
   include CommandHelpers
 
-  def stub_owners_only
-    stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [
-      {
-        id: 101,
-        name: 'Owners'
-      }
-    ])
-  end
-
-  it "adds users to owners team" do
+  it "adds users to the team matching the filename" do
     request_stubs = []
 
-    request_stubs << stub_owners_only
+    request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [
+      {
+        id: 101,
+        name: 'instructors'
+      }
+    ])
+
     users = instructor_usernames
     request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/teams/101/members?per_page=100', [
       {
@@ -27,7 +24,7 @@ describe 'add_to_owners_team' do
       request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/101/members/#{instructor}")
     end
 
-    teachers_pet(:add_to_owners_team,
+    teachers_pet(:add_to_team,
       organization: 'testorg',
       members: instructors_list_fixture_path,
 
@@ -39,4 +36,8 @@ describe 'add_to_owners_team' do
       expect(request_stub).to have_been_requested.once
     end
   end
+
+  it "creates the team if it doesn't already exist"
+
+  it "treats the team names case-insensitively"
 end
