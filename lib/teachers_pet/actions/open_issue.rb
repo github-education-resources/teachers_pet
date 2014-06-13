@@ -23,11 +23,11 @@ module TeachersPet
         # confirm("Create issue '#{@issue[:title]}' in #{@students.keys.size} student repositories - '#{@repository}'?")
         self.init_client
 
-        org_hash = @client.organization(@organization)
+        org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"
 
-        org_teams = get_teams_by_name(@organization)
+        org_teams = self.client.get_teams_by_name(@organization)
 
         puts "\nCreating issue in repositories..."
         @students.keys.sort.each do |student|
@@ -37,13 +37,13 @@ module TeachersPet
           end
           repo_name = "#{student}-#{@repository}"
 
-          unless repository?(@organization, repo_name)
+          unless self.client.repository?(@organization, repo_name)
             puts " --> Repository not found, skipping '#{repo_name}'"
             next
           end
 
           # Create the issue with octokit
-          @client.create_issue("#{@organization}/#{repo_name}", @issue[:title], @issue[:body], @issue[:options])
+          self.client.create_issue("#{@organization}/#{repo_name}", @issue[:title], @issue[:body], @issue[:options])
         end
       end
 

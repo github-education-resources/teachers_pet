@@ -40,8 +40,13 @@ To use the latest-and-greatest code from this repository, see the instructions i
 1. Create a `students` file (you can use an alternate filename and specify with the `--students` option if you like)
     * Individual assignments: one username per line
     * Group assignments: one team per line in the format `teamName username username username`
-1. Add the GitHub username of all instructors to an `instructors` file (one per line)
-1. Run `create_teams`
+1. Add the GitHub username of all instructors to an `Owners.csv` file (one per line)
+1. Run the following:
+
+    ```bash
+    teachers_pet create_student_teams ...
+    teachers_pet add_to_team --members Owners.csv ...
+    ```
 
 ### Assignments
 
@@ -79,9 +84,13 @@ teachers_pet help
 teachers_pet help COMMAND
 ```
 
+### Giving others access
+
+You may need to give other people access to various repositories using teams – the `add_to_team` command can help do this in bulk.
+
 ### Creating assignments
 
-When using the [sandboxing](https://education.github.com/guide/sandboxing) setup, you will need to create the repositories for the students.  For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_teams` first, then there will be one team per student.
+When using the [sandboxing](https://education.github.com/guide/sandboxing) setup, you will need to create the repositories for the students.  For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_student_teams` first, then there will be one team per student.
 
 ### Collaborator access
 

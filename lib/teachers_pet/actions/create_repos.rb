@@ -15,13 +15,13 @@ module TeachersPet
         # create a repo for each student
         self.init_client
 
-        org_hash = @client.organization(@organization)
+        org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"
 
         # Load the teams - there should be one team per student.
         # Repositories are given permissions by teams
-        org_teams = get_teams_by_name(@organization)
+        org_teams = self.client.get_teams_by_name(@organization)
         # For each student - create a repository, and give permissions to their "team"
         # The repository name is teamName-repository
         puts "\nCreating assignment repositories for students..."
@@ -32,13 +32,13 @@ module TeachersPet
           end
           repo_name = "#{student}-#{@repository}"
 
-          if repository?(@organization, repo_name)
+          if self.client.repository?(@organization, repo_name)
             puts " --> Already exists, skipping '#{repo_name}'"
             next
           end
 
           puts " --> Creating '#{repo_name}' public? #{@public_repos}"
-          @client.create_repository(repo_name,
+          self.client.create_repository(repo_name,
             description: "#{@repository} created for #{student}",
             private: !@public_repos,
             has_issues: true,

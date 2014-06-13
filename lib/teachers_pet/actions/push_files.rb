@@ -14,13 +14,13 @@ module TeachersPet
       def push
         self.init_client
 
-        org_hash = @client.organization(@organization)
+        org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:url]}"
 
         # Load the teams - there should be one team per student.
         # Repositories are given permissions by teams
-        org_teams = get_teams_by_name(@organization)
+        org_teams = self.client.get_teams_by_name(@organization)
 
         # For each student - if an appropraite repository exists,
         # add it to the list.
@@ -32,13 +32,13 @@ module TeachersPet
           end
           repo_name = "#{student}-#{@repository}"
 
-          unless repository?(@organization, repo_name)
+          unless self.client.repository?(@organization, repo_name)
             puts("  ** ERROR ** - no repository called #{repo_name}")
           end
           if TeachersPet::Configuration.remoteSsh
             remotes_to_add[student] = "git@#{@sshEndpoint}:#{@organization}/#{repo_name}.git"
           else
-            remotes_to_add[student] = "#{@web_endpoint}#{@organization}/#{repo_name}.git"
+            remotes_to_add[student] = "#{self.web}#{@organization}/#{repo_name}.git"
           end
         end
 

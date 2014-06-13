@@ -5,7 +5,7 @@ require_relative File.join('..', 'configuration')
 module TeachersPet
   module Actions
     class Base
-      attr_reader :options
+      attr_reader :client, :options
 
       def initialize(opts={})
         @options = opts.symbolize_keys
@@ -21,46 +21,29 @@ module TeachersPet
         end
       end
 
+      def octokit_config
+        opts = {
+          api_endpoint: self.api,
+          web_endpoint: self.web,
+          login: self.username,
+          # Organizations can get big, pull in all pages
+          auto_paginate: true
+        }
+
+        if self.options[:token]
+          opts[:access_token] = self.token
+        else
+          opts[:password] = self.password
+        end
+
+        opts
+      end
+
       def init_client
-        self.config_github
         puts "=" * 50
         puts "Authenticating to GitHub..."
-        Octokit.configure do |c|
-          c.api_endpoint = @api_endpoint
-          c.web_endpoint = @web_endpoint
-          # Organizations can get big, pull in all pages
-          c.auto_paginate = true
-        end
-
-        case @authmethod
-        when 'password'
-          @client = Octokit::Client.new(login: @username, password: @password)
-        when 'oauth'
-          @client = Octokit::Client.new(login: @username, access_token: @oauthtoken)
-        end
-      end
-
-      def repository?(organization, repo_name)
-        begin
-          @client.repository("#{organization}/#{repo_name}")
-        rescue
-          return false
-        end
-      end
-
-      def get_teams_by_name(organization)
-        org_teams = @client.organization_teams(organization)
-        teams = Hash.new
-        org_teams.each do |team|
-          teams[team[:name]] = team
-        end
-        return teams
-      end
-
-      def get_team_member_logins(team_id)
-        @client.team_members(team_id).map do |member|
-          member[:login]
-        end
+        octokit = Octokit::Client.new(self.octokit_config)
+        @client = TeachersPet::ClientDecorator.new(octokit)
       end
 
       def read_file(filename)
@@ -97,25 +80,6 @@ module TeachersPet
         student_file = self.students
         puts "Loading students:"
         read_file(student_file)
-      end
-
-      def get_auth_method
-        self.options[:token] ? 'oauth' : 'password'
-      end
-
-      def config_github
-        return unless @username.nil?
-        @api_endpoint = self.api
-        @web_endpoint = self.web
-        @username = self.username
-        @authmethod = self.get_auth_method
-
-        case @authmethod
-        when 'oauth'
-          @oauthtoken = self.token
-        when 'password'
-          @password = self.password
-        end
       end
     end
   end

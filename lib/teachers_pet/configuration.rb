@@ -26,12 +26,6 @@ module TeachersPet
       @@STUDENTS_FILE
     end
 
-    # The name of the file that contains the GitHub usernames of the instructors
-    @@INSTRUCTORS_FILE = './instructors'
-
-    def self.instructorsFile
-      @@INSTRUCTORS_FILE
-    end
 
     # github.com - set to 'github.com'
     # GitHub Enterprise - 'yourserver.com'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'create_teams' do
+describe 'create_student_teams' do
   include CommandHelpers
 
   def stub_owners_only
@@ -35,7 +35,7 @@ describe 'create_teams' do
       request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/#{i}/members/#{student}")
     end
 
-    teachers_pet(:create_teams,
+    teachers_pet(:create_student_teams,
       organization: 'testorg',
 
       students: students_list_fixture_path,
@@ -73,41 +73,11 @@ describe 'create_teams' do
       request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/1/members/#{student}")
     end
 
-    teachers_pet(:create_teams,
+    teachers_pet(:create_student_teams,
       organization: 'testorg',
 
       students: fixture_path('teams'),
       instructors: empty_list_fixture_path,
-
-      username: 'testteacher',
-      password: 'abc123'
-    )
-
-    request_stubs.each do |request_stub|
-      expect(request_stub).to have_been_requested.once
-    end
-  end
-
-  it "adds instructors to owners team" do
-    request_stubs = []
-
-    request_stubs << stub_owners_only
-    instructors = instructor_usernames
-    request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/teams/101/members?per_page=100', [
-      {
-        login: instructors.first
-      }
-    ])
-
-    instructors[1..-1].each do |instructor|
-      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/101/members/#{instructor}")
-    end
-
-    teachers_pet(:create_teams,
-      organization: 'testorg',
-
-      students: empty_list_fixture_path,
-      instructors: instructors_list_fixture_path,
 
       username: 'testteacher',
       password: 'abc123'
