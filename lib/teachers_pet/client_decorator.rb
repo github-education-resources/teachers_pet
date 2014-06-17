@@ -1,3 +1,5 @@
+require 'delegate'
+
 module TeachersPet
   class ClientDecorator < SimpleDelegator
     def repository?(organization, repo_name)
