@@ -2,8 +2,8 @@ module TeachersPet
   module Actions
     class CloneRepos < Base
       def read_info
-        @repository = self.repository
-        @organization = self.organization
+        @repository = self.options[:repository]
+        @organization = self.options[:organization]
       end
 
       def load_files
@@ -11,7 +11,7 @@ module TeachersPet
       end
 
       def get_clone_method
-        self.clone_method
+        self.options[:clone_method]
       end
 
       def create
@@ -40,11 +40,11 @@ module TeachersPet
             next
           end
 
-
-          sshEndpoint = self.web.gsub("https://","git@").gsub("/",":")
+          web = self.options[:web]
+          sshEndpoint = web.gsub("https://","git@").gsub("/",":")
           command = "git clone #{sshEndpoint}#{@organization}/#{repo_name}.git"
           if cloneMethod.eql?('https')
-            command = "git clone #{self.web}#{@organization}/#{repo_name}.git"
+            command = "git clone #{web}#{@organization}/#{repo_name}.git"
           end
           puts " --> Cloning: '#{command}'"
           self.execute(command)

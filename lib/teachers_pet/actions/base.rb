@@ -11,29 +11,19 @@ module TeachersPet
         @options = opts.symbolize_keys
       end
 
-      def method_missing(meth, *args, &block)
-        # Support boolean options ending, by calling them with '?' at the end
-        key = meth.to_s.sub(/\?\z/, '').to_sym
-        if self.options.has_key?(key)
-          self.options[key]
-        else
-          super
-        end
-      end
-
       def octokit_config
         opts = {
-          api_endpoint: self.api,
-          web_endpoint: self.web,
-          login: self.username,
+          api_endpoint: self.options[:api],
+          web_endpoint: self.options[:web],
+          login: self.options[:username],
           # Organizations can get big, pull in all pages
           auto_paginate: true
         }
 
         if self.options[:token]
-          opts[:access_token] = self.token
+          opts[:access_token] = self.options[:token]
         else
-          opts[:password] = self.password
+          opts[:password] = self.options[:password]
         end
 
         opts
@@ -77,7 +67,7 @@ module TeachersPet
       end
 
       def read_students_file
-        student_file = self.students
+        student_file = self.options[:students]
         puts "Loading students:"
         read_file(student_file)
       end
