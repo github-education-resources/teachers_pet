@@ -2,7 +2,8 @@ module TeachersPet
   module Actions
     class CreateStudentTeams < Base
       def create_student_teams
-        teams_by_name = self.client.existing_teams_by_name(self.organization)
+        org_login = self.options[:organization]
+        teams_by_name = self.client.existing_teams_by_name(org_login)
 
         students_list = self.read_students_file
         students_list.each do |key, value|
@@ -18,11 +19,11 @@ module TeachersPet
 
           team = teams_by_name[team_name]
           if team
-            puts "Team @#{organization}/#{team_name} already exists."
+            puts "Team @#{org_login}/#{team_name} already exists."
           else
-            team = self.client.create_team(organization, team_name)
+            team = self.client.create_team(org_login, team_name)
           end
-          self.client.add_users_to_team(organization, team, usernames)
+          self.client.add_users_to_team(org_login, team, usernames)
         end
       end
 
