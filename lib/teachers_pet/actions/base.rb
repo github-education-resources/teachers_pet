@@ -22,8 +22,10 @@ module TeachersPet
 
         if self.options[:token]
           opts[:access_token] = self.options[:token]
-        else
+        elsif self.options[:password]
           opts[:password] = self.options[:password]
+        else
+          raise Thor::RequiredArgumentMissingError.new("No value provided for option --password or --token")
         end
 
         opts
