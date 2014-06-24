@@ -15,8 +15,7 @@ module TeachersPet
         self.init_client
         forks = self.get_forks
 
-        # TODO configurable filename
-        CSV.open('./students.csv', 'wb') do |csv|
+        CSV.open(self.options[:output], 'wb') do |csv|
           forks.each do |fork|
             login = fork.owner.login
             if fork.owner.type == "User"
