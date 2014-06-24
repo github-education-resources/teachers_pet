@@ -98,7 +98,7 @@ If you need to grab the list of users who have forked a particular repository â€
 
 ### Collaborator access
 
-Give [collaborator access](https://help.github.com/articles/what-are-the-different-access-permissions#collaborator) to everyone who has forked your repository using `fork_collab`.  Mostly useful for GitHub demonstrations, where the students can quickly be added to a repository without having to worry about collecting usernames.
+Give [collaborator access](https://help.github.com/articles/what-are-the-different-access-permissions#collaborator) to everyone who has forked your repository using `add_collaborators`.  Mostly useful for GitHub demonstrations, where usernames can quickly be collected via `forks`, and then the students can be quickly given access to a repository.
 
 ### Pushing starter files
 

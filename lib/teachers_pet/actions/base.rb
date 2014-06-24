@@ -73,6 +73,12 @@ module TeachersPet
         puts "Loading students:"
         read_file(student_file)
       end
+
+      def read_members_file
+        file = self.options[:members]
+        puts "Loading members to add:"
+        read_file(file).keys
+      end
     end
   end
 end

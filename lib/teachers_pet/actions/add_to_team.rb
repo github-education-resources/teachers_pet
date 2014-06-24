@@ -1,12 +1,6 @@
 module TeachersPet
   module Actions
     class AddToTeam < Base
-      def read_members_file
-        file = self.options[:members]
-        puts "Loading members to add:"
-        read_file(file).keys
-      end
-
       def team_name
         file = self.options[:members]
         File.basename(file, File.extname(file))
