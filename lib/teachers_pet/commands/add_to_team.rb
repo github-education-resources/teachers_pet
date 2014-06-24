@@ -1,6 +1,7 @@
 module TeachersPet
   class Cli
     option :organization, required: true
+    # TODO make team name configurable
     option :members, required: true, banner: 'PATH', desc: "The path to the file containing the list of members to add. The filename will be used as the name of the team, e.g. `path/to/instructors.csv` will use the 'instructors' team."
     common_options
 
