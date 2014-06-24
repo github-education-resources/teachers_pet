@@ -108,6 +108,10 @@ After running `create_repos`, instructors can open issues in student repos as a 
 
 When grading, use the `clone_repos` command to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
 
+### Merge all open pull requests
+
+When running a GitHub workshop, it's nice to be able to merge a bunch of pull requests on a particular repository all at once. `merge_all_prs` will handle this for you.
+
 ## Related projects
 
 * https://education.github.com/guide
