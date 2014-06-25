@@ -110,7 +110,7 @@ When grading, use the `clone_repos` command to clone all the repositories in the
 
 ### Merge all open pull requests
 
-When running a GitHub workshop, it's nice to be able to merge a bunch of pull requests on a particular repository all at once. `merge_all_prs` will handle this for you.
+When running a GitHub workshop, it's nice to be able to merge a bunch of pull requests on a particular repository all at once. `merge_pull_requests` will handle this for you.
 
 ## Related projects
 
