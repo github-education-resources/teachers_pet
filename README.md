@@ -104,7 +104,7 @@ When creating repositories for students, you will often want to include boilerpl
 
 After running `create_repos`, instructors can open issues in student repos as a way to list requirements of the assignment, goals, or instructions for patching, using the `open_issue` command.
 
-### Pulling repositories for grading
+### Clone repositories for grading
 
 When grading, use the `clone_repos` command to clone all the repositories in the organization that match the username-repository naming scheme that is generated when `create_repos` is run.
 
