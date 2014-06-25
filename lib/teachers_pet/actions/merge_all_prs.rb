@@ -1,6 +1,6 @@
 module TeachersPet
   module Actions
-    class MergeAllOpenPrs < Base
+    class MergeAllPrs < Base
       def read_info
         @repository = self.repository
         @organization = self.repository
