@@ -20,6 +20,10 @@ module CommonHelpers
     fixture_path('students')
   end
 
+  def pull_requests_fixture_path
+    fixture_path('pull_requests')
+  end
+
   def instructors_list_fixture_path
     fixture_path('instructors')
   end
@@ -38,6 +42,10 @@ module CommonHelpers
 
   def instructor_usernames
     CSV.read(instructors_list_fixture_path).flatten
+  end
+
+  def pull_requests
+    CSV.read(pull_requests_fixture_path).flatten
   end
 
   def student_teams
