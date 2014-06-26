@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe 'merge_pull_requests' do
   include CommandHelpers
