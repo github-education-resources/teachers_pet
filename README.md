@@ -92,9 +92,13 @@ You may need to give other people access to various repositories using teams –
 
 When using the [sandboxing](https://education.github.com/guide/sandboxing) setup, you will need to create the repositories for the students.  For each assignment, use the `create_repos` action to create a repository for each student.  The repositories are technically created per team, but if you use `create_student_teams` first, then there will be one team per student.
 
+### Forks
+
+If you need to grab the list of users who have forked a particular repository – e.g. to use with another command – you can run the `forks` command, and the results will be written to a file.
+
 ### Collaborator access
 
-Give [collaborator access](https://help.github.com/articles/what-are-the-different-access-permissions#collaborator) to everyone who has forked your repository using `fork_collab`.  Mostly useful for GitHub demonstrations, where the students can quickly be added to a repository without having to worry about collecting usernames.
+Give [collaborator access](https://help.github.com/articles/what-are-the-different-access-permissions#collaborator) to everyone who has forked your repository using `add_collaborators`.  Mostly useful for GitHub demonstrations, where usernames can quickly be collected via `forks`, and then the students can be quickly given access to a repository.
 
 ### Pushing starter files
 
