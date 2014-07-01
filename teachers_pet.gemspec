@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'octokit', '~> 3.1.0'
   s.add_dependency 'require_all', '~> 1.3.2'
   s.add_dependency 'thor', '~> 0.19.1'
+  s.add_dependency 'ruby-termios'
 
   s.add_development_dependency 'bundler', '~> 1.5'
   s.add_development_dependency 'guard-rspec', '~> 4.2'

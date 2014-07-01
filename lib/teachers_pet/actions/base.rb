@@ -20,6 +20,10 @@ module TeachersPet
           auto_paginate: true
         }
 
+        if !self.options[:token] && !self.options[:password]
+          TeachersPet::Actions::Base.get_credentials_manually
+        end
+
         if self.options[:token]
           opts[:access_token] = self.options[:token]
         elsif self.options[:password]
@@ -78,6 +82,26 @@ module TeachersPet
         file = self.options[:members]
         puts "Loading members to add:"
         read_file(file).keys
+      end
+
+      private
+
+      def self.get_credentials_manually
+        puts "Please enter in your password:"
+        puts "1. Password"
+        puts "2. GitHub Token"
+        input = gets.chomp.to_i
+
+        case input
+        when 1
+          password = Password.get('Password: ')
+          self.options[:password] if password.length > 0
+        when 2
+          token = Password.get('Token: ')
+          self.options[:token] if token.length > 0
+        else
+          puts "Invalid option\n\n"
+        end
       end
     end
   end
