@@ -1,4 +1,5 @@
 require 'active_support/core_ext/hash/keys'
+require 'io/console'
 require 'octokit'
 require_relative File.join('..', 'configuration')
 
@@ -20,16 +21,12 @@ module TeachersPet
           auto_paginate: true
         }
 
-        if !self.options[:token] && !self.options[:password]
-          TeachersPet::Actions::Base.get_credentials_manually
-        end
-
         if self.options[:token]
           opts[:access_token] = self.options[:token]
         elsif self.options[:password]
           opts[:password] = self.options[:password]
         else
-          raise Thor::RequiredArgumentMissingError.new("No value provided for option --password or --token")
+          TeachersPet::Actions::Base.get_credentials_manually
         end
 
         opts
@@ -94,13 +91,15 @@ module TeachersPet
 
         case input
         when 1
-          password = Password.get('Password: ')
-          self.options[:password] if password.length > 0
+          print 'Password: '
+          password = STDIN.noecho(&:gets).chomp
+          opts[:password] = password if password.length > 0
         when 2
-          token = Password.get('Token: ')
-          self.options[:token] if token.length > 0
+          print 'Token: '
+          token = STDIN.noecho(&:gets).chomp
+          opts[:access_token] = token if token.length > 0
         else
-          puts "Invalid option\n\n"
+          raise Thor::RequiredArgumentMissingError.new("No value provided for password or token")
         end
       end
     end
