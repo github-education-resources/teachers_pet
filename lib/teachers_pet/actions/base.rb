@@ -22,18 +22,18 @@ module TeachersPet
         }
 
         if self.options[:token]
-          if self.options[:token].length > 0
-            opts[:access_token] = self.options[:token]
-          else
+          if self.options[:token].eql?('token')
             print 'Please enter your GitHub token: '
             opts[:access_token] = STDIN.noecho(&:gets).chomp
+          else
+            opts[:access_token] = self.options[:token]
           end
         elsif self.options[:password]
-          if self.options[:password].length > 0
-            opts[:password] = self.options[:password]
-          else
+          if self.options[:password].eql?('password')
             print 'Please enter your GitHub password: '
             opts[:password] = STDIN.noecho(&:gets).chomp
+          else
+            opts[:password] = self.options[:password]
           end
         else
           raise Thor::RequiredArgumentMissingError.new("No value provided for option --password or --token")
