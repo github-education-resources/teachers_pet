@@ -1,4 +1,5 @@
 require 'active_support/core_ext/hash/keys'
+require 'io/console'
 require 'octokit'
 require_relative File.join('..', 'configuration')
 
@@ -21,9 +22,19 @@ module TeachersPet
         }
 
         if self.options[:token]
-          opts[:access_token] = self.options[:token]
+          if self.options[:token].eql?('token')
+            print 'Please enter your GitHub token: '
+            opts[:access_token] = STDIN.noecho(&:gets).chomp
+          else
+            opts[:access_token] = self.options[:token]
+          end
         elsif self.options[:password]
-          opts[:password] = self.options[:password]
+          if self.options[:password].eql?('password')
+            print 'Please enter your GitHub password: '
+            opts[:password] = STDIN.noecho(&:gets).chomp
+          else
+            opts[:password] = self.options[:password]
+          end
         else
           raise Thor::RequiredArgumentMissingError.new("No value provided for option --password or --token")
         end
