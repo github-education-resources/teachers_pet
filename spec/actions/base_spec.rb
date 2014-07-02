@@ -18,6 +18,18 @@ describe TeachersPet::Actions::Base do
       action = TeachersPet::Actions::Base.new(token: 'abc123')
       expect(action.octokit_config[:access_token]).to eq('abc123')
     end
+
+    it "waits for a password if the password flag is passed without any arguments" do
+      action = TeachersPet::Actions::Base.new(password: '')
+      STDIN.stub(:gets).and_return('abc123')
+      expect(action.octokit_config[:password]).to eq('abc123')
+    end
+
+    it "waits for a token if the token flag is passed without any arguments" do
+      action = TeachersPet::Actions::Base.new(token: '')
+      STDIN.stub(:gets).and_return('abc123')
+      expect(action.octokit_config[:access_token]).to eq('abc123')
+    end
   end
 
   describe '#read_file' do

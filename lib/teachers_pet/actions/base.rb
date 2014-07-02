@@ -22,11 +22,21 @@ module TeachersPet
         }
 
         if self.options[:token]
-          opts[:access_token] = self.options[:token]
+          if self.options[:token].length > 0
+            opts[:access_token] = self.options[:token]
+          else
+            print 'Please enter your GitHub token: '
+            opts[:access_token] = STDIN.noecho(&:gets).chomp
+          end
         elsif self.options[:password]
-          opts[:password] = self.options[:password]
+          if self.options[:password].length > 0
+            opts[:password] = self.options[:password]
+          else
+            print 'Please enter your GitHub password: '
+            opts[:password] = STDIN.noecho(&:gets).chomp
+          end
         else
-          TeachersPet::Actions::Base.get_credentials_manually
+          raise Thor::RequiredArgumentMissingError.new("No value provided for option --password or --token")
         end
 
         opts
@@ -79,28 +89,6 @@ module TeachersPet
         file = self.options[:members]
         puts "Loading members to add:"
         read_file(file).keys
-      end
-
-      private
-
-      def self.get_credentials_manually
-        puts "Please enter in your password:"
-        puts "1. Password"
-        puts "2. GitHub Token"
-        input = gets.chomp.to_i
-
-        case input
-        when 1
-          print 'Password: '
-          password = STDIN.noecho(&:gets).chomp
-          opts[:password] = password if password.length > 0
-        when 2
-          print 'Token: '
-          token = STDIN.noecho(&:gets).chomp
-          opts[:access_token] = token if token.length > 0
-        else
-          raise Thor::RequiredArgumentMissingError.new("No value provided for password or token")
-        end
       end
     end
   end
