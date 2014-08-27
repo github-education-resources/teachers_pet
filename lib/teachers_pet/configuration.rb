@@ -11,9 +11,9 @@ module TeachersPet
       @@API_ENDPOINT
     end
 
-    # For github.com: https://www.github.com/'
+    # For github.com: https://github.com/'
     # For GitHub Enterprise: ''https://yourServer.com/'
-    @@WEB_ENDPOINT = 'https://www.github.com/'
+    @@WEB_ENDPOINT = 'https://github.com/'
 
     def self.webEndpoint
       @@WEB_ENDPOINT
