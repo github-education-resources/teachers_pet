@@ -90,6 +90,10 @@ module TeachersPet
         puts "Loading members to add:"
         read_file(file).keys
       end
+
+      def execute(command)
+        return system(command)
+      end
     end
   end
 end

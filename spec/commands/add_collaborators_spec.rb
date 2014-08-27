@@ -24,7 +24,7 @@ describe 'add_collaborators' do
         'password' => 'abc123',
         'repository' => 'testorg/testrepo',
         'username' => ENV['USER'],
-        'web' => 'https://www.github.com/'
+        'web' => 'https://github.com/'
       )
 
       teachers_pet(:add_collaborators,

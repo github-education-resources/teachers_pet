@@ -23,7 +23,7 @@ describe 'forks' do
         'password' => 'abc123',
         'repository' => 'testorg/testrepo',
         'username' => ENV['USER'],
-        'web' => 'https://www.github.com/'
+        'web' => 'https://github.com/'
       )
       teachers_pet(:forks, repository: 'testorg/testrepo', password: 'abc123')
     end

@@ -47,7 +47,7 @@ module TeachersPet
             command = "git clone #{web}#{@organization}/#{repo_name}.git"
           end
           puts " --> Cloning: '#{command}'"
-          system(command)
+          self.execute(command)
         end
       end
 
