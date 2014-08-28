@@ -13,7 +13,7 @@ describe 'clone_repos' do
     request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', student_teams)
     student_usernames.each do |username|
       request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo", {})
-      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://www.github.com/testorg/#{username}-testrepo.git").once
+      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://github.com/testorg/#{username}-testrepo.git").once
     end
 
     teachers_pet(:clone_repos,
