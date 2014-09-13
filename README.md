@@ -11,7 +11,7 @@ Each class is an 'organization' on GitHub. This allows the instructors (GitHub o
 * Instructors can push code starter code to all students
 * Instructors can easily browse/pull student code at any time during the assignment to assist in questions, check on progress
 
-Each student is given a team in the organization. The team name is the same as the student's GitHub username. The course instructors are also added as team members for each team (see the goals above).
+Each student is given a team in the organization. The team name is the same as the student's GitHub username.
 
 ## Installation
 
