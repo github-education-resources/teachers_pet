@@ -12,14 +12,14 @@ module TeachersPet
         teams_by_name[self.team_name] || self.client.create_team(org_login, team_name)
       end
 
-      def add_members_to_owners
+      def add_members
         member_list = self.read_members_file
         self.client.add_users_to_team(self.options[:organization], self.team, member_list)
       end
 
       def run
         self.init_client
-        self.add_members_to_owners
+        self.add_members
       end
     end
   end
