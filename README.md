@@ -1,4 +1,6 @@
-# teachers_pet [![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet)
+# teachers_pet
+
+[![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet) [![Coverage Status](https://img.shields.io/coveralls/education/teachers_pet.svg)](https://coveralls.io/r/education/teachers_pet)
 
 **WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README corresponding to the latest release.**
 
