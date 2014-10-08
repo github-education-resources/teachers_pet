@@ -51,7 +51,8 @@ module TeachersPet
           if team_members.include?(username)
             puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
           else
-            self.add_team_member(team[:id], username)
+            # https://github.com/octokit/octokit.rb/pull/518
+            self.add_team_membership(team[:id], username, accept: 'application/vnd.github.the-wasp-preview+json')
             puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
           end
         end
