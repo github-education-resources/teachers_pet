@@ -32,7 +32,7 @@ describe 'create_student_teams' do
       request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/teams/#{i}/members?per_page=100", [])
 
       # Add student to their team
-      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/#{i}/members/#{student}")
+      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/#{i}/memberships/#{student}")
     end
 
     teachers_pet(:create_student_teams,
@@ -70,7 +70,7 @@ describe 'create_student_teams' do
 
     %w(teststudent1 teststudent2).each do |student|
       # Add student to their team
-      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/1/members/#{student}")
+      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/1/memberships/#{student}")
     end
 
     teachers_pet(:create_student_teams,

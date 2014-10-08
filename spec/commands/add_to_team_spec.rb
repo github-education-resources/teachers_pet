@@ -21,7 +21,7 @@ describe 'add_to_team' do
     ])
 
     users[1..-1].each do |instructor|
-      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/101/members/#{instructor}")
+      request_stubs << stub_request(:put, "https://testteacher:abc123@api.github.com/teams/101/memberships/#{instructor}")
     end
 
     teachers_pet(:add_to_team,
