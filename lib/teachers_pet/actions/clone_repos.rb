@@ -35,14 +35,30 @@ module TeachersPet
         end
       end
 
-      def clone_command(repo_name)
-        "git clone #{self.clone_endpoint}#{@organization}/#{repo_name}.git"
+      def clone_command(repo_path)
+        "git clone #{self.clone_endpoint}#{repo_path}.git"
       end
 
-      def clone(repo_name)
-        command = self.clone_command(repo_name)
+      def clone(repo_path)
+        command = self.clone_command(repo_path)
         puts " --> Cloning: '#{command}'"
         self.execute(command)
+      end
+
+      def clone_student(student)
+        if self.org_teams.key?(student)
+          repo_name = "#{student}-#{@repository}"
+          repo_path = "#{@organization}/#{repo_name}"
+
+          if self.client.repository?(@organization, repo_name)
+            self.clone(repo_path)
+          else
+            puts " ** ERROR ** - Can't find expected repository '#{repo_path}'"
+          end
+        else
+          puts("  ** ERROR ** - no team for #{student}")
+        end
+
       end
 
       def clone_all
@@ -56,19 +72,7 @@ module TeachersPet
         # For each student - pull the repository if it exists
         puts "\nCloning assignment repositories for students..."
         self.students.each do |student|
-          unless self.org_teams.key?(student)
-            puts("  ** ERROR ** - no team for #{student}")
-            next
-          end
-
-          repo_name = "#{student}-#{@repository}"
-
-          unless self.client.repository?(@organization, repo_name)
-            puts " ** ERROR ** - Can't find expected repository '#{repo_name}'"
-            next
-          end
-
-          self.clone(repo_name)
+          self.clone_student(student)
         end
       end
 
