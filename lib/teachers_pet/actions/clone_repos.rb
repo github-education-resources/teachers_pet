@@ -40,24 +40,51 @@ module TeachersPet
         self.execute(command)
       end
 
-      def clone_student(student)
-        repo_name = "#{student}-#{@repository}"
-        repo_path = "#{@organization}/#{repo_name}"
-
-        if self.client.repository?(@organization, repo_name)
-          self.clone(repo_path)
+      def repo_owner(username)
+        if self.options[:forks]
+          username
         else
-          puts " ** ERROR ** - Can't find expected repository '#{repo_path}'"
+          @organization
         end
       end
 
+      def repo_name(username)
+        if self.options[:forks]
+          @repository
+        else
+          "#{username}-#{@repository}"
+        end
+      end
+
+      def repo_path(username)
+        name = self.repo_name(username)
+        owner = self.repo_owner(username)
+        "#{owner}/#{name}"
+      end
+
+      def clone_student(username)
+        path = self.repo_path(username)
+        if self.client.repository?(self.repo_owner(username), self.repo_name(username))
+          self.clone(path)
+        else
+          puts " ** ERROR ** - Can't find expected repository '#{path}'"
+        end
+      end
+
+      def verify_org_exists
+        org_hash = self.client.organization(@organization)
+        if org_hash.nil?
+          abort('Organization could not be found')
+        end
+        puts "Found organization at: #{org_hash[:url]}"
+      end
+
       def clone_all
-        # create a repo for each student
         self.init_client
 
-        org_hash = self.client.organization(@organization)
-        abort('Organization could not be found') if org_hash.nil?
-        puts "Found organization at: #{org_hash[:url]}"
+        unless self.options[:forks]
+          self.verify_org_exists
+        end
 
         # For each student - pull the repository if it exists
         puts "\nCloning assignment repositories for students..."

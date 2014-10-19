@@ -2,6 +2,7 @@ module TeachersPet
   class Cli
     option :organization, required: true
     option :repository, required: true
+    option :forks, type: :boolean, default: false
     option :clone_method, default: 'https', desc: "'https' or 'ssh'"
 
     students_option
