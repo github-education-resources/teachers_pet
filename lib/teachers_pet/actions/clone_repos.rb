@@ -10,11 +10,6 @@ module TeachersPet
         @students ||= self.read_students_file.keys
       end
 
-      def org_teams
-        # Load the teams - there should be one team per student.
-        @org_teams ||= self.client.get_teams_by_name(@organization)
-      end
-
       def web_endpoint
         self.options[:web]
       end
@@ -46,19 +41,14 @@ module TeachersPet
       end
 
       def clone_student(student)
-        if self.org_teams.key?(student)
-          repo_name = "#{student}-#{@repository}"
-          repo_path = "#{@organization}/#{repo_name}"
+        repo_name = "#{student}-#{@repository}"
+        repo_path = "#{@organization}/#{repo_name}"
 
-          if self.client.repository?(@organization, repo_name)
-            self.clone(repo_path)
-          else
-            puts " ** ERROR ** - Can't find expected repository '#{repo_path}'"
-          end
+        if self.client.repository?(@organization, repo_name)
+          self.clone(repo_path)
         else
-          puts("  ** ERROR ** - no team for #{student}")
+          puts " ** ERROR ** - Can't find expected repository '#{repo_path}'"
         end
-
       end
 
       def clone_all
