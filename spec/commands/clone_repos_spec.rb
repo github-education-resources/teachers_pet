@@ -10,9 +10,12 @@ describe 'clone_repos' do
       login: 'testorg',
       url: 'https://api.github.com/orgs/testorg'
     )
+
+    expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("mkdir -p testrepo").once
+
     student_usernames.each do |username|
       request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo", {})
-      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://github.com/testorg/#{username}-testrepo.git").once
+      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://github.com/testorg/#{username}-testrepo.git testrepo/#{username}").once
     end
 
     teachers_pet(:clone_repos,
@@ -33,9 +36,11 @@ describe 'clone_repos' do
   it "clones forks of a repository" do
     request_stubs = []
 
+    expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("mkdir -p testrepo").once
+
     student_usernames.each do |username|
       request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/#{username}/testrepo", {})
-      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://github.com/#{username}/testrepo.git").once
+      expect_any_instance_of(TeachersPet::Actions::CloneRepos).to receive(:execute).with("git clone https://github.com/#{username}/testrepo.git testrepo/#{username}").once
     end
 
     teachers_pet(:clone_repos,

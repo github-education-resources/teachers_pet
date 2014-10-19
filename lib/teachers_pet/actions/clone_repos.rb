@@ -30,12 +30,13 @@ module TeachersPet
         end
       end
 
-      def clone_command(repo_path)
-        "git clone #{self.clone_endpoint}#{repo_path}.git"
+      def clone_command(username)
+        path = self.repo_path(username)
+        "git clone #{self.clone_endpoint}#{path}.git #{@repository}/#{username}"
       end
 
-      def clone(repo_path)
-        command = self.clone_command(repo_path)
+      def clone(username)
+        command = self.clone_command(username)
         puts " --> Cloning: '#{command}'"
         self.execute(command)
       end
@@ -63,10 +64,10 @@ module TeachersPet
       end
 
       def clone_student(username)
-        path = self.repo_path(username)
         if self.client.repository?(self.repo_owner(username), self.repo_name(username))
-          self.clone(path)
+          self.clone(username)
         else
+          path = self.repo_path(username)
           puts " ** ERROR ** - Can't find expected repository '#{path}'"
         end
       end
@@ -85,6 +86,8 @@ module TeachersPet
         unless self.options[:forks]
           self.verify_org_exists
         end
+
+        self.execute("mkdir -p #{@repository}")
 
         # For each student - pull the repository if it exists
         puts "\nCloning assignment repositories for students..."
