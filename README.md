@@ -116,6 +116,15 @@ When grading, use the `clone_repos` command to clone all the repositories in the
 
 When running a GitHub workshop, it's nice to be able to merge a bunch of pull requests on a particular repository all at once. `merge_pull_requests` will handle this for you.
 
+### Listing who has submitted pull requests
+
+To get an overview of who has submitted which assignments ([fork model](https://education.github.com/guide/forks) only), `pull_requests` will output a CSV that looks something like this:
+
+| Login | assignment1                                   | assignment2                                   |
+|-------|-----------------------------------------------|-----------------------------------------------|
+| afeld | https://github.com/myclass/assignment1/pull/1 | https://github.com/myclass/assignment2/pull/5 |
+| ...   | ...                                           | ...                                           |
+
 ## Related projects
 
 * https://education.github.com/guide
