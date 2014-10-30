@@ -3,23 +3,38 @@ require 'csv'
 module TeachersPet
   module Actions
     class PullRequests < Base
-      def repositories
-        self.client.repositories(self.options[:organization])
+
+      # decorator
+      class PullRequest
+        attr_accessor :hsh
+
+        def initialize(hash)
+          @hsh = hash
+        end
+
+        def repository_name
+          @repository_name ||= self.hsh.html_url.match(%r{^https://github.com/[^/]+/([^/]+)/pull/\d+$})[1]
+        end
+
+        def method_missing(meth)
+          self.hsh.send(meth)
+        end
       end
 
+      def org_pull_request_results
+        self.client.search_issues("type:pr user:#{self.options[:organization]}")
+      end
+
+      # returns an Array of PullRequests
       def org_pull_requests
-        @org_pull_requests ||= self.client.search_issues("type:pr user:#{self.options[:organization]}").items.to_a
-      end
-
-      def repository_name(pull_request_url)
-        pull_request_url.match(%r{^https://github.com/[^/]+/([^/]+)/pull/\d+$})[1]
+        @org_pull_requests ||= self.org_pull_request_results.items.map{|pr| PullRequest.new(pr) }
       end
 
       def pull_requests_by_repo_by_login
         results = {}
         self.org_pull_requests.each do |pr|
           login = pr.user.login
-          repo = self.repository_name(pr.html_url)
+          repo = pr.repository_name
 
           results[login] ||= {}
           results[login][repo] ||= []
@@ -30,7 +45,7 @@ module TeachersPet
       end
 
       def repository_names
-        @repository_names ||= self.org_pull_requests.map{|pr| self.repository_name(pr.html_url) }.uniq
+        @repository_names ||= self.org_pull_requests.map(&:repository_name).uniq
       end
 
       def repository_columns
@@ -56,13 +71,16 @@ module TeachersPet
       def run
         self.init_client
 
-        CSV.open(self.options[:output], 'wb') do |csv|
+        filename = self.options[:output]
+        CSV.open(filename, 'wb') do |csv|
           csv << self.headers
           self.pull_requests_by_repo_by_login.each do |login, pull_requests_by_repo|
             row = self.generate_row(login, pull_requests_by_repo)
             csv << row
           end
         end
+
+        puts "Wrote to #{filename}."
       end
     end
   end
