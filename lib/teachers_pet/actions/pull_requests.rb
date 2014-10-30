@@ -12,8 +12,16 @@ module TeachersPet
           @hsh = hash
         end
 
+        def matches
+          @matches ||= self.hsh.html_url.match(%r{^https://github.com/[^/]+/([^/]+)/pull/\d+$})
+        end
+
         def repository_name
-          @repository_name ||= self.hsh.html_url.match(%r{^https://github.com/[^/]+/([^/]+)/pull/\d+$})[1]
+          self.matches[1]
+        end
+
+        def closed?
+          self.state == 'closed'
         end
 
         def method_missing(meth)
@@ -62,8 +70,16 @@ module TeachersPet
         # list the repositories in a consistent order
         self.repository_columns.each do |repo|
           prs = pull_requests_by_repo[repo] || []
-          pr_urls = prs.map(&:html_url)
-          row << pr_urls.join(', ')
+
+          # get their newest PR, that's preferably still open
+          prs = prs.sort_by do |pr|
+            state = pr.closed? ? 0 : 1
+            [state, pr.number]
+          end
+          pr = prs.last
+
+          url = pr ? pr.html_url : nil
+          row << url
         end
 
         row
