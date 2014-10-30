@@ -21,6 +21,7 @@ module TeachersPet
         end
       end
 
+
       def org_pull_request_results
         self.client.search_issues("type:pr user:#{self.options[:organization]}")
       end
@@ -44,12 +45,12 @@ module TeachersPet
         results
       end
 
-      def repository_names
-        @repository_names ||= self.org_pull_requests.map(&:repository_name).uniq
+      def repositories
+        self.client.repositories(self.options[:organization])
       end
 
       def repository_columns
-        @repository_columns ||= self.repository_names.sort
+        @repository_columns ||= self.repositories.map(&:name).sort
       end
 
       def headers
