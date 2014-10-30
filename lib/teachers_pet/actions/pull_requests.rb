@@ -65,20 +65,29 @@ module TeachersPet
         %w(Login).concat(self.repository_columns)
       end
 
+      # get their newest PR, that's preferably still open
+      def pull_request_to_review(pull_requests)
+        pull_requests.max_by do |pr|
+          state = pr.closed? ? 0 : 1
+          [state, pr.number]
+        end
+      end
+
+      def pull_request_to_review_url(pull_requests)
+        pr = self.pull_request_to_review(pull_requests)
+        if pr
+          pr.html_url
+        else
+          nil
+        end
+      end
+
       def generate_row(login, pull_requests_by_repo)
         row = [login]
         # list the repositories in a consistent order
         self.repository_columns.each do |repo|
           prs = pull_requests_by_repo[repo] || []
-
-          # get their newest PR, that's preferably still open
-          prs = prs.sort_by do |pr|
-            state = pr.closed? ? 0 : 1
-            [state, pr.number]
-          end
-          pr = prs.last
-
-          url = pr ? pr.html_url : nil
+          url = self.pull_request_to_review_url(prs)
           row << url
         end
 
