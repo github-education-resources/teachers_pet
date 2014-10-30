@@ -1,4 +1,3 @@
-require 'active_support/core_ext/object/try'
 require 'csv'
 
 module TeachersPet
@@ -76,7 +75,12 @@ module TeachersPet
 
       def pull_request_to_review_url(pull_requests)
         pr = self.pull_request_to_review(pull_requests)
-        pr.try(:html_url)
+        # could use #try here, but it doesn't like #method_missing
+        if pr
+          pr.html_url
+        else
+          nil
+        end
       end
 
       def generate_row(login, pull_requests_by_repo)
