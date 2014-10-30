@@ -11,12 +11,6 @@ module TeachersPet
         @org_pull_requests ||= self.client.search_issues("type:pr user:#{self.options[:organization]}").items.to_a
       end
 
-      def pull_requests_by_login
-        self.org_pull_requests.group_by do |pr|
-          pr.user.login
-        end
-      end
-
       def repository_name(pull_request_url)
         pull_request_url.match(%r{^https://github.com/[^/]+/([^/]+)/pull/\d+$})[1]
       end
@@ -39,26 +33,33 @@ module TeachersPet
         @repository_names ||= self.org_pull_requests.map{|pr| self.repository_name(pr.html_url) }.uniq
       end
 
-      def known_users
-        self.org_pull_requests.map(&:user).uniq(&:login)
+      def repository_columns
+        @repository_columns ||= self.repository_names.sort
+      end
+
+      def headers
+        %w(Login).concat(self.repository_columns)
+      end
+
+      def generate_row(login, pull_requests_by_repo)
+        row = [login]
+        # list the repositories in a consistent order
+        self.repository_columns.each do |repo|
+          prs = pull_requests_by_repo[repo] || []
+          pr_urls = prs.map(&:html_url)
+          row << pr_urls.join(', ')
+        end
+
+        row
       end
 
       def run
         self.init_client
-        repos = self.repository_names.sort
 
         CSV.open(self.options[:output], 'wb') do |csv|
-          headers = %w(Login)
-          headers.concat(repos)
-          csv << headers
-
+          csv << self.headers
           self.pull_requests_by_repo_by_login.each do |login, pull_requests_by_repo|
-            row = [login]
-            repos.each do |repo|
-              prs = pull_requests_by_repo[repo] || []
-              pr_urls = prs.map(&:html_url)
-              row << pr_urls.join(', ')
-            end
+            row = self.generate_row(login, pull_requests_by_repo)
             csv << row
           end
         end
