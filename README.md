@@ -125,6 +125,8 @@ To get an overview of who has submitted which assignments ([fork model](https://
 | Bob Hope | bob.hope@school.edu | bobhope | https://github.com/myclass/assignment1/pull/1 | https://github.com/myclass/assignment2/pull/5 |
 | ...      | ...                 | ...     | ...                                           | ...                                           |
 
+<!-- generated with http://www.tablesgenerator.com/markdown_tables -->
+
 ## Related projects
 
 * https://education.github.com/guide
