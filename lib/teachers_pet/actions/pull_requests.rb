@@ -1,3 +1,4 @@
+require 'active_support/core_ext/object/try'
 require 'csv'
 
 module TeachersPet
@@ -57,12 +58,12 @@ module TeachersPet
         self.client.repositories(self.options[:organization])
       end
 
-      def repository_columns
-        @repository_columns ||= self.repositories.map(&:name).sort
+      def repository_headers
+        @repository_headers ||= self.repositories.map(&:name).sort
       end
 
       def headers
-        %w(Login).concat(self.repository_columns)
+        %w(Name Email Login).concat(self.repository_headers)
       end
 
       # get their newest PR, that's preferably still open
@@ -75,17 +76,19 @@ module TeachersPet
 
       def pull_request_to_review_url(pull_requests)
         pr = self.pull_request_to_review(pull_requests)
-        if pr
-          pr.html_url
-        else
-          nil
-        end
+        pr.try(:html_url)
       end
 
       def generate_row(login, pull_requests_by_repo)
-        row = [login]
+        user = self.client.user(login)
+        row = [
+          user.name,
+          user.email,
+          login
+        ]
+
         # list the repositories in a consistent order
-        self.repository_columns.each do |repo|
+        self.repository_headers.each do |repo|
           prs = pull_requests_by_repo[repo] || []
           url = self.pull_request_to_review_url(prs)
           row << url

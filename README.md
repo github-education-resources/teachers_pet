@@ -120,10 +120,10 @@ When running a GitHub workshop, it's nice to be able to merge a bunch of pull re
 
 To get an overview of who has submitted which assignments ([fork model](https://education.github.com/guide/forks) only), `pull_requests` will output a CSV that looks something like this:
 
-| Login | assignment1                                   | assignment2                                   |
-|-------|-----------------------------------------------|-----------------------------------------------|
-| afeld | https://github.com/myclass/assignment1/pull/1 | https://github.com/myclass/assignment2/pull/5 |
-| ...   | ...                                           | ...                                           |
+| Name     | Email               | Login   | assignment1                                   | assignment2                                   |
+|----------|---------------------|---------|-----------------------------------------------|-----------------------------------------------|
+| Bob Hope | bob.hope@school.edu | bobhope | https://github.com/myclass/assignment1/pull/1 | https://github.com/myclass/assignment2/pull/5 |
+| ...      | ...                 | ...     | ...                                           | ...                                           |
 
 ## Related projects
 
