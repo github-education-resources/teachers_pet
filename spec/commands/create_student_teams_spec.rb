@@ -20,10 +20,7 @@ describe 'create_student_teams' do
       # Creates team
       request_stubs << stub_request(:post, 'https://testteacher:abc123@api.github.com/orgs/testorg/teams').
         with(body: "{\"name\":\"#{student}\",\"permission\":\"push\"}").
-        to_return(body: {
-            id: i,
-            name: student
-         })
+        to_return(body: "{\"id\":#{i},\"name\":\"#{student}\"}")
 
       # Checks for existing team members
       # TODO No need to retrieve members for a new team
