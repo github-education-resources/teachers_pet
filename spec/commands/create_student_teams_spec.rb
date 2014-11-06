@@ -19,10 +19,8 @@ describe 'create_student_teams' do
     student_usernames.each_with_index do |student, i|
       # Creates team
       request_stubs << stub_request(:post, 'https://testteacher:abc123@api.github.com/orgs/testorg/teams').
-         with(body: {
-           name: student,
-           permission: 'push'
-         }.to_json).to_return(body: {
+        with(body: "{\"name\":\"#{student}\",\"permission\":\"push\"}").
+        to_return(body: {
             id: i,
             name: student
          })
@@ -56,10 +54,8 @@ describe 'create_student_teams' do
 
     # Creates team
     request_stubs << stub_request(:post, 'https://testteacher:abc123@api.github.com/orgs/testorg/teams').
-       with(body: {
-         name: 'studentteam1',
-         permission: 'push'
-       }.to_json).to_return(body: {
+       with(body: "{\"name\":\"studentteam1\",\"permission\":\"push\"}").
+       to_return(body: {
           id: 1,
           name: 'studentteam1'
        })
