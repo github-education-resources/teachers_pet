@@ -8,10 +8,11 @@ module TeachersPet
         @issue = {
           title: self.options[:title],
           options: {
-            milestone: self.options[:milestone],
             labels: self.options[:labels]
           }
         }
+
+        @issue[:options][:milestone] = self.options[:milestone] unless self.options[:milestone].nil?
         @issue_file = self.options[:body]
       end
 
@@ -28,9 +29,11 @@ module TeachersPet
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"
 
-        milestone = self.client.milestone("#{@organization}/#{@repository}", self.options[:milestone])
-        abort('Milestone could not be found') if milestone.nil?
-        puts "Found milestone ##{milestone[:number]}: #{milestone[:title]}"
+        unless self.options[:milestone].nil?
+          milestone = self.client.milestone("#{@organization}/#{@repository}", self.options[:milestone])
+          abort('Milestone could not be found') if milestone.nil?
+          puts "Found milestone ##{milestone[:number]}: #{milestone[:title]}"
+        end
 
         org_teams = self.client.get_teams_by_name(@organization)
 
