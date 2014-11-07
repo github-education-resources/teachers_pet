@@ -4,7 +4,7 @@ describe 'open_issue' do
   include CommandHelpers
 
   context 'through CLI' do
-    def common_test(labels='')
+    def common_test(labels='', milestone=nil)
       issue_title = "Issue Test"
       request_stubs = []
 
@@ -16,6 +16,10 @@ describe 'open_issue' do
       student_usernames.each do |username|
         # Action checks that repos exist already
         request_stubs << stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo")
+
+        unless milestone
+          request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/milestones/", number: milestone)
+        end
       end
 
       # create the issue in each repo
@@ -26,10 +30,15 @@ describe 'open_issue' do
             team_id = st[:id]
           end
         end
-        issue_body = File.read(issue_fixture_path).gsub("\n", "\\n")
-        labels_list = labels.split(",").map(&:strip).to_s.delete(' ')
+        issue_body = File.read(issue_fixture_path)
+        labels_list = labels.split(",").map(&:strip)
         request_stubs << stub_request(:post, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/issues").
-          with(body: "{\"labels\":#{labels_list},\"title\":\"#{issue_title}\",\"body\":\"#{issue_body}\"}").
+          with(body: {
+            milestone: milestone,
+            labels: labels_list,
+            title: issue_title,
+            body: issue_body
+          }.to_json).
           to_return(status: 201)
       end
 
@@ -40,6 +49,7 @@ describe 'open_issue' do
         title: issue_title,
         body: issue_fixture_path,
         labels: labels,
+        milestone: milestone,
 
         students: students_list_fixture_path,
 
@@ -58,6 +68,10 @@ describe 'open_issue' do
 
     it "open issue with labels" do
       common_test('bug, feature')
+    end
+
+    it "open issue with milestone" do
+      common_test('bug, feature', 1)
     end
   end
 end
