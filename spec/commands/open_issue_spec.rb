@@ -17,8 +17,8 @@ describe 'open_issue' do
         # Action checks that repos exist already
         request_stubs << stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo")
 
-        unless milestone
-          request_stubs << stub_get_json("https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/milestones/", number: milestone)
+        if milestone
+          request_stubs << stub_request(:get, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/milestones/#{milestone}")
         end
       end
 

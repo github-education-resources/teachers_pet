@@ -43,8 +43,9 @@ module TeachersPet
             next
           end
 
-          if @issue[:options][:milestone].nil?
-            if self.client.milestone("#{@organization}/#{repo_name}", @issue[:options][:milestone]).nil?
+          # If the a milestone is an option, make sure the milestone is on GitHub
+          if @issue[:options][:milestone]
+            unless milestone_exists_on_github?(self.client, "#{@organization}/#{repo_name}", @issue[:options][:milestone])
               puts " --> Milestone not found, skipping '#{repo_name}'"
               next
             end
@@ -59,6 +60,10 @@ module TeachersPet
         self.read_info
         self.load_files
         self.create
+      end
+
+      def milestone_exists_on_github?(client, repo, milestone)
+        !client.milestone(repo, milestone).nil?
       end
     end
   end
