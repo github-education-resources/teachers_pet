@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash/keys'
+
 module TeachersPet
   module Actions
     class CreateStudentTeams < Base
@@ -21,7 +23,8 @@ module TeachersPet
           if team
             puts "Team @#{org_login}/#{team_name} already exists."
           else
-            team = self.client.create_team(org_login, team_name)
+            team = JSON.parse(self.client.create_team(org_login, team_name))
+            team.symbolize_keys!
           end
           self.client.add_users_to_team(org_login, team, usernames)
         end

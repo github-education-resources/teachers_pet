@@ -58,5 +58,13 @@ module TeachersPet
         end
       end
     end
+
+    def milestone?(organization, repo, milestone)
+      begin
+        self.milestone("#{organization}/#{repo}", milestone)
+      rescue
+        return false
+      end
+    end
   end
 end

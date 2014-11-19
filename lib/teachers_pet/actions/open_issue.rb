@@ -8,6 +8,7 @@ module TeachersPet
         @issue = {
           title: self.options[:title],
           options: {
+            milestone: self.options[:milestone],
             labels: self.options[:labels]
           }
         }
@@ -40,6 +41,14 @@ module TeachersPet
           unless self.client.repository?(@organization, repo_name)
             puts " --> Repository not found, skipping '#{repo_name}'"
             next
+          end
+
+          # If the a milestone is an option, make sure the milestone is on GitHub
+          if @issue[:options][:milestone]
+            unless self.client.milestone?(@organization, repo_name, @issue[:options][:milestone])
+              puts " --> Milestone not found, skipping '#{repo_name}'"
+              next
+            end
           end
 
           # Create the issue with octokit
