@@ -26,10 +26,14 @@ describe 'open_issue' do
             team_id = st[:id]
           end
         end
-        issue_body = File.read(issue_fixture_path).gsub("\n", "\\n")
-        labels_list = labels.split(",").map(&:strip).to_s.delete(' ')
+        issue_body = File.read(issue_fixture_path)
+        labels_list = labels.split(",").map(&:strip)
         request_stubs << stub_request(:post, "https://testteacher:abc123@api.github.com/repos/testorg/#{username}-testrepo/issues").
-          with(body: "{\"labels\":#{labels_list},\"title\":\"#{issue_title}\",\"body\":\"#{issue_body}\"}").
+          with(body: {
+            labels: labels_list,
+            title: issue_title,
+            body: issue_body
+          }.to_json).
           to_return(status: 201)
       end
 
