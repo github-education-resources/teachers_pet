@@ -37,7 +37,31 @@ describe 'add_to_team' do
     end
   end
 
-  it "creates the team if it doesn't already exist"
+  it "creates the team if it doesn't exist" do
+    request_stubs = []
+
+    request_stubs << stub_get_json('https://testteacher:abc123@api.github.com/orgs/testorg/teams?per_page=100', [
+      {}
+    ])
+
+    request_stubs << stub_request(:post, "https://testteacher:abc123@api.github.com/orgs/testorg/teams").
+      with(body: {
+        name: "instructors",
+        permission: "push"
+      }.to_json)
+
+    teachers_pet(:add_to_team,
+      organization: 'testorg',
+      members: instructors_list_fixture_path,
+
+      username: 'testteacher',
+      password: 'abc123'
+    )
+
+    request_stubs.each do |request_stub|
+      expect(request_stub).to have_been_requested.once
+    end
+  end
 
   it "treats the team names case-insensitively"
 end
