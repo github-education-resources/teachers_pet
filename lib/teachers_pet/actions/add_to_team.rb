@@ -14,7 +14,8 @@ module TeachersPet
 
       def add_members
         member_list = self.read_members_file
-        self.client.add_users_to_team(self.options[:organization], self.team, member_list)
+        team = self.team.is_a?(String) ? JSON.parse(self.team) : self.team
+        self.client.add_users_to_team(self.options[:organization], team, member_list)
       end
 
       def run
