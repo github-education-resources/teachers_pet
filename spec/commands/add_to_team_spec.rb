@@ -32,7 +32,9 @@ describe 'add_to_team' do
       password: 'abc123'
     )
 
-    request_stubs.each do |request_stub|
+    expect(request_stubs[0]).to have_been_requested.twice
+
+    request_stubs[1..-1].each do |request_stub|
       expect(request_stub).to have_been_requested.once
     end
   end
