@@ -25,7 +25,7 @@ describe 'create_student_teams' do
          }.to_json).to_return(body: {
             id: i,
             name: student
-         })
+         }.to_json)
 
       # Checks for existing team members
       # TODO No need to retrieve members for a new team
@@ -62,7 +62,7 @@ describe 'create_student_teams' do
        }.to_json).to_return(body: {
           id: 1,
           name: 'studentteam1'
-       })
+       }.to_json)
 
     # Checks for existing team members
     # TODO No need to retrieve members for a new team
