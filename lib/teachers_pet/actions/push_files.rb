@@ -48,7 +48,7 @@ module TeachersPet
         my_match = nil
         if File.file?('README.md')
           File.open("README.md") do |file|
-            file.lines.each do |line|
+            file.each_line do |line|
               unless my_match
                 my_match ||= /#{@organization}\/(.*)\.svg\?token=/.match(line)
                 if my_match
@@ -69,7 +69,7 @@ module TeachersPet
           if my_match
             temp_file = Tempfile.new('foo')
             File.open("README.md") do |file|
-              file.lines.each do |line|
+              file.each_line do |line|
                 line.gsub!(/#{@organization}\/#{my_match[1]}/,"#{@organization}\/#{repo_name}")
                 temp_file.puts line
               end
