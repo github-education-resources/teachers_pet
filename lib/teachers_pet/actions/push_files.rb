@@ -45,38 +45,49 @@ module TeachersPet
           end
         end
 
+        my_match = nil
+        if File.file?('README.md')
+          File.open("README.md") do |file|
+            file.lines.each do |line|
+              unless my_match
+                my_match ||= /#{@organization}\/(.*)\.svg\?token=/.match(line)
+                if my_match
+                  puts "--> Found Travis badge for #{my_match[1]}" 
+                  break
+                end
+              end
+            end
+          end
+        end
+        unless my_match
+          puts "File README.md not found or does not contain Travis badge."
+        end
+
         puts "Adding remotes and pushing files to student repositories."
         remotes_to_add.keys.each do |remote|
           repo_name = "#{remote}-#{@repository}"
-          if File.file?('README.md')
-			got_match = false
-			my_match = nil
-			temp_file = Tempfile.new('__')
+          if my_match
+            temp_file = Tempfile.new('foo')
             File.open("README.md") do |file|
               file.lines.each do |line|
-                unless got_match
-                  my_match = /#{@organization}\/(.*)\.svg\?token=/.match(line)
-			      if my_match
-                    puts "--> Got Travis badge for #{my_match[1]}" 
-                    got_match = true;
-                  end
-                end
-			    if got_match
-                  line.gsub!(/#{@organization}\/#{my_match[1]}/,"#{@organization}\/#{repo_name}")
-                end
+                line.gsub!(/#{@organization}\/#{my_match[1]}/,"#{@organization}\/#{repo_name}")
                 temp_file.puts line
               end
             end
             temp_file.close
-			FileUtils.mv(temp_file.path, "README.md")
+            FileUtils.mv(temp_file.path, "README.md")
+            # Need to commit modified README.md for it to get
+            #   pushed to remote later...
             `git add README.md`
             `git commit -m "wrote README.md for #{remote}"`
-          else
-            puts "File README.md not found. Can't create Travis badge as I can't get the Travis Token automatically."
           end
           puts "#{remote} --> #{remotes_to_add[remote]}"
           `git remote add #{remote} #{remotes_to_add[remote]}`
           `git push #{remote} master`
+          if my_match
+            # Undo local repo changes.
+            `git reset --hard HEAD~1`
+          end
         end
       end
 

@@ -53,25 +53,24 @@ module TeachersPet
 
 		  # Travis stuff:
 		  #  authenticate
-		  github = Travis::Tools::Github.new(auto_token: true, auto_password: true) do |g|
-            g.ask_login    = -> { print("GitHub login:"); STDIN.gets }
-            g.ask_password = -> { print("Password:"); STDIN.gets }
-            g.ask_otp      = -> { print("Two-factor token:"); STDIN.gets }
-          end
+		  #github = Travis::Tools::Github.new(auto_token: true, auto_password: true) do |g|
+          #  g.ask_login    = -> { print("GitHub login:"); STDIN.gets }
+          #  g.ask_password = -> { print("Password:"); STDIN.gets }
+          #  g.ask_otp      = -> { print("Two-factor token:"); STDIN.gets }
+          #end
 
-          github.with_token do |token|
-            Travis::Pro.github_auth(token)
-          end
-
+          #github.with_token do |token|
+          #  Travis::Pro.github_auth(token)
+          #end
+          travis_client = Travis::Client.new(uri: Travis::Client::PRO_URI)
+          travis_client.github_auth(self.options[:token])
 		  # Make sure Travis knows about the new repo
 		  #  Need to sleep a bit, else Travis can't find the new repo
-		  Travis::Pro::User.current.sync
+		  travis_client.user.sync
 		  sleep 5
 
-		  full_repo = "#{@organization}/#{repo_name}"
-		  travis_repo = Travis::Pro::Repository.find("#{full_repo}")
-		  travis_repo.reload
 		  # Enable Travis-CI for the repository
+		  travis_repo = travis_client.repo("#{@organization}/#{repo_name}")
 		  travis_repo.enable
           puts " --> Activated Travis for #{travis_repo.slug}"
         end
