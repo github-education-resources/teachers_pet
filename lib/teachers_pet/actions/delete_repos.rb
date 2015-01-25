@@ -36,10 +36,10 @@ module TeachersPet
             next
           end
 
-		  ######################
-		  # Only managed to get this working only with a 
-		  # Personal access token with a 'delete_repo' scope
-		  ######################
+          ######################
+          # Only managed to get this working only with a 
+          # Personal access token with a 'delete_repo' scope
+          ######################
           puts " --> Deleting '#{repo_name}'"
           self.client.delete_repository("#{@organization}/#{repo_name}")
         end
