@@ -68,17 +68,15 @@ describe 'add_collaborators' do
     end
 
     it "prints the users on a dry run" do
-      output = capture(:stdout) do
+      expect {
         teachers_pet(:add_collaborators,
-          repository: 'testorg/testrepo',
-          members: students_list_fixture_path,
-          username: 'testteacher',
-          password: 'abc123',
-          dry_run: true
-        )
-      end
-
-      expect(output).to include('teststudent1')
+                     repository: 'testorg/testrepo',
+                     members: students_list_fixture_path,
+                     username: 'testteacher',
+                     password: 'abc123',
+                     dry_run: true
+                    )
+      }.to output(/teststudent1/).to_stdout
     end
   end
 end
