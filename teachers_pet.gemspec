@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '~> 4.0'
   # for team membership API
   # https://developer.github.com/changes/2014-08-05-team-memberships-api/
-  s.add_dependency 'octokit', '~> 3.3.0'
+  s.add_dependency 'octokit', '~> 3.3'
   s.add_dependency 'require_all', '~> 1.3.2'
   s.add_dependency 'thor', '~> 0.19.1'
 
@@ -32,6 +32,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 3.0'
   # https://github.com/colszowka/simplecov/issues/281
-  s.add_development_dependency 'simplecov', '~> 0.7.1'
+  s.add_development_dependency 'simplecov', '~> 0.7'
   s.add_development_dependency 'webmock', '~> 1.17'
 end
