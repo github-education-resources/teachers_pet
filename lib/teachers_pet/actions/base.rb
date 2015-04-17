@@ -6,7 +6,7 @@ require_relative File.join('..', 'configuration')
 module TeachersPet
   module Actions
     class Base
-      attr_reader :client, :options
+      attr_reader :options
 
       def initialize(opts={})
         @options = opts.symbolize_keys
@@ -46,7 +46,11 @@ module TeachersPet
         puts "=" * 50
         puts "Authenticating to GitHub..."
         octokit = Octokit::Client.new(self.octokit_config)
-        @client = TeachersPet::ClientDecorator.new(octokit)
+        TeachersPet::ClientDecorator.new(octokit)
+      end
+
+      def client
+        @client ||= self.init_client
       end
 
       def read_file(filename)

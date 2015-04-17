@@ -12,7 +12,6 @@ module TeachersPet
       end
 
       def run
-        self.init_client
         forks = self.get_forks
 
         CSV.open(self.options[:output], 'wb') do |csv|

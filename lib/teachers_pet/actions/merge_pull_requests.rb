@@ -4,8 +4,6 @@ module TeachersPet
       def run
         repository = self.options[:repository]
 
-        self.init_client
-
         open_pull_requests = self.client.pull_requests(repository, state: 'open')
         open_pull_requests.each do |pr|
           print "Merging #{pr.html_url}..."

@@ -6,8 +6,6 @@ module TeachersPet
       end
 
       def run
-        self.init_client
-
         members = self.read_members_file
         members.each do |login|
           unless self.options[:dry_run]
