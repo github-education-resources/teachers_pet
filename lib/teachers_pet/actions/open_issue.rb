@@ -35,7 +35,7 @@ module TeachersPet
             puts("  ** ERROR ** - no team for #{student}")
             next
           end
-          repo_name = "#{student}-#{@repository}"
+          repo_name = "#{student}_#{@repository}"
 
           unless self.client.repository?(@organization, repo_name)
             puts " --> Repository not found, skipping '#{repo_name}'"

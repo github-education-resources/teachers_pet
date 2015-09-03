@@ -30,7 +30,7 @@ module TeachersPet
             puts("  ** ERROR ** - no team for #{student}")
             next
           end
-          repo_name = "#{student}-#{@repository}"
+          repo_name = "#{student}_#{@repository}"
 
           if self.client.repository?(@organization, repo_name)
             puts " --> Already exists, skipping '#{repo_name}'"

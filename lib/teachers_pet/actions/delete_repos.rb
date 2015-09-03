@@ -29,17 +29,18 @@ module TeachersPet
             puts("  ** ERROR ** - no team for #{student}")
             next
           end
-          repo_name = "#{student}-#{@repository}"
+          repo_name = "#{student}_#{@repository}"
 
           unless self.client.repository?(@organization, repo_name)
             puts " --> Does not exist, skipping '#{repo_name}'"
             next
           end
 
-		  ######################
-		  # Only managed to get this working only with a 
-		  # Personal access token with a 'delete_repo' scope
-		  ######################
+          ######################
+          # Only managed to get this working only with a 
+          # Personal access token with a 'delete_repo' scope
+		  # Works with password now!
+          ######################
           puts " --> Deleting '#{repo_name}'"
           self.client.delete_repository("#{@organization}/#{repo_name}")
         end
