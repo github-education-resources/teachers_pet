@@ -1,3 +1,5 @@
+__Notice:__ We have [released](https://github.com/blog/2055-teachers-manage-your-courses-with-classroom-for-github) a web based tool for teachers. `teachers_pet` will remain availble, but we recommend teachers use [Classroom for GitHub](https://classroom.github.com) instead.
+
 # teachers_pet [![Build Status](https://travis-ci.org/education/teachers_pet.svg?branch=master)](https://travis-ci.org/education/teachers_pet) [![Gem Version](https://badge.fury.io/rb/teachers_pet.svg)](http://badge.fury.io/rb/teachers_pet)
 
 **WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README corresponding to the latest release.**
