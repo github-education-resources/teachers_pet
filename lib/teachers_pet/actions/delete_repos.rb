@@ -23,7 +23,7 @@ module TeachersPet
         org_teams = self.client.get_teams_by_name(@organization)
         # For each student - create a repository, and give permissions to their "team"
         # The repository name is teamName-repository
-        puts "\nDeleting students' assignment repositories..."
+        puts "\nDeleting students, teams, assignment repositories..."
         @students.keys.sort.each do |student|
           unless org_teams.key?(student)
             puts("  ** ERROR ** - no team for #{student}")
@@ -41,8 +41,13 @@ module TeachersPet
           # Personal access token with a 'delete_repo' scope
 		  # Works with password now!
           ######################
-          puts " --> Deleting '#{repo_name}'"
+          puts " --> Deleting repo:'#{repo_name}'"
           self.client.delete_repository("#{@organization}/#{repo_name}")
+          puts " --> Deleting user:'#{student}'"
+          self.client.remove_organization_member("#{@organization}", "#{student}")
+          team =  org_teams[student]
+          puts " --> Deleting team:'#{team[:name]}'"
+          self.client.delete_team(team[:id])
         end
       end
 
