@@ -12,11 +12,15 @@ module TeachersPet
           }
         }
         @issue_file = self.options[:body]
+        @path_to_file = self.options[:path]
+
       end
 
       def load_files
         @students = self.read_students_file
-        @issue[:body] = File.open(@issue_file).read
+        if !@issue_file.nil?
+          @issue[:body] = File.open(@issue_file).read
+        end
       end
 
       def create
@@ -42,6 +46,9 @@ module TeachersPet
             next
           end
 
+          if @issue_file.nil?
+            @issue[:body] = File.open(@path_to_file + student+".md").read
+          end
           # Create the issue with octokit
           self.client.create_issue("#{@organization}/#{repo_name}", @issue[:title], @issue[:body], @issue[:options])
         end
