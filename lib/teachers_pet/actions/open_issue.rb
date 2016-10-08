@@ -21,7 +21,6 @@ module TeachersPet
 
       def create
         # confirm("Create issue '#{@issue[:title]}' in #{@students.keys.size} student repositories - '#{@repository}'?")
-        self.init_client
 
         org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?

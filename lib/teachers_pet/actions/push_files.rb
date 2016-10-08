@@ -12,8 +12,6 @@ module TeachersPet
       end
 
       def push
-        self.init_client
-
         org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:url]}"

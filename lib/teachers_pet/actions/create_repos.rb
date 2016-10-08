@@ -11,10 +11,8 @@ module TeachersPet
         @students = self.read_students_file
       end
 
+      # create a repo for each student
       def create
-        # create a repo for each student
-        self.init_client
-
         org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?
         puts "Found organization at: #{org_hash[:login]}"

@@ -14,11 +14,9 @@ module TeachersPet
         self.options[:clone_method]
       end
 
+      # create a repo for each student
       def create
         cloneMethod = self.get_clone_method
-
-        # create a repo for each student
-        self.init_client
 
         org_hash = self.client.organization(@organization)
         abort('Organization could not be found') if org_hash.nil?

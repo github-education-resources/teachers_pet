@@ -18,7 +18,6 @@ module TeachersPet
       end
 
       def run
-        self.init_client
         self.add_members
       end
     end

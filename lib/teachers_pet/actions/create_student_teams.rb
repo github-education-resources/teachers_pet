@@ -29,7 +29,6 @@ module TeachersPet
       end
 
       def run
-        self.init_client
         self.create_student_teams
       end
     end
