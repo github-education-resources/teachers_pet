@@ -2,6 +2,7 @@ module TeachersPet
   class Cli
     option :organization, required: true
     option :repository, required: true
+    option :forks, type: :boolean, default: false, desc: "If true, will clone forks of the repository from the provided list of students. Defaults to cloning repositories of the form <organization>/<user>-<repository>."
     option :clone_method, default: 'https', desc: "'https' or 'ssh'"
 
     students_option
