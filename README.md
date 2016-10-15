@@ -118,6 +118,10 @@ When grading, use the `clone_repos` command to clone all the repositories in the
 
 When running a GitHub workshop, it's nice to be able to merge a bunch of pull requests on a particular repository all at once. `merge_pull_requests` will handle this for you.
 
+### Delete specified repositories
+
+You can delete the specified repositories via `delete_repos`, it'll be useful once you pushed something wrong, or you may when to recycle the quota of private repo. Be careful with this command, the delete process can not be reverted, you can backup the repositories locally in case.
+
 ## Related projects
 
 * https://education.github.com/guide
