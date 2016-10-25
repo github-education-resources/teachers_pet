@@ -1,17 +1,16 @@
 module TeachersPet
   module Actions
-    class CreateRepos < Base
+    class DeleteRepos < Base
       def read_info
         @repository = self.options[:repository]
         @organization = self.options[:organization]
-        @public_repos = self.options[:public]
       end
 
       def load_files
         @students = self.read_students_file
       end
 
-      def create
+      def delete
         # create a repo for each student
         self.init_client
 
@@ -24,7 +23,7 @@ module TeachersPet
         org_teams = self.client.get_teams_by_name(@organization)
         # For each student - create a repository, and give permissions to their "team"
         # The repository name is teamName-repository
-        puts "\nCreating assignment repositories for students..."
+        puts "\nDeleting students, teams, assignment repositories..."
         @students.keys.sort.each do |student|
           unless org_teams.key?(student)
             puts("  ** ERROR ** - no team for #{student}")
@@ -32,28 +31,30 @@ module TeachersPet
           end
           repo_name = "#{student}_#{@repository}"
 
-          if self.client.repository?(@organization, repo_name)
-            puts " --> Already exists, skipping '#{repo_name}'"
+          unless self.client.repository?(@organization, repo_name)
+            puts " --> Does not exist, skipping '#{repo_name}'"
             next
           end
 
-          puts " --> Creating '#{repo_name}' public? #{@public_repos}"
-          self.client.create_repository(repo_name,
-            description: "#{@repository} created for #{student}",
-            private: !@public_repos,
-            has_issues: true,
-            has_wiki: false,
-            has_downloads: false,
-            organization: @organization,
-            team_id: org_teams[student][:id]
-          )
+          ######################
+          # Only managed to get this working only with a 
+          # Personal access token with a 'delete_repo' scope
+		  # Works with password now!
+          ######################
+          puts " --> Deleting repo:'#{repo_name}'"
+          self.client.delete_repository("#{@organization}/#{repo_name}")
+          puts " --> Deleting user:'#{student}'"
+          self.client.remove_organization_member("#{@organization}", "#{student}")
+          team =  org_teams[student]
+          puts " --> Deleting team:'#{team[:name]}'"
+          self.client.delete_team(team[:id])
         end
       end
 
       def run
         self.read_info
         self.load_files
-        self.create
+        self.delete
       end
     end
   end
