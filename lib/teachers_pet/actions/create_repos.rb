@@ -1,3 +1,6 @@
+require 'travis/pro'
+require 'travis/tools/github'
+
 module TeachersPet
   module Actions
     class CreateRepos < Base
@@ -36,7 +39,7 @@ module TeachersPet
             puts " --> Already exists, skipping '#{repo_name}'"
             next
           end
-
+		  
           puts " --> Creating '#{repo_name}' public? #{@public_repos}"
           self.client.create_repository(repo_name,
             description: "#{@repository} created for #{student}",
@@ -47,6 +50,20 @@ module TeachersPet
             organization: @organization,
             team_id: org_teams[student][:id]
           )
+
+          # Travis stuff:
+          #  authenticate
+          travis_client = Travis::Client.new(uri: Travis::Client::PRO_URI)
+          travis_client.github_auth(self.options[:token])
+          # Make sure Travis knows about the new repo
+          #  Need to sleep a bit, else Travis can't find the new repo
+          travis_client.user.sync
+          sleep 5
+
+          # Enable Travis-CI for the repository
+          travis_repo = travis_client.repo("#{@organization}/#{repo_name}")
+          travis_repo.enable
+          puts " --> Activated Travis for #{travis_repo.slug}"
         end
       end
 

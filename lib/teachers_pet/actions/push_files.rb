@@ -1,3 +1,6 @@
+require 'tempfile'
+require 'fileutils'
+
 module TeachersPet
   module Actions
     class PushFiles < Base
@@ -42,11 +45,49 @@ module TeachersPet
           end
         end
 
+        my_match = nil
+        if File.file?('README.md')
+          File.open("README.md") do |file|
+            file.each_line do |line|
+              unless my_match
+                my_match ||= /#{@organization}\/(.*)\.svg\?token=/.match(line)
+                if my_match
+                  puts "--> Found Travis badge for #{my_match[1]}" 
+                  break
+                end
+              end
+            end
+          end
+        end
+        unless my_match
+          puts "File README.md not found or does not contain Travis badge."
+        end
+
         puts "Adding remotes and pushing files to student repositories."
         remotes_to_add.keys.each do |remote|
+          repo_name = "#{remote}-#{@repository}"
+          if my_match
+            temp_file = Tempfile.new('foo')
+            File.open("README.md") do |file|
+              file.each_line do |line|
+                line.gsub!(/#{@organization}\/#{my_match[1]}/,"#{@organization}\/#{repo_name}")
+                temp_file.puts line
+              end
+            end
+            temp_file.close
+            FileUtils.mv(temp_file.path, "README.md")
+            # Need to commit modified README.md for it to get
+            #   pushed to remote later...
+            `git add README.md`
+            `git commit -m "wrote README.md for #{remote}"`
+          end
           puts "#{remote} --> #{remotes_to_add[remote]}"
           `git remote add #{remote} #{remotes_to_add[remote]}`
           `git push #{remote} master`
+          if my_match
+            # Undo local repo changes.
+            `git reset --hard HEAD~1`
+          end
         end
       end
 
