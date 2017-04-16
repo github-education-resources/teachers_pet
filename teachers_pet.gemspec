@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_dependency 'activesupport', '~> 4.0'
+  s.add_dependency 'activesupport', '~> 4.1.9'
   # for team membership API
   # https://developer.github.com/changes/2014-08-05-team-memberships-api/
   s.add_dependency 'octokit', '~> 3.3'
